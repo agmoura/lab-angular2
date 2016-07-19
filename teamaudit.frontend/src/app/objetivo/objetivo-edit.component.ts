@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {Objetivo, CategoriaObjetivo} from "../shared/model/models";
+import {Objetivo, CategoriaObjetivo, UnidadeOrganizacional} from "../shared/model/models";
 import {DataService} from "../shared/services/data.service";
 
 @Component({
@@ -16,20 +16,9 @@ export class ObjetivoEditComponent implements OnInit {
     subscription:any;
     objetivo:Objetivo = new Objetivo();
     categoriaObjetivos:CategoriaObjetivo[] = [];
+    unidades:UnidadeOrganizacional[] = [];
 
-    constructor(private route:ActivatedRoute, private dataService:DataService) {
-        //this.objetivo = <Objetivo>{ };
-        /*this.objetivo = <Objetivo>{
-         _links: {
-         categoriaObjetivo: {href: "http://localhost:8080/teamaudit/api/categoriaObjetivos/4028e7995603f0cc015603f0d4770010"},
-         unidadeOrganizacional: {href: "http://localhost:8080/teamaudit/api/objetivos/4028e7995603f0cc015603f0d4780014/unidadeOrganizacional"}
-         },
-         categoriaObjetivo: {id: "4028e7995603f0cc015603f0d4770010"}
-         };*/
-
-        //this.objetivo = <Objetivo> { };
-        //this.objetivo.categoriaObjetivo = <CategoriaObjetivo>{ };
-    }
+    constructor(private route:ActivatedRoute, private dataService:DataService) { }
 
     ngOnInit() {
         this.subscription = this.route.params.subscribe(
@@ -45,6 +34,10 @@ export class ObjetivoEditComponent implements OnInit {
 
         this.dataService.findAll<CategoriaObjetivo>('categoriaObjetivos').subscribe(
             data => this.categoriaObjetivos = data.list
+        );
+
+        this.dataService.findAll<CategoriaObjetivo>('unidades').subscribe(
+            data => this.unidades = data.list
         );
     }
 

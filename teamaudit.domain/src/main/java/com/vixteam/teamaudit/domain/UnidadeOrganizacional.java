@@ -23,7 +23,7 @@ public class UnidadeOrganizacional implements IEntity<String> {
     @Column(name = "NM_UOAUD", length = 50, nullable = false)
     private String nome;
 
-    @OneToMany(mappedBy = "unidadeOrganizacional")
+    /*@OneToMany(mappedBy = "unidadeOrganizacional")
     private List<Objetivo> objetivos;
 
     @OneToMany(mappedBy = "unidadeOrganizacional")
@@ -33,7 +33,7 @@ public class UnidadeOrganizacional implements IEntity<String> {
     private List<Estrutura> estruturas;
 
     @OneToMany(mappedBy = "unidadeOrganizacional")
-    private List<VisaoAuditavel> visoes;
+    private List<VisaoAuditavel> visoes;*/
 
     @Override
     public String getId() {
@@ -53,7 +53,7 @@ public class UnidadeOrganizacional implements IEntity<String> {
         this.nome = nome;
     }
 
-    public List<Objetivo> getObjetivos() {
+    /*public List<Objetivo> getObjetivos() {
         return objetivos;
     }
 
@@ -83,5 +83,5 @@ public class UnidadeOrganizacional implements IEntity<String> {
 
     public void setVisoes(List<VisaoAuditavel> visoes) {
         this.visoes = visoes;
-    }
+    }*/
 }

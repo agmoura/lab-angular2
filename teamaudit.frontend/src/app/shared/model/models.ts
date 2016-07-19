@@ -24,4 +24,9 @@ export class Objetivo extends EntityBase {
     valorMeta:number;
     percentualMeta:number;
     categoriaObjetivo:CategoriaObjetivo;
+    unidadeOrganizacional:UnidadeOrganizacional;
+}
+
+export class UnidadeOrganizacional extends EntityBase {
+    nome:string;
 }
