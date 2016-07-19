@@ -1,0 +1,67 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h3>Objetivos 11</h3>
+        </div>
+        <button (click)="gotoEdit()" class="btn btn-info">Novo Registro</button>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-condensed table-hover">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Valor Meta</th>
+                    <th>Percentual Meta</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let objetivo of objetivos">
+                    <td>{{objetivo.nome}}</td>
+                    <td>{{objetivo.descricao}}</td>
+                    <td>{{objetivo.valorMeta}}</td>
+                    <td>{{objetivo.percentualMeta}}</td>
+                    <td>
+                        <a href="javascript:void(0)" (click)="gotoEdit(objetivo)">Editar</a>
+                        <a href="javascript:void(0)" (click)="delete(objetivo)">Excluir</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <button (click)="previousPage()" class="btn btn-default">
+                    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                </button>
+                <button (click)="nextPage()" class="btn btn-default">
+                    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                </button>
+                <span>Total Registros: {{page.totalElements}}</span>
+            </div>
+
+            <!--<ul class="pagination">
+                <li ng-class="{disabled: page.number === 0}">
+                    <a ng-show="page.number !== 0" ng-href="#{{basePath}}?page=0&size={{page.size}}&sort={{sort}}">&laquo;</a>
+                    <span ng-show="page.number === 0">&laquo;</span>
+                </li>
+                <li ng-class="{disabled: page.number === 0}">
+                    <a ng-show="page.number !== 0" ng-href="#{{basePath}}?page={{page.number - 1}}&size={{page.size}}&sort={{sort}}">Prev</a>
+                    <span ng-show="page.number === 0">Prev</span>
+                </li>
+                <li ng-repeat="n in [] | pages: page.number:page.totalPages:5" ng-class="{active: n === page.number}">
+                    <a ng-show="page.number !== n" ng-href="#{{basePath}}?page={{n}}&size={{page.size}}&sort={{sort}}"></a>
+                    <span ng-show="page.number === n"></span>
+                </li>
+                <li ng-class="{disabled: page.number === page.totalPages - 1}">
+                    <a ng-show="page.number !== page.totalPages - 1" ng-href="#{{basePath}}?page={{page.number + 1}}&size={{page.size}}&sort={{sort}}">Next</a>
+                    <span ng-show="page.number === page.totalPages - 1">Next</span>
+                </li>
+                <li ng-class="{disabled: page.number === page.totalPages - 1}">
+                    <a ng-show="page.number !== page.totalPages - 1" ng-href="#{{basePath}}?page={{page.totalPages - 1}}&size={{page.size}}&sort={{sort}}">&raquo;</a>
+                    <span ng-show="page.number === page.totalPages - 1">&raquo;</span>
+                </li>
+            </ul>-->
+        </div>
+    </div>
+</div>

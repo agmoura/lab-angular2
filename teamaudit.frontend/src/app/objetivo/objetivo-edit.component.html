@@ -1,0 +1,64 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h3>Editar Objetivo 5</h3>
+        </div>
+    </div>
+    <div class="panel-body">
+
+        <div [hidden]="errors.length === 0" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <ul>
+                <li *ngFor="let error of errors">
+                    <span>{{error}}</span>
+                </li>
+            </ul>
+        </div>
+
+        <form (ngSubmit)="save()" #thisForm="ngForm">
+            {{diagnostic}}
+            <div class="form-group">
+                <label>Nome:</label>
+                <input type="text" name="nome" [(ngModel)]="objetivo.nome" class="form-control" required #spy>
+                <br>TODO: remove this: {{spy.className}}
+            </div>
+
+            <div class="form-group">
+                <label>Descrição:</label>
+                <input type="text" name="descricao" [(ngModel)]="objetivo.descricao" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Descrição Meta:</label>
+                <input name="descricaoMeta" [(ngModel)]="objetivo.descricaoMeta" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Valor Meta:</label>
+                <input name="valorMeta" [(ngModel)]="objetivo.valorMeta" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Percentual Meta: </label>
+                <input name="percentualMeta" [(ngModel)]="objetivo.percentualMeta" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Categoria:</label>
+                <select name="categoriaObjetivo" [(ngModel)]="objetivo.categoriaObjetivo" class="form-control">
+                    <option value=""> --- Selecione ---</option>
+                    <option *ngFor="let categoriaObjetivo of categoriaObjetivos" [ngValue]="categoriaObjetivo">
+                        {{categoriaObjetivo.nome}}
+                    </option>
+                </select>
+            </div>
+
+            <div>
+                <button type="button" (click)="goBack()" class="btn btn-default">Voltar</button>
+                <button type="submit" [disabled]="!thisForm.form.valid" class="btn btn-primary">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
