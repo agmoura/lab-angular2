@@ -1,6 +1,6 @@
 import {Link} from "./paged-list";
 
-export class EntityBase {
+export abstract class EntityBase {
     id:string;
     _links:{ self:Link; };
 }
@@ -14,17 +14,22 @@ export class CategoriaObjetivo extends EntityBase {
     nome:string;
     descricao:string;
     indicadorInternoSistema:string;
-    escopo:Escopo;
+    escopo:Escopo | string;
 }
 
 export class Objetivo extends EntityBase {
+    _links:{
+        self:Link;
+        categoriaObjetivo:Link;
+        unidadeOrganizacional:Link
+    };
     nome:string;
     descricao:string;
     descricaoMeta:string;
     valorMeta:number;
     percentualMeta:number;
-    categoriaObjetivo:CategoriaObjetivo;
-    unidadeOrganizacional:UnidadeOrganizacional;
+    categoriaObjetivo:CategoriaObjetivo | string;
+    unidadeOrganizacional:UnidadeOrganizacional | string;
 }
 
 export class UnidadeOrganizacional extends EntityBase {

@@ -18,8 +18,7 @@ export class ObjetivoListComponent implements OnInit {
     objetivos:Objetivo[] = [];
     page:Page = new Page();
 
-    constructor(private router:Router, private dataService:DataService) {
-    }
+    constructor(private router:Router, private dataService:DataService) { }
 
     ngOnInit() {
         this.load();
@@ -54,8 +53,8 @@ export class ObjetivoListComponent implements OnInit {
 
     gotoEdit(objetivo:Objetivo = null) {
         if (objetivo)
-            this.router.navigate(['/objetivos-edit', objetivo.id]);
+            this.router.navigate(['objetivos/edit', objetivo.id]);
         else
-            this.router.navigate(['/objetivos-edit']);
+            this.router.navigate(['objetivos/edit']);
     }
 }

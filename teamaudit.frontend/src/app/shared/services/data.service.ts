@@ -18,9 +18,13 @@ export class DataService {
             .map(response => new PagedList<TEntity>(response.json(), path));
     }
 
-    get<TEntity extends EntityBase>(path:string, id:string):Observable<TEntity> {
-        return <Observable<TEntity>> this.http.get(this.baseUrl + path + '/' + id)
+    getByUri<TEntity extends EntityBase>(uri:string):Observable<TEntity> {
+        return <Observable<TEntity>> this.http.get(uri)
             .map(response => response.json());
+    }
+    
+    get<TEntity extends EntityBase>(path:string, id:string):Observable<TEntity> {
+        return this.getByUri<TEntity>(this.baseUrl + path + '/' + id);
     }
 
     save<TEntity extends EntityBase>(path:string, entity:TEntity):Observable<TEntity> {

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {Objetivo, CategoriaObjetivo, UnidadeOrganizacional} from "../shared/model/models";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Objetivo, CategoriaObjetivo, UnidadeOrganizacional, EntityBase} from "../shared/model/models";
 import {DataService} from "../shared/services/data.service";
 
 @Component({
@@ -8,28 +8,35 @@ import {DataService} from "../shared/services/data.service";
     templateUrl: './objetivo-edit.component.html',
     //styleUrls: ['./app.css'],
     moduleId: module.id,
-    providers: [DataService]
+    providers: [DataService],
 })
 export class ObjetivoEditComponent implements OnInit {
 
-    errors:string[] = [];
-    subscription:any;
     objetivo:Objetivo = new Objetivo();
     categoriaObjetivos:CategoriaObjetivo[] = [];
     unidades:UnidadeOrganizacional[] = [];
+    errors:string[] = [];
 
-    constructor(private route:ActivatedRoute, private dataService:DataService) { }
+    constructor(private route:ActivatedRoute, private router: Router, private dataService:DataService) { }
 
     ngOnInit() {
-        this.subscription = this.route.params.subscribe(
-            params => this.load(params['id'])
-        );
+        this.load(this.route.snapshot.params['id'])
     }
 
     load(id:string) {
         if (id)
             this.dataService.get<Objetivo>('objetivos', id).subscribe(
-                data => this.objetivo = data
+                data => {
+                    this.objetivo = data;
+
+                    this.dataService.getByUri<CategoriaObjetivo>(this.objetivo._links.categoriaObjetivo.href).subscribe(
+                        data => this.objetivo.categoriaObjetivo = data._links.self.href
+                    );
+
+                    this.dataService.getByUri<UnidadeOrganizacional>(this.objetivo._links.unidadeOrganizacional.href).subscribe(
+                        data => this.objetivo.unidadeOrganizacional = data._links.self.href
+                    );
+                }
             );
 
         this.dataService.findAll<CategoriaObjetivo>('categoriaObjetivos').subscribe(
@@ -50,7 +57,7 @@ export class ObjetivoEditComponent implements OnInit {
     }
 
     goBack() {
-        window.history.back();
+        this.router.navigate(['/objetivos']);
     }
 
     handleError(data:any) {
