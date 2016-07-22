@@ -83,24 +83,11 @@ public class ControlePadrao implements IEntity<String> {
     private Escopo escopo;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "CATEC", joinColumns = {
-        @JoinColumn(name = "CD_CTREM")
-    },
-        inverseJoinColumns = {
-            @JoinColumn(name = "CD_TPECR")
-        }
-    )
-    // TODO rodrigo.pimenta falta implementar para aparecer no jsp
+    @JoinTable(name = "CATEC", joinColumns = {@JoinColumn(name = "CD_CTREM")}, inverseJoinColumns = {@JoinColumn(name = "CD_TPECR")})
     private List<TipoEspecialControle> listaTipoEspecialControle;
 
-        @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="OBJAC", joinColumns = {
-        @JoinColumn(name = "CD_CTREM")
-    },
-        inverseJoinColumns = {
-            @JoinColumn(name = "CD_OBACR")
-        })
-    // TODO rodrigo.pimenta falta implementar para aparecer no jsp
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "OBJAC", joinColumns = {@JoinColumn(name = "CD_CTREM")}, inverseJoinColumns = {@JoinColumn(name = "CD_OBACR")})
     private List<ObjetivoAuditoria> listaObjetivoAuditoria;
 
     /* Getters and Setters */

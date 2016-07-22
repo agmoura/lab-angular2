@@ -1,15 +1,13 @@
 import {bootstrap} from '@angular/platform-browser-dynamic';
-import {appRouterProviders} from './app/app.routes';
+import {Type} from '@angular/core';
 import {HTTP_PROVIDERS} from '@angular/http';
-import { disableDeprecatedForms, provideForms } from '@angular/forms';
+import {disableDeprecatedForms, provideForms} from '@angular/forms';
+import {appRouterProviders} from './app/app.routes';
 import {AppComponent} from './app/app.component';
 
-// import {enableProdMode} from '@angular/core';
-// enableProdMode();
-
-bootstrap(AppComponent, [
-    appRouterProviders,
+bootstrap(<Type> AppComponent, [
     HTTP_PROVIDERS,
     disableDeprecatedForms(),
-    provideForms()
+    provideForms(),
+    appRouterProviders
 ]).catch(error => console.error(error));

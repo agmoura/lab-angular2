@@ -18,6 +18,7 @@ module.exports = {
         new webpack.optimize.OccurenceOrderPlugin(true),
         new webpack.optimize.CommonsChunkPlugin({ name: ['main', 'vendor', 'polyfills'], minChunks: Infinity }),
         new copy([{from: './src/index.html', to: 'index.html'}])
+        //new webpack.optimize.UglifyJsPlugin({compress: { warnings: false }})
     ],
     resolve: {
         root: [ path.join(__dirname, 'src') ],

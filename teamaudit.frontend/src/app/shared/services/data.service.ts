@@ -13,9 +13,15 @@ export class DataService {
 
     constructor(private http:Http) { }
 
-    findAll<TEntity extends EntityBase>(path:string, page:Page = new Page(0, -1)):Observable<PagedList<TEntity>> {
-        return this.http.get(this.baseUrl + path + '?page=' + page.number + '&size=' + page.size)
-            .map(response => new PagedList<TEntity>(response.json(), path));
+    findAll(path:string, page:Page = null, sorts:string[] = null):Observable<PagedList> {
+        let url:string = this.baseUrl + path;
+
+        if(page) url +=  '?page.number=' + page.number + '&page.size=' + page.size;
+
+        //TODO: Tratar caso de 'sorts' ser informado e 'page' não
+        if(sorts) sorts.map(sort => url += '&sorts=' + sort);
+        
+        return this.http.get(url).map(response => new PagedList(response.json()));
     }
 
     getByUri<TEntity extends EntityBase>(uri:string):Observable<TEntity> {
@@ -31,14 +37,14 @@ export class DataService {
         let headers = new Headers({'Content-Type': 'application/json'});
 
         if (entity.id)
-            return <Observable<TEntity>> this.http.put(entity._links.self.href, JSON.stringify(entity), {headers: headers})
+            return <Observable<TEntity>> this.http.put(this.baseUrl + path + "/" + entity.id, JSON.stringify(entity), {headers: headers})
                 .map(response => <TEntity> response.json());
 
         return <Observable<TEntity>> this.http.post(this.baseUrl + path, JSON.stringify(entity), {headers: headers})
             .map(response => response.json());
     }
 
-    delete<TEntity extends EntityBase>(entity:TEntity) {
-        return this.http.delete(entity._links.self.href);
+    delete(path:string, entity:EntityBase) {
+        return this.http.delete(this.baseUrl + path + "/" + entity.id);
     }
 }

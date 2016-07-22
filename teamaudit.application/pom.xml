@@ -37,7 +37,7 @@
         </dependency>
 
         <!-- DATABASE SERVER -->
-        <!--<dependency>
+        <dependency>
             <groupId>com.microsoft</groupId>
             <artifactId>sqljdbc</artifactId>
             <version>4.2.6420.100</version>
@@ -48,7 +48,7 @@
             <artifactId>ojdbc7</artifactId>
             <version>12.1.0.1.0</version>
             <scope>runtime</scope>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

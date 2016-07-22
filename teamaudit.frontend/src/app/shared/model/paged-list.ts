@@ -1,22 +1,22 @@
-export class PagedList<TEntity> {
+export class PagedList {
+    list:any[];
     page:Page;
-    links:Links;
-    list:TEntity[];
+    //links:Links;
 
-    constructor(data:any, listName:string) {
-        this.page = data.page;
-        this.links = data._links;
-        this.list = data._embedded[listName];
+    constructor(public result:any ) {
+        this.list = result.list;
+        this.page = result.page;
     }
 }
 
 export class Page {
-    totalElements:number;
+    totalItens:number;
     totalPages:number;
 
     constructor(public number:number = 0, public size:number = 10) { }
 }
 
+/*
 export class Link {
     href:string;
     templated:boolean;
@@ -29,4 +29,4 @@ export class Links {
     last:Link;
     profile:Link;
     search:Link;
-}
+}*/

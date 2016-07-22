@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vixteam.teamaudit.domain.enums.SimNaoEnum;
 import com.vixteam.teamaudit.domain.enums.SimNaoEnumConverter;
 import org.hibernate.annotations.GenericGenerator;
@@ -16,10 +17,9 @@ import java.util.List;
 @Table (name="CATOB")
 public class CategoriaObjetivo implements IEntity<String> {
 
-	@Id 
-	@Column(name="CD_CATOB" ,length=32, columnDefinition = "CHAR(32)") 
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @Id
+    @GeneratedValue
+    @Column(name="CD_CATOB" ,length=32, columnDefinition = "CHAR(32)")
     private String id;
 
     @ManyToOne
@@ -41,6 +41,7 @@ public class CategoriaObjetivo implements IEntity<String> {
     @Column(name="ID_CATOB_INTR_SIST", length=1, nullable=false)
     private SimNaoEnum indicadorInternoSistema;
 
+    @JsonIgnore
     @Valid
     @OneToMany(mappedBy = "categoriaObjetivo")
     private List<Objetivo> objetivos;

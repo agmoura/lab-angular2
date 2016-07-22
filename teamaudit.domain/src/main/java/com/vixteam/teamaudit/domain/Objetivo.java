@@ -12,9 +12,8 @@ import org.hibernate.annotations.GenericGenerator;
 public class Objetivo implements IEntity<String> {
 
     @Id
+    @GeneratedValue
     @Column(name="CD_OBJEM" ,length=32, columnDefinition = "CHAR(32)")
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
     private String id;
 
     @NotNull

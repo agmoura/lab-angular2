@@ -3,7 +3,7 @@ import {ObjetivoListComponent} from "./objetivo-list.component";
 import {ObjetivoEditComponent} from "./objetivo-edit.component";
 
 export const objetivoRoutes:RouterConfig = <RouterConfig> [
-    {path: 'objetivos', component: ObjetivoListComponent},
-    {path: 'objetivos/edit', component: ObjetivoEditComponent},
-    {path: 'objetivos/edit/:id', component: ObjetivoEditComponent}
+    {path: 'objetivo', component: ObjetivoListComponent},
+    {path: 'objetivo/edit', component: ObjetivoEditComponent},
+    {path: 'objetivo/edit/:id', component: ObjetivoEditComponent}
 ];

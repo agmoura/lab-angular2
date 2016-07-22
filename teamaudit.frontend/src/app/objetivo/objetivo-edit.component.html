@@ -17,58 +17,64 @@
             </ul>
         </div>
 
-        <form (ngSubmit)="save()" #form="ngForm">
-            {{diagnostic}}
+        <!--TODO: Remover Informações de Depuração -->
+        <strong>this.objetivo:</strong> {{objetivo | json}} <br/>
+        <strong>form.value:</strong> {{form.value | json}}
+
+        <form (ngSubmit)="save(form.value)" #form="ngForm">
+            <input type="hidden" name="id" [ngModel]="objetivo.id">
 
             <div class="form-group">
                 <label>Nome:</label>
-                <input type="text" name="nome" [(ngModel)]="objetivo.nome" class="form-control" required #spy>
-                <br>TODO: remove this: {{spy.className}}
+                <input type="text" name="nome" [ngModel]="objetivo.nome" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label>Descrição:</label>
-                <input type="text" name="descricao" [(ngModel)]="objetivo.descricao" class="form-control" required>
+                <input type="text" name="descricao" [ngModel]="objetivo.descricao" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label>Descrição Meta:</label>
-                <input type="text" name="descricaoMeta" [(ngModel)]="objetivo.descricaoMeta" class="form-control">
+                <input type="text" name="descricaoMeta" [ngModel]="objetivo.descricaoMeta" class="form-control">
             </div>
 
             <div class="form-group">
                 <label>Valor Meta:</label>
-                <input type="number" step="0.01" name="valorMeta" [(ngModel)]="objetivo.valorMeta" class="form-control">
+                <input type="number" step="0.01" name="valorMeta" [ngModel]="objetivo.valorMeta" class="form-control">
             </div>
 
             <div class="form-group">
                 <label>Percentual Meta: </label>
-                <input type="number" step="0.01" name="percentualMeta" [(ngModel)]="objetivo.percentualMeta" class="form-control">
+                <input type="number" step="0.01" name="percentualMeta" [ngModel]="objetivo.percentualMeta" class="form-control">
             </div>
 
-            <div class="form-group">
+            <div ngModelGroup="categoriaObjetivo" class="form-group">
                 <label>Categoria:</label>
-                <select name="categoriaObjetivo" [(ngModel)]="objetivo.categoriaObjetivo" class="form-control" required>
-                    <!--<option value=""> -&#45;&#45; Selecione -&#45;&#45;</option>-->
-                    <option *ngFor="let entity of categoriaObjetivos" [ngValue]="entity._links.self.href">
-                        {{entity.nome}}
+                <select name="id" ngModel="{{objetivo.categoriaObjetivo?.id}}"  class="form-control" required>
+                    <option value=""> --- Selecione ---</option>
+                    <option *ngFor="let item of categorias" [value]="item.id">
+                        {{item.nome}}
                     </option>
                 </select>
             </div>
 
-            <div class="form-group">
+            <div ngModelGroup="unidadeOrganizacional" class="form-group">
                 <label>Unidade:</label>
-                <select name="unidadeOrganizacional" [(ngModel)]="objetivo.unidadeOrganizacional" class="form-control" required>
-                    <option *ngFor="let entity of unidades" [ngValue]="entity._links.self.href">
-                        {{entity.nome}}
+                <select name="id" ngModel="{{objetivo.unidadeOrganizacional?.id}}" class="form-control" required>
+                    <option value=""> --- Selecione ---</option>
+                    <option *ngFor="let item of unidades" [value]="item.id">
+                        {{item.nome}}
                     </option>
                 </select>
             </div>
 
             <div>
                 <button type="button" (click)="goBack()" class="btn btn-default">Voltar</button>
-                <button type="submit" [disabled]="!form.valid" class="btn btn-primary">Salvar</button>
+                <button type="submit" class="btn btn-primary">Salvar</button>
             </div>
+
+
         </form>
     </div>
 </div>

@@ -13,11 +13,15 @@ import {DataService} from "../shared/services/data.service";
 export class ObjetivoEditComponent implements OnInit {
 
     objetivo:Objetivo = new Objetivo();
-    categoriaObjetivos:CategoriaObjetivo[] = [];
+    categorias:CategoriaObjetivo[] = [];
     unidades:UnidadeOrganizacional[] = [];
     errors:string[] = [];
 
-    constructor(private route:ActivatedRoute, private router: Router, private dataService:DataService) { }
+    constructor(private route:ActivatedRoute, private router:Router, private dataService:DataService) {
+        //this.objetivo.categoriaObjetivo = new CategoriaObjetivo();
+        //this.objetivo.unidadeOrganizacional = new UnidadeOrganizacional();
+        //this.objetivo.categoriaObjetivo.id = "XXXXX";
+    }
 
     ngOnInit() {
         this.load(this.route.snapshot.params['id'])
@@ -25,31 +29,22 @@ export class ObjetivoEditComponent implements OnInit {
 
     load(id:string) {
         if (id)
-            this.dataService.get<Objetivo>('objetivos', id).subscribe(
-                data => {
-                    this.objetivo = data;
-
-                    this.dataService.getByUri<CategoriaObjetivo>(this.objetivo._links.categoriaObjetivo.href).subscribe(
-                        data => this.objetivo.categoriaObjetivo = data._links.self.href
-                    );
-
-                    this.dataService.getByUri<UnidadeOrganizacional>(this.objetivo._links.unidadeOrganizacional.href).subscribe(
-                        data => this.objetivo.unidadeOrganizacional = data._links.self.href
-                    );
-                }
+            this.dataService.get<Objetivo>('objetivo', id).subscribe(
+                data => this.objetivo = data
             );
 
-        this.dataService.findAll<CategoriaObjetivo>('categoriaObjetivos').subscribe(
-            data => this.categoriaObjetivos = data.list
+        this.dataService.findAll('categoriaObjetivo').subscribe(
+            data => this.categorias = data.list
         );
 
-        this.dataService.findAll<CategoriaObjetivo>('unidades').subscribe(
+        this.dataService.findAll('unidadeOrganizacional').subscribe(
             data => this.unidades = data.list
         );
     }
 
-    save() {
-        this.dataService.save('objetivos', <Objetivo>this.objetivo).subscribe(
+    save(objetivo:Objetivo) {
+
+        this.dataService.save('objetivo', objetivo).subscribe(
             data => this.objetivo = data,
             error => this.handleError(error.json()),
             () => this.goBack()
@@ -57,7 +52,7 @@ export class ObjetivoEditComponent implements OnInit {
     }
 
     goBack() {
-        this.router.navigate(['/objetivos']);
+        this.router.navigate(['/objetivo']);
     }
 
     handleError(data:any) {
@@ -66,7 +61,7 @@ export class ObjetivoEditComponent implements OnInit {
 
         // Handle Bean Validations
         if (data.errors) {
-            this.errors = data.errors.map(e => e.property + ' - ' + e.message);
+            this.errors = data.errors.map(e => e.field + ' - ' + e.defaultMessage);
         }
 
         // Handle Other Exceptions
@@ -77,11 +72,10 @@ export class ObjetivoEditComponent implements OnInit {
                 this.errors.push(data.message);
             }
         }
-    }
 
-    // TODO: Remove this when we're done
-    get diagnostic() {
-        return JSON.stringify(this.objetivo);
+        else {
+            this.errors.push("Ocorreu um erro desconhecido.");
+            this.errors.push(data);
+        }
     }
-
 }

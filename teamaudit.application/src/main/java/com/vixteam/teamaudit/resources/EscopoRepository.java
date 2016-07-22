@@ -8,7 +8,7 @@ import com.vixteam.teamaudit.domain.Escopo;
 
 import java.util.List;
 
-@RepositoryRestResource(collectionResourceRel = "escopos", path = "escopos")
+@RepositoryRestResource(collectionResourceRel = "escopo", path = "escopo")
 public interface EscopoRepository extends PagingAndSortingRepository<Escopo, String> {
     List<Escopo> findByNome(@Param("nome") String nome);
 }

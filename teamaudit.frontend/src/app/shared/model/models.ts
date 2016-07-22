@@ -1,8 +1,8 @@
-import {Link} from "./paged-list";
+//import {Link} from "./paged-list";
 
 export abstract class EntityBase {
     id:string;
-    _links:{ self:Link; };
+    //_links:{ self:Link; };
 }
 
 export class Escopo extends EntityBase {
@@ -14,22 +14,22 @@ export class CategoriaObjetivo extends EntityBase {
     nome:string;
     descricao:string;
     indicadorInternoSistema:string;
-    escopo:Escopo | string;
+    escopo:Escopo;
 }
 
 export class Objetivo extends EntityBase {
-    _links:{
-        self:Link;
-        categoriaObjetivo:Link;
-        unidadeOrganizacional:Link
-    };
+    /*_links:{
+     self:Link;
+     categoriaObjetivo:Link;
+     unidadeOrganizacional:Link
+     };*/
     nome:string;
     descricao:string;
     descricaoMeta:string;
     valorMeta:number;
     percentualMeta:number;
-    categoriaObjetivo:CategoriaObjetivo | string;
-    unidadeOrganizacional:UnidadeOrganizacional | string;
+    categoriaObjetivo:CategoriaObjetivo;
+    unidadeOrganizacional:UnidadeOrganizacional;
 }
 
 export class UnidadeOrganizacional extends EntityBase {

@@ -16,10 +16,9 @@ import com.vixteam.framework.domain.IEntity;
 @Table (name="ESCPO")
 public class Escopo implements IEntity<String> {
 
-	@Id 
+    @Id
+    @GeneratedValue
 	@Column(name="CD_ESCPO" ,length=32, columnDefinition = "CHAR(32)") 
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
     private String id;
 
     @NotNull
