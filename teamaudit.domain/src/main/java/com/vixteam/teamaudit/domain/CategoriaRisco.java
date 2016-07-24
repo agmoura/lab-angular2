@@ -19,9 +19,10 @@ import javax.validation.constraints.Size;
 public class CategoriaRisco implements IEntity<String> {
 
     @Id
+    @GeneratedValue
+    //@GeneratedValue(generator = "uuid")
+    //@GenericGenerator(name = "uuid", strategy = "uuid")
     @Column(name = "CD_CATRI", columnDefinition = "CHAR(32)", length = 32)
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
     private String id;
 
     @ManyToOne
@@ -40,11 +41,11 @@ public class CategoriaRisco implements IEntity<String> {
 
     @NotNull
     @Convert(converter = SimNaoEnumConverter.class)
-    @Column(name = "ID_CATRI_INTR_SIST", columnDefinition = "CHAR(1) DEFAULT N", length = 1, nullable = false)
+    @Column(name = "ID_CATRI_INTR_SIST", length = 1, nullable = false)
     private SimNaoEnum indicadorInternoSistema = SimNaoEnum.Nao;
 
     @ManyToOne
-    @JoinColumn(name = "CD_CATRI_PAI", columnDefinition = "CHAR(32)")
+    @JoinColumn(name = "CD_CATRI_PAI")
     private CategoriaRisco categoriaRiscoPai;
 
     @NotNull
@@ -54,7 +55,7 @@ public class CategoriaRisco implements IEntity<String> {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "CD_CCRSC", columnDefinition = "CHAR(32)", nullable = false)
+    @JoinColumn(name = "CD_CCRSC", nullable = false)
     private ClassificacaoRisco classificacaoRisco;
 
     /* Getters and Setters */

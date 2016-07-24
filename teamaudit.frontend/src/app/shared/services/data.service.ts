@@ -13,13 +13,14 @@ export class DataService {
 
     constructor(private http:Http) { }
 
-    findAll(path:string, page:Page = null, sorts:string[] = null):Observable<PagedList> {
-        let url:string = this.baseUrl + path;
+    findAll(path:string, page:Page = null, sorts:string[] = null, predicates:string[] = null):Observable<PagedList> {
+        let url:string = this.baseUrl + path + '?';
 
-        if(page) url +=  '?page.number=' + page.number + '&page.size=' + page.size;
+        if(page) url += 'page.number=' + page.number + '&page.size=' + page.size;
 
-        //TODO: Tratar caso de 'sorts' ser informado e 'page' não
         if(sorts) sorts.map(sort => url += '&sorts=' + sort);
+
+        if(predicates) predicates.map(predicate => url += '&predicates=' + predicate);
         
         return this.http.get(url).map(response => new PagedList(response.json()));
     }

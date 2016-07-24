@@ -1,32 +1,30 @@
 export class PagedList {
     list:any[];
     page:Page;
-    //links:Links;
 
-    constructor(public result:any ) {
-        this.list = result.list;
-        this.page = result.page;
+    constructor(public pagedList:any) {
+        this.list = pagedList.list;
+        this.page = pagedList.page;
     }
 }
 
 export class Page {
-    totalItens:number;
-    totalPages:number;
+    number:number = 0;
+    size:number = 10;
+    totalItens:number = 0;
+    totalPages:number = 0;
 
-    constructor(public number:number = 0, public size:number = 10) { }
-}
+    constructor(page:any = null) {
+        if (page) {
+            this.number = page.number;
+            this.size = page.size;
+            this.totalItens = page.totalItens;
+            this.calculeteTotalPages();
+        }
+    }
 
-/*
-export class Link {
-    href:string;
-    templated:boolean;
-}
-
-export class Links {
-    first:Link;
-    self:Link;
-    next:Link;
-    last:Link;
-    profile:Link;
-    search:Link;
-}*/
+    private calculeteTotalPages():void {
+        if (this.size >= 0)
+            this.totalPages = Math.ceil(this.totalItens / this.size);
+    }
+}   

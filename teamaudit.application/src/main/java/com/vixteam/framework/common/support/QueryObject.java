@@ -3,6 +3,7 @@ package com.vixteam.framework.common.support;
 public class QueryObject {
     private Page page;
     private String[] projections;
+    private String[] predicates;
     private String[] sorts;
     private String entityName;
 
@@ -18,6 +19,13 @@ public class QueryObject {
         return projections;
     }
 
+    public String[] getPredicates() {
+        return predicates;
+    }
+
+    public void setPredicates(String[] predicates) {
+        this.predicates = predicates;
+    }
 
     public void setProjections(String[] projections) {
         this.projections = projections;
@@ -40,16 +48,22 @@ public class QueryObject {
         return "select " + String.join(", ", (CharSequence[]) projections);
     }
 
+    private String buildPredicates() {
+        if(predicates == null ) return "";
+        return " where " + String.join(" and ", (CharSequence[]) predicates);
+    }
+
     private String buildOrderBy() {
         if(sorts == null ) return "";
         return " order by " + String.join(", ", (CharSequence[]) sorts);
     }
 
     public String buildQuery(){
-        return buildProjections() + " from " + this.entityName + buildOrderBy();
+        return buildProjections() + " from " + this.entityName + buildPredicates() + buildOrderBy();
     }
 
     public String buildCountQuery(){
-        return "select count(e) from " + this.entityName + " e";
+        return "select count(e) from " + this.entityName + " e" + buildPredicates();
     }
+
 }

@@ -17,9 +17,10 @@ import javax.validation.constraints.Size;
 public class ClassificacaoRisco
     implements IEntity<String> {
     @Id
+    @GeneratedValue
+    //@GeneratedValue(generator = "uuid")
+    //@GenericGenerator(name = "uuid", strategy = "uuid")
     @Column(name = "CD_CCRSC", columnDefinition = "CHAR(32)", length = 32)
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
     private String id;
 
     @NotNull

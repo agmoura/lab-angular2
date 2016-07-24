@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {Objetivo, CategoriaObjetivo, UnidadeOrganizacional, EntityBase} from "../shared/model/models";
+
+import {Objetivo, CategoriaObjetivo, UnidadeOrganizacional} from "../shared/model/models";
+import {HandleErrorsComponent} from "../shared/components/handle-errors.component";
 import {DataService} from "../shared/services/data.service";
 
 @Component({
@@ -8,20 +10,17 @@ import {DataService} from "../shared/services/data.service";
     templateUrl: './objetivo-edit.component.html',
     //styleUrls: ['./app.css'],
     moduleId: module.id,
+    directives: [HandleErrorsComponent],
     providers: [DataService],
 })
 export class ObjetivoEditComponent implements OnInit {
 
-    objetivo:Objetivo = new Objetivo();
+    objetivo:Objetivo = <Objetivo>{};
     categorias:CategoriaObjetivo[] = [];
     unidades:UnidadeOrganizacional[] = [];
-    errors:string[] = [];
+    errors:any;
 
-    constructor(private route:ActivatedRoute, private router:Router, private dataService:DataService) {
-        //this.objetivo.categoriaObjetivo = new CategoriaObjetivo();
-        //this.objetivo.unidadeOrganizacional = new UnidadeOrganizacional();
-        //this.objetivo.categoriaObjetivo.id = "XXXXX";
-    }
+    constructor(private route:ActivatedRoute, private router:Router, private dataService:DataService) { }
 
     ngOnInit() {
         this.load(this.route.snapshot.params['id'])
@@ -46,36 +45,12 @@ export class ObjetivoEditComponent implements OnInit {
 
         this.dataService.save('objetivo', objetivo).subscribe(
             data => this.objetivo = data,
-            error => this.handleError(error.json()),
+            error => this.errors = error.json(),
             () => this.goBack()
         );
     }
 
     goBack() {
         this.router.navigate(['/objetivo']);
-    }
-
-    handleError(data:any) {
-
-        this.errors.length = 0;
-
-        // Handle Bean Validations
-        if (data.errors) {
-            this.errors = data.errors.map(e => e.field + ' - ' + e.defaultMessage);
-        }
-
-        // Handle Other Exceptions
-        else if (data.message) {
-            this.errors.push(data.message);
-            while (data.cause) {
-                data = data.cause;
-                this.errors.push(data.message);
-            }
-        }
-
-        else {
-            this.errors.push("Ocorreu um erro desconhecido.");
-            this.errors.push(data);
-        }
     }
 }

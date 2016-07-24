@@ -1,28 +1,23 @@
 //import {Link} from "./paged-list";
 
-export abstract class EntityBase {
+export interface EntityBase {
     id:string;
     //_links:{ self:Link; };
 }
 
-export class Escopo extends EntityBase {
+export interface Escopo extends EntityBase {
     nome:string;
     descricao:string;
 }
 
-export class CategoriaObjetivo extends EntityBase {
+export interface CategoriaObjetivo extends EntityBase {
     nome:string;
     descricao:string;
     indicadorInternoSistema:string;
     escopo:Escopo;
 }
 
-export class Objetivo extends EntityBase {
-    /*_links:{
-     self:Link;
-     categoriaObjetivo:Link;
-     unidadeOrganizacional:Link
-     };*/
+export interface Objetivo extends EntityBase {
     nome:string;
     descricao:string;
     descricaoMeta:string;
@@ -32,6 +27,22 @@ export class Objetivo extends EntityBase {
     unidadeOrganizacional:UnidadeOrganizacional;
 }
 
-export class UnidadeOrganizacional extends EntityBase {
+export interface UnidadeOrganizacional extends EntityBase {
     nome:string;
+}
+
+export interface ClassificacaoRisco extends EntityBase {
+    nome:string;
+    descricao:string;
+    numeroNivel:number;
+}
+
+export interface CategoriaRisco extends EntityBase {
+    nome:string;
+    descricao:string;
+    indicadorInternoSistema:string;
+    ordem:string;
+    escopo:Escopo;
+    classificacaoRisco:ClassificacaoRisco;
+    categoriaRiscoPai: CategoriaRisco;
 }

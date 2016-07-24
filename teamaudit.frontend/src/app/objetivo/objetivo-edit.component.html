@@ -5,23 +5,9 @@
         </div>
     </div>
     <div class="panel-body">
+        <handle-errors [errors]="errors"></handle-errors>
 
-        <div [hidden]="errors.length === 0" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <ul>
-                <li *ngFor="let error of errors">
-                    <span>{{error}}</span>
-                </li>
-            </ul>
-        </div>
-
-        <!--TODO: Remover Informações de Depuração -->
-        <strong>this.objetivo:</strong> {{objetivo | json}} <br/>
-        <strong>form.value:</strong> {{form.value | json}}
-
-        <form (ngSubmit)="save(form.value)" #form="ngForm">
+        <form #form="ngForm" (ngSubmit)="save(form.value)">
             <input type="hidden" name="id" [ngModel]="objetivo.id">
 
             <div class="form-group">
@@ -49,9 +35,9 @@
                 <input type="number" step="0.01" name="percentualMeta" [ngModel]="objetivo.percentualMeta" class="form-control">
             </div>
 
-            <div ngModelGroup="categoriaObjetivo" class="form-group">
+            <div class="form-group">
                 <label>Categoria:</label>
-                <select name="id" ngModel="{{objetivo.categoriaObjetivo?.id}}"  class="form-control" required>
+                <select ngModelGroup="categoriaObjetivo" name="id" ngModel="{{objetivo.categoriaObjetivo?.id}}"  class="form-control" required>
                     <option value=""> --- Selecione ---</option>
                     <option *ngFor="let item of categorias" [value]="item.id">
                         {{item.nome}}
@@ -59,9 +45,9 @@
                 </select>
             </div>
 
-            <div ngModelGroup="unidadeOrganizacional" class="form-group">
+            <div class="form-group">
                 <label>Unidade:</label>
-                <select name="id" ngModel="{{objetivo.unidadeOrganizacional?.id}}" class="form-control" required>
+                <select ngModelGroup="unidadeOrganizacional" name="id" ngModel="{{objetivo.unidadeOrganizacional?.id}}" class="form-control" required>
                     <option value=""> --- Selecione ---</option>
                     <option *ngFor="let item of unidades" [value]="item.id">
                         {{item.nome}}
@@ -73,8 +59,10 @@
                 <button type="button" (click)="goBack()" class="btn btn-default">Voltar</button>
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </div>
-
-
         </form>
     </div>
 </div>
+
+<!--TODO: Remover Informações de Depuração -->
+<strong>this.objetivo:</strong> {{objetivo | json}} <br/>
+<strong>form.value:</strong> {{form.value | json}}

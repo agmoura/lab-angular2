@@ -1,0 +1,39 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h3>Manter Categorias de Risco</h3>
+        </div>
+        <button (click)="gotoEdit()" class="btn btn-info">Novo Registro</button>
+    </div>
+    <div class="panel-body">
+        <handle-errors [errors]="errors"></handle-errors>
+
+        <div class="table-responsive">
+            <table class="table table-condensed table-hover">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Classficação</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tr *ngFor="let entity of categoriasRisco; let index = index" [class.expanded]="entity.expanded" [class.hidden]="entity.hidden">
+                    <td>
+                        <span (click)="expand(entity, index)" class="row-expand glyphicon level-{{entity.level}}"></span>
+                        {{entity.nome}}
+                    </td>
+                    <td>{{entity.descricao}}</td>
+                    <td>{{entity.classificacaoRisco.nome}}</td>
+                    <td>
+                        <a href="javascript:void(0)" (click)="gotoEdit(entity)">Editar</a>
+                        <a href="javascript:void(0)" (click)="delete(entity, index)">Excluir</a>
+                        <a href="javascript:void(0)" (click)="gotoNewChild(entity)">Inserir Filho</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
