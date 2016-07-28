@@ -9,7 +9,8 @@ module.exports = {
         'main': './src/main.ts'
     },
     output: {
-        path: './target/classes/static',
+        //path: './target/classes/static', // Spring Boot Path
+        path: './target/classes/META-INF/resources', // Servlet 3.0 Path
         filename: '[name].bundle.js',
         sourceMapFilename: '[name].map',
         chunkFilename: '[id].chunk.js'

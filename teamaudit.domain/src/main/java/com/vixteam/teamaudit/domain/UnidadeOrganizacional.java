@@ -1,22 +1,16 @@
 package com.vixteam.teamaudit.domain;
 
-import java.util.List;
+import com.vixteam.framework.domain.BaseEntity;
+import com.vixteam.framework.domain.IEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.hibernate.annotations.GenericGenerator;
-import com.vixteam.framework.domain.IEntity;
-
 
 @Entity
 @Table(name = "UOAUD")
-public class UnidadeOrganizacional implements IEntity<String> {
-
-    @Id
-    @Column(name = "CD_UOAUD", length = 32, columnDefinition = "CHAR(32)")
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
-    private String id;
+@AttributeOverride(name="id", column=@Column(name = "CD_UOAUD", columnDefinition = "CHAR(32)"))
+public class UnidadeOrganizacional extends BaseEntity {
 
     @NotNull
     @Size(max = 50)
@@ -34,16 +28,6 @@ public class UnidadeOrganizacional implements IEntity<String> {
 
     @OneToMany(mappedBy = "unidadeOrganizacional")
     private List<VisaoAuditavel> visoes;*/
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;

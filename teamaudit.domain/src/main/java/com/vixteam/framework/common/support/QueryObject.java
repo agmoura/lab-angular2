@@ -1,5 +1,7 @@
 package com.vixteam.framework.common.support;
 
+import java.util.Arrays;
+
 public class QueryObject {
     private Page page;
     private String[] projections;
@@ -7,12 +9,25 @@ public class QueryObject {
     private String[] sorts;
     private String entityName;
 
+    public QueryObject() {
+
+    }
+
+    public QueryObject(Integer pageNumber, Integer pageSize, String[] projections, String[] predicates, String[] sorts) {
+        setPage(pageNumber != null || pageSize != null ? new Page() : null);
+        if(pageNumber != null ) getPage().setNumber(pageNumber);
+        if(pageSize != null ) getPage().setSize(pageSize);
+        setProjections(projections);
+        setPredicates(predicates);
+        setSorts(sorts);
+    }
+
     public Page getPage() {
         return page;
     }
 
     public void setPage(Page page) {
-        this.page = page;
+        this.page  = page;
     }
 
     public String[] getProjections() {
@@ -44,22 +59,30 @@ public class QueryObject {
     }
 
     private String buildProjections() {
-        if(projections == null ) return "";
+        if(projections == null || projections.length == 0) return "select e";
         return "select " + String.join(", ", (CharSequence[]) projections);
     }
 
+    private String concatenate(String[] items, String separator){
+        String result = "";
+        for (int i = 0; i < items.length; i++) {
+            result +=  (i > 0 ? separator : "") + "e." + items[i];
+        }
+        return result;
+    }
+
     private String buildPredicates() {
-        if(predicates == null ) return "";
-        return " where " + String.join(" and ", (CharSequence[]) predicates);
+        if(predicates == null || predicates.length == 0) return "";
+        return " where " + concatenate(predicates, " and ");
     }
 
     private String buildOrderBy() {
-        if(sorts == null ) return "";
-        return " order by " + String.join(", ", (CharSequence[]) sorts);
+        if(sorts == null || sorts.length == 0) return "";
+        return " order by " + concatenate(sorts, ", ");
     }
 
     public String buildQuery(){
-        return buildProjections() + " from " + this.entityName + buildPredicates() + buildOrderBy();
+        return buildProjections() + " from " + this.entityName + " e" + buildPredicates() + buildOrderBy();
     }
 
     public String buildCountQuery(){

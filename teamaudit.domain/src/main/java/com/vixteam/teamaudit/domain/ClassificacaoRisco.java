@@ -1,6 +1,7 @@
 
 package com.vixteam.teamaudit.domain;
 
+import com.vixteam.framework.domain.BaseEntity;
 import com.vixteam.framework.domain.IEntity;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -14,14 +15,8 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "CCRSC")
-public class ClassificacaoRisco
-    implements IEntity<String> {
-    @Id
-    @GeneratedValue
-    //@GeneratedValue(generator = "uuid")
-    //@GenericGenerator(name = "uuid", strategy = "uuid")
-    @Column(name = "CD_CCRSC", columnDefinition = "CHAR(32)", length = 32)
-    private String id;
+@AttributeOverride(name="id", column=@Column(name = "CD_CCRSC", columnDefinition = "CHAR(32)"))
+public class ClassificacaoRisco extends BaseEntity {
 
     @NotNull
     @Size(max = 60)
@@ -38,17 +33,6 @@ public class ClassificacaoRisco
     private Integer numeroNivel;
 
     /* Getters and Setters */
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getNome() {
         return nome;
     }

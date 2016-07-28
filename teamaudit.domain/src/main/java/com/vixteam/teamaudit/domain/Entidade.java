@@ -16,8 +16,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "EQAUD")
-public class Entidade
-        implements IEntity<String> {
+public class Entidade implements IEntity<String> {
 
     @Id
     @Column(name = "CD_EQAUD", columnDefinition = "CHAR(32)", length = 32)

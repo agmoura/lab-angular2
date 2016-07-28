@@ -9,7 +9,8 @@ import {EntityBase} from "../model/models";
 @Injectable()
 export class DataService {
 
-    baseUrl:string = 'http://localhost:8080/teamaudit/api/';
+    //baseUrl:string = 'http://localhost:8080/teamaudit/api/';
+    baseUrl:string = 'api/';
 
     constructor(private http:Http) { }
 

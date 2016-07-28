@@ -1,12 +1,10 @@
 package com.vixteam.teamaudit.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.vixteam.framework.domain.BaseEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.vixteam.framework.domain.IEntity;
@@ -14,12 +12,8 @@ import com.vixteam.framework.domain.IEntity;
 
 @Entity
 @Table (name="ESCPO")
-public class Escopo implements IEntity<String> {
-
-    @Id
-    @GeneratedValue
-	@Column(name="CD_ESCPO" ,length=32, columnDefinition = "CHAR(32)") 
-    private String id;
+@AttributeOverride(name="id", column=@Column(name = "CD_ESCPO", columnDefinition = "CHAR(32)"))
+public class Escopo extends BaseEntity {
 
     @NotNull
     @Size(max = 60)
@@ -30,16 +24,6 @@ public class Escopo implements IEntity<String> {
     @Size(max = 255)
     @Column(name="DS_ESCPO"  , length=255, nullable=false)
     private String descricao; 
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;

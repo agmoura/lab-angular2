@@ -4,23 +4,17 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vixteam.framework.domain.BaseEntity;
 import com.vixteam.teamaudit.domain.enums.SimNaoEnum;
 import com.vixteam.teamaudit.domain.enums.SimNaoEnumConverter;
-import org.hibernate.annotations.GenericGenerator;
-import com.vixteam.framework.domain.IEntity;
 import java.util.List;
 
 
 @Entity
 @Table (name="CATOB")
-public class CategoriaObjetivo implements IEntity<String> {
-
-    @Id
-    @GeneratedValue
-    @Column(name="CD_CATOB" ,length=32, columnDefinition = "CHAR(32)")
-    private String id;
+@AttributeOverride(name="id", column=@Column(name = "CD_CATOB", columnDefinition = "CHAR(32)"))
+public class CategoriaObjetivo extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name="CD_ESCPO", nullable=false)
@@ -45,16 +39,6 @@ public class CategoriaObjetivo implements IEntity<String> {
     @Valid
     @OneToMany(mappedBy = "categoriaObjetivo")
     private List<Objetivo> objetivos;
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public Escopo getEscopo () {
     	return escopo;

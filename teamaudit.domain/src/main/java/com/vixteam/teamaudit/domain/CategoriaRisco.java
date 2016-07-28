@@ -1,29 +1,20 @@
 
 package com.vixteam.teamaudit.domain;
 
-import com.vixteam.framework.domain.IEntity;
+import com.vixteam.framework.domain.BaseEntity;
 import com.vixteam.teamaudit.domain.enums.SimNaoEnum;
 import com.vixteam.teamaudit.domain.enums.SimNaoEnumConverter;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 
 /**
  * Categoria do RiscoPadrao
  */
 @Entity
 @Table(name = "CATRI")
-public class CategoriaRisco implements IEntity<String> {
-
-    @Id
-    @GeneratedValue
-    //@GeneratedValue(generator = "uuid")
-    //@GenericGenerator(name = "uuid", strategy = "uuid")
-    @Column(name = "CD_CATRI", columnDefinition = "CHAR(32)", length = 32)
-    private String id;
+@AttributeOverride(name="id", column=@Column(name = "CD_CATRI", columnDefinition = "CHAR(32)"))
+public class CategoriaRisco extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "CD_ESCPO", columnDefinition = "CHAR(32)")
@@ -59,16 +50,6 @@ public class CategoriaRisco implements IEntity<String> {
     private ClassificacaoRisco classificacaoRisco;
 
     /* Getters and Setters */
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public Escopo getEscopo() {
         return escopo;
     }

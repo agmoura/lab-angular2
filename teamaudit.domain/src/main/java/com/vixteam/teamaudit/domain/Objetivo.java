@@ -3,18 +3,14 @@ package com.vixteam.teamaudit.domain;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.vixteam.framework.domain.IEntity;
+import com.vixteam.framework.domain.BaseEntity;
 import org.hibernate.annotations.GenericGenerator;
+import com.vixteam.framework.domain.IEntity;
 
 @Entity
 @Table (name="OBJEM")
-public class Objetivo implements IEntity<String> {
-
-    @Id
-    @GeneratedValue
-    @Column(name="CD_OBJEM" ,length=32, columnDefinition = "CHAR(32)")
-    private String id;
+@AttributeOverride(name="id", column=@Column(name = "CD_OBJEM", columnDefinition = "CHAR(32)"))
+public class Objetivo extends BaseEntity {
 
     @NotNull
     @Size(max = 60)
@@ -45,16 +41,6 @@ public class Objetivo implements IEntity<String> {
 
     @Column(name="PC_OBJEM_META", precision = 7, scale = 2)
     private Double percentualMeta;
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;
