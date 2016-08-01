@@ -1,30 +1,35 @@
 package com.vixteam.teamaudit.resources;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.vixteam.framework.common.support.ErrorItem;
 import com.vixteam.framework.common.support.PagedList;
 import com.vixteam.framework.common.support.QueryObject;
+import com.vixteam.framework.domain.IEntity;
 import com.vixteam.teamaudit.repositories.EntityRepository;
-import com.vixteam.teamaudit.services.EntityService;
 import com.vixteam.teamaudit.services.IEntityService;
 
 @Path("/")
-@Produces("application/json")
+@Produces(MediaType.APPLICATION_JSON)
 public class EntityController {
 
-    //@Inject
-    //Validator validator;
+    @Inject
+    Validator validator;
 
     @Inject
     private IEntityService service;
-
-   /* public EntityController() {
-        if (service == null) service = new EntityService();
-    }*/
 
     @GET
     @Path("/{entityPath}")
@@ -45,31 +50,37 @@ public class EntityController {
 
     @POST
     @Path("{entityPath}")
-    @Consumes("application/json")
-    public Object addEntity(@PathParam("entityPath") String entityPath, String entityData, HttpServletResponse response) throws ClassNotFoundException, IOException {
-        return saveEntity(EntityRepository.getEntityName(entityPath), null, entityData, response);
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addEntity(@PathParam("entityPath") String entityPath, String entityData) throws ClassNotFoundException {
+        return saveEntity(EntityRepository.getEntityName(entityPath), null, entityData);
     }
 
     @PUT
     @Path("{entityPath}/{id}")
-    @Consumes("application/json")
-    public Object updateEntity(@PathParam("entityPath") String entityPath, @PathParam("id") String id, String entityData, HttpServletResponse response) throws ClassNotFoundException, IOException {
-        return saveEntity(EntityRepository.getEntityName(entityPath), id, entityData, response);
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateEntity(@PathParam("entityPath") String entityPath, @PathParam("id") String id, String entityData) throws ClassNotFoundException {
+        return saveEntity(EntityRepository.getEntityName(entityPath), id, entityData);
     }
 
-    private Object saveEntity(String entityName, String entityId, String entityData, HttpServletResponse response) throws ClassNotFoundException, IOException {
+    private Response saveEntity(String entityName, String entityId, String entityData) throws ClassNotFoundException {
         // Build Object Entity from JSON Data
-        Object entity = new ObjectMapper().readValue(entityData, Class.forName(entityName));
+        IEntity entity = (IEntity) new Gson().fromJson(entityData, Class.forName(entityName));
 
         // Validate Entity
-        /*MapBindingResult errors = new MapBindingResult(new HashMap<String, String>(), entityName);
-        validator.validate(entity, errors);
-        if(errors.hasErrors()) {
-            response.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
-            return new Errors(errors);
-        }*/
+        Set<ConstraintViolation<IEntity>> violations = validator.validate(entity);
+        if (!violations.isEmpty()) {
+            List<ErrorItem> errors = violations.stream()
+                .map(v -> new ErrorItem(v.getPropertyPath().toString(), v.getMessage()))
+                .collect(Collectors.toList());
 
-        return service.save(entityId, entity);
+            return Response.status(Response.Status.PRECONDITION_FAILED)
+                .entity(new HashMap<String, List<ErrorItem>>() {{ put("errors", errors); }})
+                .build();
+        }
+
+        // Add or Update Entity
+        entity = service.save(entity);
+        return Response.status(Response.Status.OK).entity(entity).build();
     }
 
     @DELETE

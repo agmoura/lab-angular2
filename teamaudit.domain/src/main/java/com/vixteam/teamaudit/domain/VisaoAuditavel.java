@@ -4,8 +4,6 @@ package com.vixteam.teamaudit.domain;
 import com.vixteam.framework.domain.IEntity;
 import com.vixteam.teamaudit.domain.enums.SimNaoEnum;
 import com.vixteam.teamaudit.domain.enums.SimNaoEnumConverter;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -18,8 +16,8 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "VIAUD")
-public class VisaoAuditavel
-        implements IEntity<String>
+@AttributeOverride(name="id", column=@Column(name = "CD_VIAUD", columnDefinition = "CHAR(32)"))
+public class VisaoAuditavel extends BaseEntity
 {
     public VisaoAuditavel(String id, String nome, String descricao, UnidadeOrganizacional unidadeOrganizacional, String metricaRisco, Date dataInclusao, SimNaoEnum permiteCSAVisao, Date dataDesativacao, VisaoAuditavel visaoAuditavelOrigem, String visaoMatrizRisco) {
         this.id = id;
@@ -37,12 +35,6 @@ public class VisaoAuditavel
     public VisaoAuditavel() {
         super();
     }
-
-    @Id
-    @Column(name = "CD_VIAUD", columnDefinition = "CHAR(32)", length = 32)
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
-    private String id;
 
     @NotNull
     @Size(max = 50)
@@ -85,17 +77,6 @@ public class VisaoAuditavel
     private String visaoMatrizRisco;
 
     /* Getters and Setters */
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getNome() {
         return nome;
     }

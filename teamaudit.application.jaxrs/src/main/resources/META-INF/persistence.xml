@@ -2,15 +2,20 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="default" transaction-type="JTA">
         <!--<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
+        <!--<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>-->
+        <!--<jta-data-source>jdbc/TeamAuditDS</jta-data-source>-->
         <!--<jta-data-source>java:comp/env/jdbc/TeamAuditDS</jta-data-source>-->
-        <!--<jar-file>../lib/teamaudit.domain-1.0.0.jar</jar-file>-->
-        <class>com.vixteam.framework.domain.BaseEntity</class>
+        <!--<jar-file>lib/teamaudit.domain-1.0.0.jar</jar-file>-->
+        <!--<jar-file></jar-file>-->
+        <class>com.vixteam.teamaudit.domain.BaseEntity</class>
         <class>com.vixteam.teamaudit.domain.UnidadeOrganizacional</class>
         <class>com.vixteam.teamaudit.domain.Escopo</class>
         <class>com.vixteam.teamaudit.domain.CategoriaObjetivo</class>
         <class>com.vixteam.teamaudit.domain.Objetivo</class>
         <class>com.vixteam.teamaudit.domain.ClassificacaoRisco</class>
         <class>com.vixteam.teamaudit.domain.CategoriaRisco</class>
+        <class>com.vixteam.teamaudit.domain.enums.SimNaoEnumConverter</class>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:teamaudit" />
@@ -18,13 +23,15 @@
             <property name="javax.persistence.jdbc.password" value="sa" />
 
             <property name="javax.persistence.schema-generation.database.action" value="create"/>
-            <!--<property name="javax.persistence.schema-generation.create-source" value="metadata"/>
+            <property name="javax.persistence.schema-generation.create-source" value="metadata"/>
             <property name="javax.persistence.schema-generation.drop-source" value="metadata"/>
-            <property name="javax.persistence.sql-load-script-source" value="META-INF/load.sql"/>-->
+            <!--<property name="javax.persistence.sql-load-script-source" value="META-INF/load.sql"/>-->
 
             <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
+            <property name="eclipselink.logging.level" value="FINE"/>
+            <!--<property name="eclipselink.weaving" value="false"/>-->
         </properties>
     </persistence-unit>
 </persistence>

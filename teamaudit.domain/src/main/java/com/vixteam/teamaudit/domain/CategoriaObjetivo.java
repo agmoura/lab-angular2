@@ -5,7 +5,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.vixteam.framework.domain.BaseEntity;
 import com.vixteam.teamaudit.domain.enums.SimNaoEnum;
 import com.vixteam.teamaudit.domain.enums.SimNaoEnumConverter;
 import java.util.List;

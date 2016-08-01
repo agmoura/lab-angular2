@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.hibernate.annotations.GenericGenerator;
 import com.vixteam.framework.domain.IEntity;
 
 /**
@@ -14,14 +13,9 @@ import com.vixteam.framework.domain.IEntity;
  */
 @Entity
 @Table(name = "UNAUD")
-public class Processo implements IEntity<String>
+@AttributeOverride(name="id", column=@Column(name = "CD_UNAUD", columnDefinition = "CHAR(32)"))
+public class Processo extends BaseEntity
 {
-    @Id
-    @Column(name = "CD_UNAUD",columnDefinition = "CHAR(32)", length = 32)
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
-    private String id;
-
     @NotNull
     @Size(max = 50)
     @Column(name = "NM_UNAUD", length = 50, nullable = false)
@@ -58,17 +52,6 @@ public class Processo implements IEntity<String>
     private Estrutura estrutura;
 
     /* Getters and Setters */
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getNome() {
         return nome;
     }

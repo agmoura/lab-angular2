@@ -35,7 +35,7 @@ public class DatabaseLoader {
             UnidadeOrganizacional unidade = new UnidadeOrganizacional();
             String number = String.format("%04d", i);
             unidade.setNome("Unidade " + number);
-            unidades[i] = repository.save(null, unidade);
+            unidades[i] = repository.save(unidade);
         }
 
         for (int i = 0; i < escopoCount; i++) {
@@ -43,7 +43,7 @@ public class DatabaseLoader {
             String number = String.format("%04d", i);
             escopo.setNome("Escopo " + number);
             escopo.setDescricao("Descrição do Escopo " + number);
-            escopos[i] = repository.save(null, escopo);
+            escopos[i] = repository.save(escopo);
         }
 
         for (int i = 0; i < categoriaCount; i++) {
@@ -53,7 +53,7 @@ public class DatabaseLoader {
             categoriaObjetivo.setDescricao("Descrição da Categoria " + number);
             categoriaObjetivo.setIndicadorInternoSistema(SimNaoEnum.Nao);
             categoriaObjetivo.setEscopo(escopos[random.nextInt(escopoCount)]);
-            categoriaObjetivos[i] = repository.save(null, categoriaObjetivo);
+            categoriaObjetivos[i] = repository.save(categoriaObjetivo);
         }
 
         for (int i = 0; i < objetivoCount; i++) {
@@ -65,7 +65,7 @@ public class DatabaseLoader {
             objetivo.setUnidadeOrganizacional(unidades[random.nextInt(unidadeCount)]);
             objetivo.setValorMeta(2.5 * i);
             objetivo.setPercentualMeta(i / 10.0);
-            repository.save(null, objetivo);
+            repository.save(objetivo);
         }
 
         for (int i = 0; i < classificacaoRiscoCount; i++) {
@@ -74,7 +74,7 @@ public class DatabaseLoader {
             classificacaoRisco.setNome("Classificacao Risco " + number);
             classificacaoRisco.setDescricao("Descrição da Classificacao Risco " + number);
             classificacaoRisco.setNumeroNivel(i);
-            classificacaoRiscos[i] = repository.save(null, classificacaoRisco);
+            classificacaoRiscos[i] = repository.save(classificacaoRisco);
         }
 
         for (int i = 1; i < categoriaRiscoCount; i++) {
@@ -99,7 +99,7 @@ public class DatabaseLoader {
                 categoriaRisco.setCategoriaRiscoPai(pai);
             }
 
-            categoriaRiscos[i] = repository.save(null, categoriaRisco);
+            categoriaRiscos[i] = repository.save(categoriaRisco);
         }
 
         //repository.commitTransaction();

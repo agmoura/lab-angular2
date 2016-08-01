@@ -1,7 +1,6 @@
 
 package com.vixteam.teamaudit.domain;
 
-import com.vixteam.framework.domain.BaseEntity;
 import com.vixteam.teamaudit.domain.enums.SimNaoEnum;
 import com.vixteam.teamaudit.domain.enums.SimNaoEnumConverter;
 import javax.persistence.*;

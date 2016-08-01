@@ -1,8 +1,5 @@
 package com.vixteam.teamaudit.domain;
 
-import com.vixteam.framework.domain.BaseEntity;
-import com.vixteam.framework.domain.IEntity;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

@@ -45,7 +45,7 @@ export class ObjetivoEditComponent implements OnInit {
 
         this.dataService.save('objetivo', objetivo).subscribe(
             data => this.objetivo = data,
-            error => this.errors = error.json(),
+            error => this.errors = error,
             () => this.goBack()
         );
     }

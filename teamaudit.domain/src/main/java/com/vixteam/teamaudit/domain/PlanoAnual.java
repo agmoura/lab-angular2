@@ -1,10 +1,8 @@
 
 package com.vixteam.teamaudit.domain;
 
-import com.vixteam.framework.domain.IEntity;
 import com.vixteam.teamaudit.domain.enums.TipoPlanoAnualEnum;
 import com.vixteam.teamaudit.domain.enums.TipoPlanoAnualEnumConverter;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,14 +13,8 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "PLAAT")
-public class PlanoAnual
-        implements IEntity<String> {
-    @Id
-    @Column(name = "CD_PLAAT", columnDefinition = "CHAR(32)", length = 32)
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
-    private String id;
-
+@AttributeOverride(name="id", column=@Column(name = "CD_PLAAT", columnDefinition = "CHAR(32)"))
+public class PlanoAnual extends BaseEntity {
     @NotNull
     @Column(name = "NO_PLAAT_ANO", nullable = false)
     private Integer numero;
@@ -49,15 +41,6 @@ public class PlanoAnual
     private String numeroOrdem;
 
     /* Getters and Setters */
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public Integer getNumero() {
         return numero;
     }

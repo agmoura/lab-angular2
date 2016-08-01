@@ -1,8 +1,6 @@
 package com.vixteam.teamaudit.domain;
 
 import com.vixteam.framework.domain.IEntity;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -12,13 +10,8 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="CVAUD")
-public class Composicao implements IEntity<String> {
-
-    @Id
-    @Column(name = "CD_CVAUD", columnDefinition = "CHAR(32)", length = 32)
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
-    private String id;
+@AttributeOverride(name="id", column=@Column(name = "CD_CVAUD", columnDefinition = "CHAR(32)"))
+public class Composicao extends BaseEntity {
 
     @NotNull
     @ManyToOne
@@ -48,16 +41,6 @@ public class Composicao implements IEntity<String> {
         str += processo.getNome();
 
         return str;
-    }
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
     }
 
     public VisaoAuditavel getVisaoAuditavel() {

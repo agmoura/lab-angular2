@@ -1,22 +1,22 @@
 package com.vixteam.teamaudit.repositories;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import com.vixteam.framework.common.support.Page;
 import com.vixteam.framework.common.support.PagedList;
 import com.vixteam.framework.common.support.QueryObject;
-
-import javax.persistence.*;
-import java.io.Serializable;
+import com.vixteam.framework.domain.IEntity;
 
 public class EntityRepository implements IEntityRepository {
-
-    private static EntityManagerFactory entityManagerFactory;
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    private Boolean isApplicationManaged = null;
+    //private static EntityManagerFactory entityManagerFactory;
 
-    private EntityManager getEntityManager(){
+    //private Boolean isApplicationManaged = null;
+
+   /* private EntityManager getEntityManager(){
         if(entityManager != null) return entityManager;
 
         isApplicationManaged = true;
@@ -39,7 +39,7 @@ public class EntityRepository implements IEntityRepository {
 
     public void rollbackTransaction(){
         if(isApplicationManaged) getEntityManager().getTransaction().rollback();
-    }
+    }*/
 
     public static String getEntityName(String entityPath) {
         return "com.vixteam.teamaudit.domain." + entityPath.substring(0, 1).toUpperCase() + entityPath.substring(1);
@@ -47,9 +47,6 @@ public class EntityRepository implements IEntityRepository {
 
     @Override
     public PagedList find(String entityPath, QueryObject queryObject) {
-
-        EntityManager entityManager = getEntityManager();
-
         queryObject.setEntityName(getEntityName(entityPath));
         Query query = entityManager.createQuery(queryObject.buildQuery());
         Page page = queryObject.getPage();
@@ -65,49 +62,22 @@ public class EntityRepository implements IEntityRepository {
 
     @Override
     public Object get(String entityPath, Serializable id) throws ClassNotFoundException {
-        return getEntityManager().find(Class.forName(getEntityName(entityPath)), id);
+        return entityManager.find(Class.forName(getEntityName(entityPath)), id);
     }
 
     @Override
-    public <TEntity> TEntity save(Serializable id, TEntity entity) {
-
-        EntityManager entityManager = getEntityManager();
-
-        beginTransaction();
-
-        try {
-            if (id != null)
-                entity = entityManager.merge(entity);
-            else
-                entityManager.persist(entity);
-
-            commitTransaction();
-        }
-
-        catch (Throwable ex) {
-            rollbackTransaction();
-            throw ex;
-        }
+    public <TEntity extends IEntity> TEntity save(TEntity entity) {
+        if (entity.getId() != null)
+            entity = entityManager.merge(entity);
+        else
+            entityManager.persist(entity);
 
         return entity;
     }
 
     @Override
     public void delete(String entityPath, Serializable id) throws ClassNotFoundException {
-
-        EntityManager entityManager = getEntityManager();
-
-        beginTransaction();
-
-        try {
-            Object entity = get(entityPath, id);
-            entityManager.remove(entity);
-            commitTransaction();
-        }
-
-        catch (Throwable ex) {
-            rollbackTransaction();
-            throw ex;
-        }
+        Object entity = get(entityPath, id);
+        entityManager.remove(entity);
     }
 }

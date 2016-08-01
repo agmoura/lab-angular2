@@ -1,18 +1,15 @@
-package com.vixteam.framework.domain;
+package com.vixteam.teamaudit.domain;
 
-import javax.persistence.GeneratedValue;
+import java.util.UUID;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.PrePersist;
+import com.vixteam.framework.domain.IEntity;
 
 @MappedSuperclass
 public abstract class BaseEntity implements IEntity<String> {
 
     @Id
-    //@GeneratedValue
-    //@GeneratedValue(generator = "uuid-string")
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
     protected String id;
 
     @Override
@@ -23,5 +20,11 @@ public abstract class BaseEntity implements IEntity<String> {
     @Override
     public String getId() {
         return this.id;
+    }
+
+    @PrePersist
+    private void setNewId(){
+        if(this.id == null)
+            this.id = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
     }
 }

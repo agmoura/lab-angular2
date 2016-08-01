@@ -1,9 +1,6 @@
 
 package com.vixteam.teamaudit.domain;
 
-import com.vixteam.framework.domain.IEntity;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -16,14 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "EQAUD")
-public class Entidade implements IEntity<String> {
-
-    @Id
-    @Column(name = "CD_EQAUD", columnDefinition = "CHAR(32)", length = 32)
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
-    private String id;
-
+public class Entidade extends BaseEntity {
     @NotNull
     @Size(max = 50)
     @Column(name = "NM_EQAUD", length = 50, nullable = false)
@@ -58,7 +48,6 @@ public class Entidade implements IEntity<String> {
     private List<PlanoAnual> planosAnuaisAuditoria;
 
     /* Getters and Setters */
-
     public List<PlanoAnual> getPlanosAnuaisAuditoria() {
         return planosAnuaisAuditoria;
     }
@@ -113,15 +102,5 @@ public class Entidade implements IEntity<String> {
 
     public void setCodigoImportacao(String codigoImportacao) {
         this.codigoImportacao = codigoImportacao;
-    }
-
-    @Override
-    public String getId() {
-        return this.id;
-    }
-
-    @Override
-    public void setId(String s) {
-        this.id = s;
     }
 }

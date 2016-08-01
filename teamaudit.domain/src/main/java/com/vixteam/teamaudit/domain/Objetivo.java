@@ -3,10 +3,6 @@ package com.vixteam.teamaudit.domain;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import com.vixteam.framework.domain.BaseEntity;
-import org.hibernate.annotations.GenericGenerator;
-import com.vixteam.framework.domain.IEntity;
-
 @Entity
 @Table (name="OBJEM")
 @AttributeOverride(name="id", column=@Column(name = "CD_OBJEM", columnDefinition = "CHAR(32)"))

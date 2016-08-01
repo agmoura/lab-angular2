@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {Response} from "@angular/http";
 
 @Component({
     moduleId: module.id,
@@ -22,10 +23,12 @@ export class HandleErrorsComponent {
     constructor() { }
 
     @Input()
-    set errors(errorData:any) {
+    set errors(errorResponse:Response) {
         this._errors.length = 0;
 
-        if (errorData) {
+        if (errorResponse) {
+
+            let errorData:any = errorResponse.json();
 
             // Handle Bean Validations
             if (errorData.errors) {

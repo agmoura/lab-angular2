@@ -32,7 +32,7 @@ export class ObjetivoListComponent implements OnInit {
                 this.objetivos = data.list;
                 this.page = new Page(data.page);
             },
-            error => this.errors = error.json()
+            error => this.errors = error
         );
     }
 
@@ -50,7 +50,7 @@ export class ObjetivoListComponent implements OnInit {
         if (confirm('Tem certeza que deseja exluir esse registro (' + objetivo.nome) + ')?') {
             this.dataService.delete("objetivo", objetivo).subscribe(
                 data => this.load(),
-                error => this.errors = error.json()
+                error => this.errors = error
             );
         }
     }

@@ -2,20 +2,17 @@ package com.vixteam.teamaudit.services;
 
 import com.vixteam.framework.common.support.PagedList;
 import com.vixteam.framework.common.support.QueryObject;
-import com.vixteam.teamaudit.repositories.EntityRepository;
+import com.vixteam.framework.domain.IEntity;
 import com.vixteam.teamaudit.repositories.IEntityRepository;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 
 public class EntityService implements IEntityService {
 
     @Inject
     private IEntityRepository repository;
-
-   /* public EntityService(){
-        if (repository == null) repository = new EntityRepository();
-    }*/
 
     @Override
     public PagedList find(String entityPath, QueryObject queryObject) {
@@ -27,11 +24,13 @@ public class EntityService implements IEntityService {
         return repository.get(entityPath, id);
     }
 
+    @Transactional
     @Override
-    public <TEntity> TEntity save(Serializable id, TEntity entity) {
-        return repository.save(id, entity);
+    public <TEntity extends IEntity> TEntity save(TEntity entity) {
+        return repository.save(entity);
     }
 
+    @Transactional
     @Override
     public void delete(String entityPath, Serializable id) throws ClassNotFoundException {
         repository.delete(entityPath, id);

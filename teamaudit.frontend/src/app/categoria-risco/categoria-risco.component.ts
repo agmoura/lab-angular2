@@ -34,7 +34,7 @@ export class CategoriaRiscoComponent implements OnInit {
                     item.level = 0;
                     this.categoriasRisco.push(item);
                 }),
-            error => this.errors = error.json()
+            error => this.errors = error
         );
     }
 
@@ -75,7 +75,7 @@ export class CategoriaRiscoComponent implements OnInit {
         if (confirm('Tem certeza que deseja exluir esse registro (' + categoriaRisco.nome) + ')?') {
             this.dataService.delete("categoriaRisco", categoriaRisco).subscribe(
                 data => this.categoriasRisco.splice(index, 1),
-                error => this.errors = error.json()
+                error => this.errors = error
             );
         }
     }
