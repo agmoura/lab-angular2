@@ -73,7 +73,7 @@ export class CategoriaRiscoComponent implements OnInit {
 
     delete(categoriaRisco:CategoriaRisco, index:number) {
         if (confirm('Tem certeza que deseja exluir esse registro (' + categoriaRisco.nome) + ')?') {
-            this.dataService.delete("categoriaRisco", categoriaRisco).subscribe(
+            this.dataService.delete("categoriaRisco", categoriaRisco.id).subscribe(
                 data => this.categoriasRisco.splice(index, 1),
                 error => this.errors = error
             );

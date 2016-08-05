@@ -1,0 +1,40 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h3>Manter {{entitySchema.label.plural}}</h3>
+        </div>
+        <button (click)="gotoEdit()" class="btn btn-info">Novo Registro</button>
+    </div>
+    <div class="panel-body">
+        <handle-errors [errors]="errors"></handle-errors>
+
+        <div class="table-responsive">
+            <table class="table table-condensed table-hover">
+                <thead>
+                <tr>
+                    <th *ngFor="let field of entitySchema.listView.fields">{{field.label}}</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let entity of entityList">
+                    <td *ngFor="let field of entitySchema.listView.fields; let index = index">{{entity[index+1]}}</td>
+                    <td>
+                        <a href="javascript:void(0)" (click)="gotoEdit(entity)">Editar</a>
+                        <a href="javascript:void(0)" (click)="delete(entity)">Excluir</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <button (click)="previousPage()" [disabled]="page.number <= 0" class="btn btn-default">
+                    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                </button>
+                <button (click)="nextPage()" [disabled]="page.number >= page.totalPages-1" class="btn btn-default">
+                    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                </button>
+                <span>Total Registros: {{page.totalItens}}</span>
+            </div>
+        </div>
+    </div>
+</div>

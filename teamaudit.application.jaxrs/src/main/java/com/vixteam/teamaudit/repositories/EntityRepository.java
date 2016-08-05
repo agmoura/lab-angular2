@@ -1,45 +1,18 @@
 package com.vixteam.teamaudit.repositories;
 
+import javax.inject.Inject;
 import javax.persistence.*;
 import java.io.Serializable;
 import com.vixteam.framework.common.support.Page;
 import com.vixteam.framework.common.support.PagedList;
 import com.vixteam.framework.common.support.QueryObject;
+import com.vixteam.framework.common.support.Schema;
 import com.vixteam.framework.domain.IEntity;
 
 public class EntityRepository implements IEntityRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
-
-    //private static EntityManagerFactory entityManagerFactory;
-
-    //private Boolean isApplicationManaged = null;
-
-   /* private EntityManager getEntityManager(){
-        if(entityManager != null) return entityManager;
-
-        isApplicationManaged = true;
-
-        if(entityManagerFactory == null)
-            entityManagerFactory = Persistence.createEntityManagerFactory("default");
-
-        return entityManager = entityManagerFactory.createEntityManager();
-    }
-
-    public void beginTransaction(){
-        if(isApplicationManaged == null) isApplicationManaged = entityManager == null;
-
-        if(isApplicationManaged) getEntityManager().getTransaction().begin();
-    }
-
-    public void commitTransaction(){
-        if(isApplicationManaged) getEntityManager().getTransaction().commit();
-    }
-
-    public void rollbackTransaction(){
-        if(isApplicationManaged) getEntityManager().getTransaction().rollback();
-    }*/
 
     public static String getEntityName(String entityPath) {
         return "com.vixteam.teamaudit.domain." + entityPath.substring(0, 1).toUpperCase() + entityPath.substring(1);
@@ -57,7 +30,7 @@ public class EntityRepository implements IEntityRepository {
             query.setMaxResults(page.getSize());
         }
 
-        return new PagedList(query.getResultList(), page);
+        return new PagedList(query.getResultList(), page, new Schema());
     }
 
     @Override

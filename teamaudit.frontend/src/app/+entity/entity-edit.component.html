@@ -1,0 +1,69 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h3>Editar {{entitySchema.label.singular}}</h3>
+        </div>
+    </div>
+    <div class="panel-body">
+        <handle-errors [errors]="errors"></handle-errors>
+
+        <form #form="ngForm" (ngSubmit)="save(form.value)">
+
+            <input type="hidden" name="{{entitySchema.id.path}}" [ngModel]="entity[entitySchema.id.path]">
+
+            <div *ngFor="let field of entitySchema.formView.fields" class="form-group">
+                <label>{{field.label}}:</label>
+                <input type="text" name="{{field.path}}" ngModel="{{entity[field.path]}}" class="form-control" [required]="field.required">
+            </div>
+
+            <!--<div class="form-group">
+                <label>Descrição:</label>
+                <input type="text" name="descricao" [ngModel]="entity.descricao" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Descrição Meta:</label>
+                <input type="text" name="descricaoMeta" [ngModel]="entity.descricaoMeta" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Valor Meta:</label>
+                <input type="number" step="0.01" name="valorMeta" [ngModel]="entity.valorMeta" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Percentual Meta: </label>
+                <input type="number" step="0.01" name="percentualMeta" [ngModel]="entity.percentualMeta" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Categoria:</label>
+                <select ngModelGroup="categoriaObjetivo" name="id" ngModel="{{entity.categoriaObjetivo?.id}}"  class="form-control" required>
+                    <option value=""> -&#45;&#45; Selecione -&#45;&#45;</option>
+                    <option *ngFor="let item of categorias" [value]="item.id">
+                        {{item.nome}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Unidade:</label>
+                <select ngModelGroup="unidadeOrganizacional" name="id" ngModel="{{entity.unidadeOrganizacional?.id}}" class="form-control" required>
+                    <option value=""> -&#45;&#45; Selecione -&#45;&#45;</option>
+                    <option *ngFor="let item of unidades" [value]="item.id">
+                        {{item.nome}}
+                    </option>
+                </select>
+            </div>-->
+
+            <div>
+                <button type="button" (click)="goBack()" class="btn btn-default">Voltar</button>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--TODO: Remover Informações de Depuração -->
+<strong>this.objetivo:</strong> {{objetivo | json}} <br/>
+<strong>form.value:</strong> {{form.value | json}}

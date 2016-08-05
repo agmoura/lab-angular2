@@ -1,13 +1,16 @@
 package com.vixteam.teamaudit.resources;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.metamodel.Attribute;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -26,21 +29,40 @@ import com.vixteam.teamaudit.services.IEntityService;
 public class EntityController {
 
     @Inject
-    Validator validator;
+    private Validator validator;
 
     @Inject
     private IEntityService service;
 
+    //TODO: QueryParam do tipo array não funciona no Jersey. No Resteasy isso funciona.
     @GET
     @Path("/{entityPath}")
-    public PagedList getEntityList(@PathParam("entityPath") String entityPath,
+    public Response getEntityList(@PathParam("entityPath") String entityPath,
                                    @QueryParam("page.number") Integer pageNumber,
                                    @QueryParam("page.size") Integer pageSize,
                                    @QueryParam("projections") String[] projections,
                                    @QueryParam("predicates") String[] predicates,
                                    @QueryParam("sorts") String[] sorts) {
-        return service.find(entityPath, new QueryObject(pageNumber, pageSize, projections, predicates, sorts));
+
+        PagedList pagedList = service.find(entityPath, new QueryObject(pageNumber, pageSize, projections, predicates, sorts));
+        return  Response.status(Response.Status.OK).entity(pagedList).build();
     }
+
+    /*@GET
+    @Path("{entityPath}/schema")
+    public Object getEntitySchema(@PathParam("entityPath") String entityPath) throws ClassNotFoundException {
+
+        Metamodel metamodel = entityManager.getMetamodel();
+        EntityType<?> entityType = metamodel.entity(Class.forName(EntityRepository.getEntityName(entityPath)));
+
+        for (Attribute<?, ?> attribute : entityType.getAttributes()) {
+                String name = attribute.getName();
+                String javaName = attribute.getJavaMember().getName();
+                //String getter = "get" + javaName.substring(0, 1).toUpperCase() + javaName.substring(1);
+        }
+
+        return null;
+    }*/
 
     @GET
     @Path("{entityPath}/{id}")

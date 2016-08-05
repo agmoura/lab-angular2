@@ -2,18 +2,20 @@ package com.vixteam.teamaudit.setup;
 
 import java.util.Random;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
+import com.vixteam.extension.container.transaction.Transactional;
+//import javax.transaction.Transactional;
+
 import com.vixteam.teamaudit.domain.*;
 import com.vixteam.teamaudit.domain.enums.SimNaoEnum;
-import com.vixteam.teamaudit.repositories.EntityRepository;
+import com.vixteam.teamaudit.repositories.IEntityRepository;
 
 public class DatabaseLoader {
 
     @Inject
-    EntityRepository repository;
+    IEntityRepository repository;
 
     @Transactional
-    public void loadDatabase() {
+    public String loadDatabase() {
 
         int unidadeCount = 2;
         int escopoCount = 5;
@@ -28,8 +30,6 @@ public class DatabaseLoader {
         ClassificacaoRisco[] classificacaoRiscos = new ClassificacaoRisco[classificacaoRiscoCount];
         CategoriaRisco[] categoriaRiscos = new CategoriaRisco[categoriaRiscoCount];
         Random random = new Random();
-
-        //repository.beginTransaction();
 
         for (int i = 0; i < unidadeCount; i++) {
             UnidadeOrganizacional unidade = new UnidadeOrganizacional();
@@ -102,6 +102,6 @@ public class DatabaseLoader {
             categoriaRiscos[i] = repository.save(categoriaRisco);
         }
 
-        //repository.commitTransaction();
+        return "OK";
     }
 }

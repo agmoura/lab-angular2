@@ -3,4 +3,18 @@
     <Resource name="jdbc/TeamAuditDS" auth="Container" type="javax.sql.DataSource" JtaManaged="true"
               driverClassName="org.h2.Driver" url="jdbc:h2:mem:teamaudit" username="sa" password="sa"
               maxActive="20" maxIdle="10" maxWait="-1"/>
+
+    <Transaction factory="org.objectweb.jotm.UserTransactionFactory" jotm.timeout="60"/>
+
+    <!--<Resource name="UserTransaction" auth="Container" type="javax.transaction.UserTransaction"/>
+    <ResourceParams name="UserTransaction">
+        <parameter>
+            <name>factory</name>
+            <value>org.objectweb.jotm.UserTransactionFactory</value>
+        </parameter>
+        <parameter>
+            <name>jotm.timeout</name>
+            <value>60</value>
+        </parameter>
+    </ResourceParams>-->
 </Context>

@@ -6,7 +6,8 @@ import com.vixteam.framework.domain.IEntity;
 import com.vixteam.teamaudit.repositories.IEntityRepository;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
+import com.vixteam.extension.container.transaction.Transactional;
+//import javax.transaction.Transactional;
 import java.io.Serializable;
 
 public class EntityService implements IEntityService {

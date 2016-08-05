@@ -47,7 +47,7 @@ public class EntityController {
             query.setMaxResults(page.getSize());
         }
 
-        return new PagedList(query.getResultList(), page);
+        return new PagedList(query.getResultList(), page, null);
     }
 
     @RequestMapping(value = "{entityPath}/{id}", method = RequestMethod.GET)

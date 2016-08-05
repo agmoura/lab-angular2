@@ -48,7 +48,7 @@ export class ObjetivoListComponent implements OnInit {
 
     delete(objetivo:Objetivo) {
         if (confirm('Tem certeza que deseja exluir esse registro (' + objetivo.nome) + ')?') {
-            this.dataService.delete("objetivo", objetivo).subscribe(
+            this.dataService.delete("objetivo", objetivo.id).subscribe(
                 data => this.load(),
                 error => this.errors = error
             );
