@@ -2,8 +2,7 @@ package com.vixteam.teamaudit.setup;
 
 import java.util.Random;
 import javax.inject.Inject;
-import com.vixteam.extension.container.transaction.Transactional;
-//import javax.transaction.Transactional;
+import javax.transaction.Transactional;
 
 import com.vixteam.teamaudit.domain.*;
 import com.vixteam.teamaudit.domain.enums.SimNaoEnum;

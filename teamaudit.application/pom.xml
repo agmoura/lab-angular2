@@ -30,6 +30,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>${org.springframework.boot-version}</version>
             <!--<exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
@@ -44,6 +45,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${org.springframework.boot-version}</version>
         </dependency>
 
         <!-- DATABASE SERVER -->
@@ -69,6 +71,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <version>${org.springframework.boot-version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

@@ -16,6 +16,6 @@ public class PersistenceContextResourceFactory implements ResourceReferenceFacto
 
     @Override
     public ResourceReference<EntityManager> createResource() {
-        return new PersistenceContextResource(entityManagerFactory);
+        return new ThreadLocalPersistenceContextResource(entityManagerFactory);
     }
 }

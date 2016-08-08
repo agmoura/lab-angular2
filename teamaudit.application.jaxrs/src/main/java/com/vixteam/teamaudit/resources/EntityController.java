@@ -1,11 +1,6 @@
 package com.vixteam.teamaudit.resources;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.metamodel.Attribute;
-import javax.persistence.metamodel.EntityType;
-import javax.persistence.metamodel.Metamodel;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.ws.rs.*;
@@ -40,9 +35,9 @@ public class EntityController {
     public Response getEntityList(@PathParam("entityPath") String entityPath,
                                    @QueryParam("page.number") Integer pageNumber,
                                    @QueryParam("page.size") Integer pageSize,
-                                   @QueryParam("projections") String[] projections,
-                                   @QueryParam("predicates") String[] predicates,
-                                   @QueryParam("sorts") String[] sorts) {
+                                   @QueryParam("projections") List<String> projections,
+                                   @QueryParam("predicates") List<String> predicates,
+                                   @QueryParam("sorts") List<String> sorts) {
 
         PagedList pagedList = service.find(entityPath, new QueryObject(pageNumber, pageSize, projections, predicates, sorts));
         return  Response.status(Response.Status.OK).entity(pagedList).build();
@@ -67,7 +62,8 @@ public class EntityController {
     @GET
     @Path("{entityPath}/{id}")
     public Object getEntity(@PathParam("entityPath") String entityPath, @PathParam("id") String id) throws ClassNotFoundException {
-        return service.get(entityPath, id);
+        Object entity = service.get(entityPath, id);
+        return entity;
     }
 
     @POST

@@ -4,25 +4,21 @@ import java.util.List;
 
 public class QueryObject {
     private Page page;
-    private String[] projections;
-    private String[] predicates;
-    private String[] sorts;
+    private List<String> projections;
+    private List<String> predicates;
+    private List<String> sorts;
     private String entityName;
 
     public QueryObject() {
     }
 
-    public QueryObject(Integer pageNumber, Integer pageSize, String[] projections, String[] predicates, String[] sorts) {
+    public QueryObject(Integer pageNumber, Integer pageSize, List<String> projections, List<String> predicates, List<String> sorts) {
         setPage(pageNumber != null || pageSize != null ? new Page() : null);
         if (pageNumber != null) getPage().setNumber(pageNumber);
         if (pageSize != null) getPage().setSize(pageSize);
         setProjections(projections);
         setPredicates(predicates);
         setSorts(sorts);
-    }
-
-    public QueryObject(Integer pageNumber, Integer pageSize, List<String> projections, List<String> predicates, List<String> sorts) {
-        this(pageNumber, pageSize, (String[]) projections.toArray(), (String[]) predicates.toArray(), (String[]) sorts.toArray());
     }
 
     public Page getPage() {
@@ -33,27 +29,27 @@ public class QueryObject {
         this.page = page;
     }
 
-    public String[] getProjections() {
+    public List<String> getProjections() {
         return projections;
     }
 
-    public String[] getPredicates() {
+    public List<String> getPredicates() {
         return predicates;
     }
 
-    public void setPredicates(String[] predicates) {
+    public void setPredicates(List<String> predicates) {
         this.predicates = predicates;
     }
 
-    public void setProjections(String[] projections) {
+    public void setProjections(List<String> projections) {
         this.projections = projections;
     }
 
-    public String[] getSorts() {
+    public List<String> getSorts() {
         return sorts;
     }
 
-    public void setSorts(String[] sorts) {
+    public void setSorts(List<String> sorts) {
         this.sorts = sorts;
     }
 
@@ -61,27 +57,27 @@ public class QueryObject {
         this.entityName = entityName;
     }
 
-    private String buildProjections() {
-        if (projections == null || projections.length == 0) return "select e";
-        return "select " + String.join(", ", (CharSequence[]) projections);
-    }
-
-    //TODO: Solução Fraca. É necessário revisar.
-    private String concatenate(String[] items, String separator) {
+    //TODO: Solução Muito Fraca. É necessário revisar.
+    private String concatenate(List<String> items, String separator) {
         String result = "";
-        for (int i = 0; i < items.length; i++) {
-            result += (i > 0 ? separator : "") + "e." + items[i];
+        for (int i = 0; i < items.size(); i++) {
+            result += (i > 0 ? separator : "") + "e." + items.get(i);
         }
         return result;
     }
 
+    private String buildProjections() {
+        if (projections == null || projections.size() == 0) return "select e";
+        return "select " + concatenate(projections, ", ");
+    }
+
     private String buildPredicates() {
-        if (predicates == null || predicates.length == 0) return "";
+        if (predicates == null || predicates.size() == 0) return "";
         return " where " + concatenate(predicates, " and ");
     }
 
     private String buildOrderBy() {
-        if (sorts == null || sorts.length == 0) return "";
+        if (sorts == null || sorts.size() == 0) return "";
         return " order by " + concatenate(sorts, ", ");
     }
 

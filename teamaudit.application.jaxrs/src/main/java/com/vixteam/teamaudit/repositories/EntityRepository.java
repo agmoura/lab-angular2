@@ -2,6 +2,7 @@ package com.vixteam.teamaudit.repositories;
 
 import javax.inject.Inject;
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import com.vixteam.framework.common.support.Page;
 import com.vixteam.framework.common.support.PagedList;
@@ -34,8 +35,10 @@ public class EntityRepository implements IEntityRepository {
     }
 
     @Override
+    @Transactional
     public Object get(String entityPath, Serializable id) throws ClassNotFoundException {
-        return entityManager.find(Class.forName(getEntityName(entityPath)), id);
+        Object entity = entityManager.find(Class.forName(getEntityName(entityPath)), id);
+        return entity;
     }
 
     @Override
