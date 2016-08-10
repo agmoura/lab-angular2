@@ -1,4 +1,3 @@
-//import {Link} from "./paged-list";
 
 export interface EntityBase {
     id:string;

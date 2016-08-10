@@ -20,7 +20,7 @@
                 </thead>
                 <tr *ngFor="let entity of categoriasRisco; let index = index" [class.expanded]="entity.expanded" [class.hidden]="entity.hidden">
                     <td>
-                        <span (click)="expand(entity, index)" class="row-expand glyphicon level-{{entity.level}}"></span>
+                        <span (click)="expand(entity, index)" class="row-expand glyphicon" [style.margin-left]="15 * entity.level + 'px'"></span>
                         {{entity.nome}}
                     </td>
                     <td>{{entity.descricao}}</td>

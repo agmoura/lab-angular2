@@ -6,10 +6,8 @@ import javax.validation.Validator;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
+//import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 import com.vixteam.framework.common.support.ErrorItem;
@@ -87,9 +85,15 @@ public class EntityController {
         // Validate Entity
         Set<ConstraintViolation<IEntity>> violations = validator.validate(entity);
         if (!violations.isEmpty()) {
+            /*JAVA8
             List<ErrorItem> errors = violations.stream()
                 .map(v -> new ErrorItem(v.getPropertyPath().toString(), v.getMessage()))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
+
+            final List<ErrorItem> errors = new ArrayList<ErrorItem>();
+            for (ConstraintViolation<IEntity> violation: violations ) {
+                errors.add(new ErrorItem(violation.getPropertyPath().toString(), violation.getMessage()));
+            }
 
             return Response.status(Response.Status.PRECONDITION_FAILED)
                 .entity(new HashMap<String, List<ErrorItem>>() {{ put("errors", errors); }})

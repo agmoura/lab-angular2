@@ -84,7 +84,7 @@ public class DatabaseLoader {
             categoriaRisco.setIndicadorInternoSistema(SimNaoEnum.Nao);
             categoriaRisco.setEscopo(escopos[random.nextInt(escopoCount)]);
 
-            int j = Math.floorDiv(i - 1, 3);
+            int j = floorDiv(i - 1, 3);
 
             if (j == 0) {
                 categoriaRisco.setOrdem("0");
@@ -102,5 +102,12 @@ public class DatabaseLoader {
         }
 
         return "OK";
+    }
+
+    public static int floorDiv(int x, int y) {
+        int r = x / y;
+        // if the signs are different and modulo not zero, round down
+        if ((x ^ y) < 0 && (r * y != x)) r--;
+        return r;
     }
 }

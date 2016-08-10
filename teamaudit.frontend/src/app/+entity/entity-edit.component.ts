@@ -4,29 +4,30 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {EntityBase} from "../shared/model/models";
 import {HandleErrorsComponent} from "../shared/components/handle-errors.component";
 import {DataService} from "../shared/services/data.service";
-import {EntityListComponent} from "./entity-list.component";
+import {EntitySchema} from "../shared/model/schema";
+import {EntitySchemaService} from "./entity-schema.service";
 
 @Component({
     selector: 'entity-edit',
-    templateUrl: './entity-edit.component.html',
+    templateUrl: './entity-edit.template.html',
     moduleId: module.id,
     directives: [HandleErrorsComponent],
-    providers: [DataService],
+    providers: [DataService, EntitySchemaService],
 })
 export class EntityEditComponent implements OnInit {
 
     entityName:string;
-    entitySchema:any;
+    entitySchema:EntitySchema;
     entity:EntityBase = <EntityBase>{};
-    /*categorias:CategoriaObjetivo[] = [];
-    unidades:UnidadeOrganizacional[] = [];*/
+    entityReferences:any = {};
     errors:any;
 
-    constructor(private route:ActivatedRoute, private router:Router, private dataService:DataService) { }
+    constructor(private route:ActivatedRoute, private router:Router, private dataService:DataService, private schemaService:EntitySchemaService) {
+    }
 
     ngOnInit() {
         this.entityName = this.route.snapshot.params['entity'];
-        this.entitySchema = EntityListComponent.schemas[this.entityName];
+        this.entitySchema = this.schemaService.getEntitySchema(this.entityName);
         this.load(this.route.snapshot.params['id'])
     }
 
@@ -36,16 +37,38 @@ export class EntityEditComponent implements OnInit {
                 data => this.entity = data
             );
 
-        /*this.dataService.findAll('categoriaObjetivo').subscribe(
-            data => this.categorias = data.list
-        );
+        this.entitySchema.formView.fields
+            .filter(field => field.type === 'select')
+            .forEach(field => {
 
-        this.dataService.findAll('unidadeOrganizacional').subscribe(
-            data => this.unidades = data.list
-        );*/
+                var path = field.referencePath || field.path;
+                var projections = [field.select.value, field.select.text];
+
+                this.dataService.findAll(path, null, [field.select.text], null, projections).subscribe(
+                    data => this.entityReferences[field.path] = data.list
+                );
+            });
+    }
+
+    // Remove Undefined, Null and Empty Attributes
+    cleanEntity(entity:EntityBase) {
+        for (var attribute in entity) {
+            if (!entity[attribute]) {
+                delete entity[attribute];
+            }
+            else if (typeof entity[attribute] === 'object') {
+                this.cleanEntity(entity[attribute]);
+
+                if(Object.keys(entity[attribute]).length === 0)
+                    delete entity[attribute];
+            }
+        }
     }
 
     save(entity:EntityBase) {
+
+        this.cleanEntity(entity);
+
         this.dataService.save(this.entityName, entity).subscribe(
             data => this.entity = data,
             error => this.errors = error,

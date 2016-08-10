@@ -1,98 +1,37 @@
 import {Component, OnInit} from '@angular/core';
 import {ROUTER_DIRECTIVES, Router, ActivatedRoute} from '@angular/router';
 
-import {Objetivo, EntityBase} from "../shared/model/models";
+import {EntitySchema} from "../shared/model/schema";
 import {DataService} from "../shared/services/data.service";
 import {Page} from "../shared/model/paged-list";
 import {HandleErrorsComponent} from "../shared/components/handle-errors.component";
+import {EntitySchemaService} from "./entity-schema.service";
 
 @Component({
     selector: 'entity-list',
-    templateUrl: './entity-list.component.html',
+    templateUrl: './entity-list.template.html',
     moduleId: module.id,
     directives: [ROUTER_DIRECTIVES, HandleErrorsComponent],
-    providers: [DataService]
+    providers: [DataService, EntitySchemaService]
 })
 export class EntityListComponent implements OnInit {
 
     routeSubscription:any;
     entityName:string;
-    entitySchema:any;
+    entitySchema:EntitySchema;
     entityList = [];
-    page:Page = new Page();
+    page:Page;
     errors:any;
-
-    public static schemas:any = {
-        escopo: {
-            label: {singular: 'Escopo', plural: 'Escopos'},
-            id: {path: 'id'},
-            listView: {
-                fields: [
-                    {label: 'Nome2', path: 'nome'},
-                    {label: 'Descrição2', path: 'descricao'}
-                ],
-                sorts: ['nome asc']
-            },
-            formView: {
-                fields: [
-                    {label: 'Nome', path: 'nome', type: 'text', required:true},
-                    {label: 'Descrição', path: 'descricao', type: 'text'}
-                ]
-            }
-        },
-        categoriaObjetivo: {
-            label: {singular: 'Categoria de Objetivo', plural: 'Categorias de Objetivo'},
-            id: {path: 'id'},
-            listView: {
-                fields: [
-                    {label: 'Escopo', path: 'escopo.descricao'},
-                    {label: 'Nome', path: 'nome'},
-                    {label: 'Descrição', path: 'descricao'}
-                ],
-                sorts: ['nome desc']
-            },
-            formView: {
-                fields: [
-                    {label: 'Nome', path: 'nome', type: 'text'},
-                    {label: 'Descrição', path: 'descricao', type: 'text'},
-                    {label: 'Interno', path: 'indicadorInternoSistema', type: 'checkbox'},
-                    {label: 'Escopo', path: 'escopo', type: 'select'}
-                ]
-            }
-        },
-        objetivo: {
-            label: {singular: 'Objetivo', plural: 'Objetivos'},
-            id: {path: 'id'},
-            listView: {
-                fields: [
-                    {label: 'Escopo', path: 'categoriaObjetivo.escopo.nome'},
-                    {label: 'Categoria', path: 'categoriaObjetivo.nome'},
-                    {label: 'Nome', path: 'nome'},
-                    {label: 'Descrição', path: 'descricao'}
-                ]
-            },
-            formView: {
-                fields: [
-                    {label: 'Nome', path: 'nome', type: 'text'},
-                    {label: 'Descrição', path: 'descricao', type: 'text'},
-                    {label: 'Descrição Meta', path: 'descricaoMeta', type: 'text'},
-                    {label: 'Valor Meta', path: 'valorMeta', type: 'number'},
-                    {label: 'Percentual Meta', path: 'percentualMeta', type: 'number'},
-                    {label: 'Categoria', path: 'categoriaObjetivo', type: 'select', select: {value: 'id', text: 'nome'}},
-                    {label: 'Unidade', path: 'unidadeOrganizacional', type: 'select', select: {value: 'id', text: 'nome'}}
-                ]
-            }
-        }
-    };
-
-    constructor(private route:ActivatedRoute, private router:Router, private dataService:DataService) {
-
+   
+    constructor(private route:ActivatedRoute, private router:Router, private dataService:DataService, private schemaService:EntitySchemaService) {
+        
     }
 
     ngOnInit() {
         this.routeSubscription = this.route.params.subscribe(params => {
             this.entityName = params['entity'];
-            this.entitySchema = EntityListComponent.schemas[this.entityName];
+            this.entitySchema = this.schemaService.getEntitySchema(this.entityName);
+            this.page = new Page();
             this.load();
         });
     }

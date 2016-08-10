@@ -26,7 +26,7 @@ public class DatabaseLoader implements ApplicationListener<ContextRefreshedEvent
         int categoriaCount = 10;
         int objetivoCount = 100;
         int classificacaoRiscoCount = 5;
-        int categoriaRiscoCount = 10000;
+        int categoriaRiscoCount = 100;
 
         UnidadeOrganizacional[] unidades = new UnidadeOrganizacional[unidadeCount];
         Escopo[] escopos = new Escopo[escopoCount];
@@ -89,7 +89,7 @@ public class DatabaseLoader implements ApplicationListener<ContextRefreshedEvent
             categoriaRisco.setIndicadorInternoSistema(SimNaoEnum.Nao);
             categoriaRisco.setEscopo(escopos[random.nextInt(escopoCount)]);
 
-            int j = Math.floorDiv(i-1, 3);
+            int j = floorDiv(i-1, 3);
 
             if (j == 0) {
                 categoriaRisco.setOrdem("0");
@@ -106,6 +106,16 @@ public class DatabaseLoader implements ApplicationListener<ContextRefreshedEvent
             categoriaRiscos[i] = this.entityManager.merge(categoriaRisco);
         }
 
+    }
+
+    public static int floorDiv(int x, int y) {
+        int r = x / y;
+        // if the signs are different and modulo not zero, round down
+        if ((x ^ y) < 0 && (r * y != x)) {
+            r--;
+        }
+
+        return r;
     }
 }
 
