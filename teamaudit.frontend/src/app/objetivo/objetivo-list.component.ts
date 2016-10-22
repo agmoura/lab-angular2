@@ -1,26 +1,22 @@
 import {Component, OnInit} from '@angular/core';
-import {ROUTER_DIRECTIVES, Router} from '@angular/router';
+import {Router} from '@angular/router';
 
 import {Objetivo} from "../shared/model/models";
 import {DataService} from "../shared/services/data.service";
 import {Page} from "../shared/model/paged-list";
-import {HandleErrorsComponent} from "../shared/components/handle-errors.component";
 
 @Component({
     selector: 'objetivo-list',
-    templateUrl: './objetivo-list.component.html',
-    //styleUrls: ['./app.css'],
-    moduleId: module.id,
-    directives: [ROUTER_DIRECTIVES, HandleErrorsComponent],
-    providers: [DataService]
+    templateUrl: 'objetivo-list.component.html',
 })
 export class ObjetivoListComponent implements OnInit {
 
-    objetivos:Objetivo[] = [];
-    page:Page = new Page();
-    errors:any;
+    objetivos: Objetivo[] = [];
+    page: Page = new Page();
+    errors: any;
 
-    constructor(private router:Router, private dataService:DataService) { }
+    constructor(private router: Router, private dataService: DataService) {
+    }
 
     ngOnInit() {
         this.load();
@@ -46,7 +42,7 @@ export class ObjetivoListComponent implements OnInit {
         this.load();
     }
 
-    delete(objetivo:Objetivo) {
+    delete(objetivo: Objetivo) {
         if (confirm('Tem certeza que deseja exluir esse registro (' + objetivo.nome) + ')?') {
             this.dataService.delete("objetivo", objetivo.id).subscribe(
                 data => this.load(),
@@ -55,7 +51,7 @@ export class ObjetivoListComponent implements OnInit {
         }
     }
 
-    gotoEdit(objetivo:Objetivo = null) {
+    gotoEdit(objetivo: Objetivo = null) {
         if (objetivo)
             this.router.navigate(['objetivo/edit', objetivo.id]);
         else

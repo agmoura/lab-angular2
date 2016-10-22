@@ -9,19 +9,19 @@ import {EntityBase} from "../model/models";
 @Injectable()
 export class DataService {
 
-    //baseUrl:string = 'http://localhost:8080/teamaudit.application.jaxrs-1.0.0/api/';
-    baseUrl:string = 'api/';
+    baseUrl: string = 'http://localhost:8080/teamaudit/api/';
+    //baseUrl:string = 'api/';
 
-    constructor(private http:Http) {
+    constructor(private http: Http) {
     }
 
-    findAll(path:string,
-            page:Page = null,
-            sorts:string[] = null,
-            predicates:string[] = null,
-            projections:string[] = null):Observable<PagedList> {
-        
-        let url:string = this.baseUrl + path + '?';
+    findAll(path: string,
+            page: Page = null,
+            sorts: string[] = null,
+            predicates: string[] = null,
+            projections: string[] = null): Observable<PagedList> {
+
+        let url: string = this.baseUrl + path + '?';
 
         if (page) url += 'page.number=' + page.number + '&page.size=' + page.size;
 
@@ -34,16 +34,16 @@ export class DataService {
         return this.http.get(url).map(response => new PagedList(response.json()));
     }
 
-    getByUri<TEntity extends EntityBase>(uri:string):Observable<TEntity> {
+    getByUri<TEntity extends EntityBase>(uri: string): Observable<TEntity> {
         return <Observable<TEntity>> this.http.get(uri)
             .map(response => response.json());
     }
 
-    get<TEntity extends EntityBase>(path:string, id:string):Observable<TEntity> {
+    get<TEntity extends EntityBase>(path: string, id: string): Observable<TEntity> {
         return this.getByUri<TEntity>(this.baseUrl + path + '/' + id);
     }
 
-    save<TEntity extends EntityBase>(path:string, entity:TEntity):Observable<TEntity> {
+    save<TEntity extends EntityBase>(path: string, entity: TEntity): Observable<TEntity> {
         let headers = new Headers({'Content-Type': 'application/json'});
 
         if (entity.id)
@@ -54,7 +54,7 @@ export class DataService {
             .map(response => response.json());
     }
 
-    delete(path:string, id:string) {
+    delete(path: string, id: string) {
         return this.http.delete(this.baseUrl + path + "/" + id);
     }
 }

@@ -2,7 +2,6 @@ import {Component, Input} from '@angular/core';
 import {Response} from "@angular/http";
 
 @Component({
-    moduleId: module.id,
     selector: 'handle-errors',
     template: `
     <div *ngIf="_errors.length > 0" class="alert alert-danger alert-dismissible" role="alert">

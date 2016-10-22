@@ -1,15 +1,13 @@
-import {bootstrap} from '@angular/platform-browser-dynamic';
-import {Type} from '@angular/core';
-import {HTTP_PROVIDERS} from '@angular/http';
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
-import {appRouterProviders} from './app/app.routes';
-import {disableDeprecatedForms, provideForms} from '@angular/forms';
-import {AppComponent} from './app/app.component';
+import './polyfills.ts';
+import 'rxjs/Rx';
 
-bootstrap(<Type> AppComponent, [
-    HTTP_PROVIDERS,
-    appRouterProviders,
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
-    disableDeprecatedForms(),
-    provideForms(),
-]).catch(error => console.error(error));
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { enableProdMode } from '@angular/core';
+import { environment } from './environments/environment';
+import { AppModule } from './app/app.module';
+
+if (environment.production) {
+  enableProdMode();
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule);

@@ -2,16 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 
 import {Objetivo, CategoriaObjetivo, UnidadeOrganizacional} from "../shared/model/models";
-import {HandleErrorsComponent} from "../shared/components/handle-errors.component";
 import {DataService} from "../shared/services/data.service";
 
 @Component({
     selector: 'objetivo-edit',
-    templateUrl: './objetivo-edit.component.html',
-    //styleUrls: ['./app.css'],
-    moduleId: module.id,
-    directives: [HandleErrorsComponent],
-    providers: [DataService],
+    templateUrl: 'objetivo-edit.component.html',
 })
 export class ObjetivoEditComponent implements OnInit {
 

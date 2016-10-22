@@ -1,19 +1,16 @@
-import {provideRouter, RouterConfig} from '@angular/router';
-import {About} from './about/about';
-import {Home} from './home/home';
-import {entityRoutes} from "./+entity/entity.routes";
-import {objetivoRoutes} from "./objetivo/objetivo.routes";
+import {ModuleWithProviders} from "@angular/core";
+import {Routes, RouterModule} from "@angular/router";
+import {HomeComponent} from "./home/home.component";
 import {CategoriaRiscoComponent} from "./categoria-risco/categoria-risco.component";
+import {objetivoRoutes} from "./objetivo/objetivo.routes";
+import {entityRoutes} from "./+entity/entity.routes";
 
-const routes:RouterConfig = [
-    {path: '', redirectTo: 'home', terminal: true},
-    {path: 'home', component: Home},
-    ...entityRoutes,
-    ...objetivoRoutes,
+const rootRoutes: Routes = [
+    {path: '', redirectTo:'home', pathMatch:'full'},
+    {path: 'home', component: HomeComponent},
     {path: 'categoria-risco', component: CategoriaRiscoComponent},
-    {path: 'about', component: About}
+    ...objetivoRoutes,
+    ...entityRoutes
 ];
 
-export const appRouterProviders = [
-    provideRouter(routes)
-];
+export const rootRoutesModule: ModuleWithProviders = RouterModule.forRoot(rootRoutes, {useHash: true});

@@ -1,18 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {ROUTER_DIRECTIVES, Router} from '@angular/router';
+import {Router} from '@angular/router';
 
 import {CategoriaRisco} from "../shared/model/models";
 import {DataService} from "../shared/services/data.service";
 import {Page} from "../shared/model/paged-list";
-import {HandleErrorsComponent} from "../shared/components/handle-errors.component";
 import {TreeItem} from "../shared/model/tree-list";
 
 @Component({
     selector: 'categoria-risco-list',
-    templateUrl: './categoria-risco.component.html',
-    moduleId: module.id,
-    directives: [ROUTER_DIRECTIVES, HandleErrorsComponent],
-    providers: [DataService]
+    templateUrl: 'categoria-risco.component.html',
 })
 export class CategoriaRiscoComponent implements OnInit {
 

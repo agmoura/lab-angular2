@@ -1,18 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {ROUTER_DIRECTIVES, Router, ActivatedRoute} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 
 import {EntitySchema} from "../shared/model/schema";
 import {DataService} from "../shared/services/data.service";
 import {Page} from "../shared/model/paged-list";
-import {HandleErrorsComponent} from "../shared/components/handle-errors.component";
 import {EntitySchemaService} from "./entity-schema.service";
 
 @Component({
     selector: 'entity-list',
-    templateUrl: './entity-list.template.html',
-    moduleId: module.id,
-    directives: [ROUTER_DIRECTIVES, HandleErrorsComponent],
-    providers: [DataService, EntitySchemaService]
+    templateUrl: 'entity-list.template.html',
 })
 export class EntityListComponent implements OnInit {
 
