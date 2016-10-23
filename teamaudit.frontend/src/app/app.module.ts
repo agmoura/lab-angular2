@@ -15,12 +15,14 @@ import {ObjetivoListComponent} from "./objetivo/objetivo-list.component";
 import {CategoriaRiscoComponent} from "./categoria-risco/categoria-risco.component";
 import {EntityEditComponent} from "./+entity/entity-edit.component";
 import {EntityListComponent} from "./+entity/entity-list.component";
+import {About} from "./about/about";
 
 
 @NgModule({
     declarations: [
         AppComponent,
         HandleErrorsComponent,
+        About,
         HomeComponent,
         EntityListComponent,
         EntityEditComponent,
