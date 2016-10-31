@@ -26,7 +26,7 @@ public class EntityRepository implements IEntityRepository {
         Page page = queryObject.getPage();
 
         if (page != null) {
-            page.setTotalItens(((Long) entityManager.createQuery(queryObject.buildCountQuery()).getSingleResult()).intValue());
+            page.setTotalItems(((Long) entityManager.createQuery(queryObject.buildCountQuery()).getSingleResult()).intValue());
             query.setFirstResult(page.getFirstItemIndex());
             query.setMaxResults(page.getSize());
         }

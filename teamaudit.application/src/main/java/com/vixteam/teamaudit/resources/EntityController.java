@@ -1,21 +1,21 @@
 package com.vixteam.teamaudit.resources;
 
 import java.io.IOException;
-import java.util.HashMap;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vixteam.framework.domain.IEntity;
+import com.vixteam.teamaudit.repositories.EntityRepository;
+import com.vixteam.teamaudit.resources.support.ValidationException;
+import com.vixteam.teamaudit.services.IEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.MapBindingResult;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import com.vixteam.framework.common.support.Errors;
 import com.vixteam.framework.common.support.Page;
 import com.vixteam.framework.common.support.PagedList;
 import com.vixteam.framework.common.support.QueryObject;
@@ -26,6 +26,9 @@ public class EntityController {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private IEntityService service;
 
     @Autowired
     Validator validator;
@@ -42,15 +45,54 @@ public class EntityController {
         Page page = queryObject.getPage();
 
         if (page != null) {
-            page.setTotalItens(((Long) entityManager.createQuery(queryObject.buildCountQuery()).getSingleResult()).intValue());
+            page.setTotalItems(((Long) entityManager.createQuery(queryObject.buildCountQuery()).getSingleResult()).intValue());
             query.setFirstResult(page.getFirstItemIndex());
             query.setMaxResults(page.getSize());
         }
 
         return new PagedList(query.getResultList(), page, null);
     }
-
     @RequestMapping(value = "{entityPath}/{id}", method = RequestMethod.GET)
+    public Object getEntity(@PathVariable String entityPath, @PathVariable String id) throws ClassNotFoundException {
+        return service.get(entityPath, id);
+    }
+
+    @RequestMapping(value = "{entityPath}", method = RequestMethod.POST)
+    public Object addEntity(@PathVariable String entityPath, @RequestBody String entityData) throws ClassNotFoundException, IOException, NoSuchMethodException, MethodArgumentNotValidException {
+        return saveEntity(entityPath, null, entityData);
+    }
+
+    @RequestMapping(value = "{entityPath}/{id}", method = RequestMethod.PUT)
+    public Object updateEntity(@PathVariable String entityPath, @PathVariable String id, @RequestBody String entityData) throws ClassNotFoundException, IOException, NoSuchMethodException, MethodArgumentNotValidException {
+        return saveEntity(entityPath, id, entityData);
+    }
+
+    /*@RequestMapping(value = "{entityPath}/{id}", method = RequestMethod.PUT)
+    public Object updateEntity(@PathVariable String entityPath, @PathVariable String id, @RequestBody @Valid BaseEntity entity) throws ClassNotFoundException, IOException, NoSuchMethodException, MethodArgumentNotValidException {
+        return service.save(entity);
+    }*/
+
+    private Object saveEntity(String entityPath, String entityId, String entityData) throws ClassNotFoundException, IOException, NoSuchMethodException, MethodArgumentNotValidException {
+        // Build Object Entity from JSON Data
+        String entityName = EntityRepository.getEntityName(entityPath);
+        IEntity entity = (IEntity) new ObjectMapper().readValue(entityData, Class.forName(entityName));
+
+        // Validate Entity
+        BindingResult result = new BeanPropertyBindingResult(entity, entityName);
+        validator.validate(entity, result);
+        if(result.hasErrors())
+            throw new ValidationException(result);
+
+        // Add or Update Entity
+        return service.save(entity);
+    }
+
+    @RequestMapping(value = "{entityPath}/{id}", method = RequestMethod.DELETE)
+    public void deleteEntity(@PathVariable String entityPath, @PathVariable String id) throws ClassNotFoundException {
+        service.delete(entityPath, id);
+    }
+
+    /*@RequestMapping(value = "{entityPath}/{id}", method = RequestMethod.GET)
     public Object getEntity(@PathVariable String entityPath, @PathVariable String id) throws ClassNotFoundException {
         return entityManager.find(Class.forName(getEntityName(entityPath)), id);
     }
@@ -90,5 +132,5 @@ public class EntityController {
     public void deleteEntity(@PathVariable String entityPath, @PathVariable String id, HttpEntity<String> httpEntity) throws ClassNotFoundException {
         Object entity = getEntity(entityPath, id);
         entityManager.remove(entity);
-    }
+    }*/
 }

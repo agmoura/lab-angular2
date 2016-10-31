@@ -21,11 +21,11 @@ public class Page {
         this.size = size;
     }
 
-    public Integer getTotalItens() {
+    public Integer getTotalItems() {
         return totalItens;
     }
 
-    public void setTotalItens(Integer totalItens) {
+    public void setTotalItems(Integer totalItens) {
         this.totalItens = totalItens;
     }
 
