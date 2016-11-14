@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="panel-body">
-        <handle-errors [errors]="errors"></handle-errors>
+        <!--<handle-errors [errors]="errors"></handle-errors>-->
 
         <form #form="ngForm" (ngSubmit)="save(form.value)">
             <input type="hidden" name="id" [ngModel]="objetivo.id">
