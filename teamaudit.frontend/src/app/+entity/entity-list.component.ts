@@ -12,15 +12,17 @@ import {EntitySchemaService} from "./entity-schema.service";
 })
 export class EntityListComponent implements OnInit {
 
-    routeSubscription:any;
-    entityName:string;
-    entitySchema:EntitySchema;
+    routeSubscription: any;
+    entityName: string;
+    entitySchema: EntitySchema;
     entityList = [];
-    page:Page;
-    errors:any;
-   
-    constructor(private route:ActivatedRoute, private router:Router, private dataService:DataService, private schemaService:EntitySchemaService) {
-        
+    page: Page;
+    errors: any;
+
+    gridColumns: any[];
+
+    constructor(private route: ActivatedRoute, private router: Router, private dataService: DataService, private schemaService: EntitySchemaService) {
+
     }
 
     ngOnInit() {
@@ -28,6 +30,14 @@ export class EntityListComponent implements OnInit {
             this.entityName = params['entity'];
             this.entitySchema = this.schemaService.getEntitySchema(this.entityName);
             this.page = new Page();
+            this.page.size = 100;
+
+            this.gridColumns = this.entitySchema.listView.fields.map((field, index) => {
+                let columnOption:any = {dataField: `${index+1}`, caption: field.label};
+                if(field.required) columnOption.validationRules = [{ type: "required" }];
+                return columnOption
+            });
+
             this.load();
         });
     }
@@ -60,7 +70,7 @@ export class EntityListComponent implements OnInit {
         this.load();
     }
 
-    delete(entity:any) {
+    delete(entity: any) {
         if (confirm('Tem certeza que deseja exluir esse registro ?')) {
             this.dataService.delete(this.entityName, entity[0]).subscribe(
                 data => this.load(),
@@ -69,7 +79,7 @@ export class EntityListComponent implements OnInit {
         }
     }
 
-    gotoEdit(entity:any = null) {
+    gotoEdit(entity: any = null) {
         if (entity)
             this.router.navigate(['entity', this.entityName, 'edit', entity[0]]);
         else

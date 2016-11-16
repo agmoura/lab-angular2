@@ -10,7 +10,7 @@ export class EntitySchemaService {
             id: {path: 'id'},
             listView: {
                 fields: [
-                    {label: 'Nome', path: 'nome'},
+                    {label: 'Nome', path: 'nome', required: true},
                     {label: 'Descrição', path: 'descricao'}
                 ],
                 sorts: ['nome asc']
@@ -28,7 +28,7 @@ export class EntitySchemaService {
             listView: {
                 fields: [
                     {label: 'Escopo', path: 'escopo.descricao'},
-                    {label: 'Nome', path: 'nome'},
+                    {label: 'Nome', path: 'nome', required: true},
                     {label: 'Descrição', path: 'descricao'}
                 ],
                 sorts: ['nome desc']

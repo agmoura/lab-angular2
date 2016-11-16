@@ -7,7 +7,8 @@ import {EntityEditComponent} from "./entity-edit.component";
 import {EntitySchemaService} from "./entity-schema.service";
 import {HandleErrorsComponent} from "../shared/components/handle-errors.component";
 
-import {DataTableModule} from 'primeng/components/datatable/datatable';
+//import {DataTableModule} from 'primeng/components/datatable/datatable';
+import {DevExtremeModule} from 'devextreme-angular'
 
 @NgModule({
     imports: [
@@ -15,7 +16,8 @@ import {DataTableModule} from 'primeng/components/datatable/datatable';
         FormsModule,
         ReactiveFormsModule,
         entityRouting,
-        DataTableModule
+        //DataTableModule,
+        DevExtremeModule
     ],
     declarations: [
         EntityListComponent,
