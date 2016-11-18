@@ -16,6 +16,38 @@ export class EntityListComponent implements OnInit {
     entityName: string;
     entitySchema: EntitySchema;
     entityList = [];
+    gridData: any[] =
+        [{
+            "ProductID": 1,
+            "ProductName": "Chai",
+            "UnitPrice": 18.0000,
+            "Discontinued": true
+        }, {
+            "ProductID": 2,
+            "ProductName": "Chang",
+            "UnitPrice": 19.0000,
+            "Discontinued": false
+        }, {
+            "ProductID": 3,
+            "ProductName": "Aniseed Syrup",
+            "UnitPrice": 10.0000,
+            "Discontinued": false
+        }, {
+            "ProductID": 4,
+            "ProductName": "Chef Anton's Cajun Seasoning",
+            "UnitPrice": 22.0000,
+            "Discontinued": false
+        }, {
+            "ProductID": 5,
+            "ProductName": "Chef Anton's Gumbo Mix",
+            "UnitPrice": 21.3500,
+            "Discontinued": false
+        }, {
+            "ProductID": 6,
+            "ProductName": "Grandma's Boysenberry Spread",
+            "UnitPrice": 25.0000,
+            "Discontinued": false
+        }];
     page: Page;
     errors: any;
 
@@ -30,11 +62,11 @@ export class EntityListComponent implements OnInit {
             this.entityName = params['entity'];
             this.entitySchema = this.schemaService.getEntitySchema(this.entityName);
             this.page = new Page();
-            this.page.size = 100;
+            this.page.size = 0;
 
             this.gridColumns = this.entitySchema.listView.fields.map((field, index) => {
-                let columnOption:any = {dataField: `${index+1}`, caption: field.label};
-                if(field.required) columnOption.validationRules = [{ type: "required" }];
+                let columnOption: any = {dataField: `${index + 1}`, caption: field.label};
+                if (field.required) columnOption.validationRules = [{type: "required"}];
                 return columnOption
             });
 

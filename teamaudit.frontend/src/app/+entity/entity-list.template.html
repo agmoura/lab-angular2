@@ -25,7 +25,26 @@
             </footer>
         </p-dataTable>-->
 
-        <dx-data-grid [dataSource]="entityList"
+        <kendo-grid [data]="entityList" [selectable]="true"  [height]="300">
+            <kendo-grid-column *ngFor="let field of entitySchema.listView.fields; let index = index" field="[{{index+1}}]" title="{{field.label}}"></kendo-grid-column>
+            <kendo-grid-column>
+                <template kendoHeaderTemplate>
+                    Editing
+                </template>
+                <template kendoCellTemplate let-dataItem>
+                    <button (click)="onEdit(dataItem)" class="k-button k-button-icontext k-grid-edit">Edit</button>
+                    <button (click)="delete(dataItem)" class="k-button k-button-icontext k-grid-delete">Delete</button>
+                </template>
+            </kendo-grid-column>
+        </kendo-grid>
+
+        <!--<kendo-grid [data]="entityList">
+            <kendo-grid-column field="[1]" title="ID"></kendo-grid-column>
+            <kendo-grid-column field="[2]" title="Product Name"></kendo-grid-column>
+            <kendo-grid-column field="[3]" title="Unit Price"></kendo-grid-column>
+        </kendo-grid>-->
+
+        <!--<dx-data-grid [dataSource]="entityList"
                       [loadPanel]="{enabled: false}"
                       [columns]="gridColumns"
                       [filterRow]="{visible: true, applyFilter: 'auto'}"
@@ -47,12 +66,12 @@
                       [export]="{enabled: true, fileName: entityName, allowExportSelectedData: true}"
                       [paging]="{pageSize: 10}"
                       [pager]="{showPageSizeSelector: true, allowedPageSizes: [5, 10, 20], showInfo: true}">
-            <!--<dxi-column *ngFor="let field of entitySchema.listView.fields; let index = index" [dataField]="[index+1]" caption="{{field.label}}"></dxi-column>-->
+            &lt;!&ndash;<dxi-column *ngFor="let field of entitySchema.listView.fields; let index = index" [dataField]="[index+1]" caption="{{field.label}}"></dxi-column>&ndash;&gt;
 
-            <!--<div *dxTemplate="let cellData of 'phoneCellTemplate'">
+            &lt;!&ndash;<div *dxTemplate="let cellData of 'phoneCellTemplate'">
                 <dx-button (onClick)="callNumber(cellData.value)" [text]="cellData.text"></dx-button>
-            </div>-->
-        </dx-data-grid>
+            </div>&ndash;&gt;
+        </dx-data-grid>-->
 
         <!--<div class="table-responsive">
             <table class="table table-condensed table-hover">

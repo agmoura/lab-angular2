@@ -24,7 +24,7 @@ public class DatabaseLoader implements ApplicationListener<ContextRefreshedEvent
         int unidadeCount = 2;
         int escopoCount = 5;
         int categoriaCount = 10;
-        int objetivoCount = 100;
+        int objetivoCount = 1000;
         int classificacaoRiscoCount = 5;
         int categoriaRiscoCount = 100;
 
