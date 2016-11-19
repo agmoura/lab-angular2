@@ -1,5 +1,7 @@
 package com.vixteam.teamaudit.domain;
 
+import com.vixteam.teamaudit.core.domain.CategoriaObjetivo;
+import com.vixteam.teamaudit.core.domain.Escopo;
 import com.vixteam.teamaudit.domain.annotation.HandleBeforeSave;
 import com.vixteam.teamaudit.domain.annotation.RepositoryEventHandler;
 

@@ -1,5 +1,7 @@
 package com.vixteam.framework.common.support;
 
+import com.vixteam.framework.core.usecase.commons.Page;
+
 import java.util.List;
 
 public class QueryObject {

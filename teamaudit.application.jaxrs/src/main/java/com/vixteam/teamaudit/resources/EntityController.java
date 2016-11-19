@@ -11,9 +11,9 @@ import java.util.*;
 
 import com.google.gson.Gson;
 import com.vixteam.framework.common.support.ErrorItem;
-import com.vixteam.framework.common.support.PagedList;
+import com.vixteam.framework.core.usecase.commons.PagedList;
 import com.vixteam.framework.common.support.QueryObject;
-import com.vixteam.framework.domain.IEntity;
+import com.vixteam.framework.core.domain.commons.IEntity;
 import com.vixteam.teamaudit.repositories.EntityRepository;
 import com.vixteam.teamaudit.services.IEntityService;
 

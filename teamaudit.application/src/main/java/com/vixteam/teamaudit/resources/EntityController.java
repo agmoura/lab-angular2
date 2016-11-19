@@ -5,7 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vixteam.framework.domain.IEntity;
+import com.vixteam.framework.core.domain.commons.IEntity;
 import com.vixteam.teamaudit.repositories.EntityRepository;
 import com.vixteam.teamaudit.resources.support.ValidationException;
 import com.vixteam.teamaudit.services.IEntityService;
@@ -16,8 +16,8 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import com.vixteam.framework.common.support.Page;
-import com.vixteam.framework.common.support.PagedList;
+import com.vixteam.framework.core.usecase.commons.Page;
+import com.vixteam.framework.core.usecase.commons.PagedList;
 import com.vixteam.framework.common.support.QueryObject;
 
 @RestController()

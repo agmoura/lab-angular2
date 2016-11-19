@@ -4,12 +4,12 @@ import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.vixteam.teamaudit.domain.*;
+import com.vixteam.teamaudit.core.domain.*;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import com.vixteam.teamaudit.domain.enums.SimNaoEnum;
+import com.vixteam.teamaudit.core.domain.enums.SimNaoEnum;
 
 @Component
 public class DatabaseLoader implements ApplicationListener<ContextRefreshedEvent> {

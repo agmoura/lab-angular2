@@ -1,14 +1,13 @@
 package com.vixteam.teamaudit.repositories;
 
-import javax.inject.Inject;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.io.Serializable;
-import com.vixteam.framework.common.support.Page;
-import com.vixteam.framework.common.support.PagedList;
+import com.vixteam.framework.core.usecase.commons.Page;
+import com.vixteam.framework.core.usecase.commons.PagedList;
 import com.vixteam.framework.common.support.QueryObject;
 import com.vixteam.framework.common.support.Schema;
-import com.vixteam.framework.domain.IEntity;
+import com.vixteam.framework.core.domain.commons.IEntity;
 
 public class EntityRepository implements IEntityRepository {
 

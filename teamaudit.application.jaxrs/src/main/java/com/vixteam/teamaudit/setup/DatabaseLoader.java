@@ -4,8 +4,8 @@ import java.util.Random;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
-import com.vixteam.teamaudit.domain.*;
-import com.vixteam.teamaudit.domain.enums.SimNaoEnum;
+import com.vixteam.teamaudit.core.domain.*;
+import com.vixteam.teamaudit.core.domain.enums.SimNaoEnum;
 import com.vixteam.teamaudit.repositories.IEntityRepository;
 
 public class DatabaseLoader {

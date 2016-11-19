@@ -1,8 +1,8 @@
 package com.vixteam.teamaudit.repositories;
 
-import com.vixteam.framework.common.support.EntityQuery;
-import com.vixteam.framework.common.support.PagedList;
-import com.vixteam.framework.domain.IEntity;
+import com.vixteam.teamaudit.core.usecase.EntityQuery;
+import com.vixteam.framework.core.usecase.commons.PagedList;
+import com.vixteam.framework.core.domain.commons.IEntity;
 
 import java.io.Serializable;
 import java.util.List;

@@ -31,6 +31,13 @@
             <version>2.8.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.3.4.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 	
 </project>

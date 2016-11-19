@@ -1,12 +1,10 @@
 package com.vixteam.teamaudit.domain;
 
+import com.vixteam.teamaudit.core.domain.Entidade;
+import com.vixteam.teamaudit.core.domain.Escopo;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 
 @BusinessRule({Entidade.class, Escopo.class})

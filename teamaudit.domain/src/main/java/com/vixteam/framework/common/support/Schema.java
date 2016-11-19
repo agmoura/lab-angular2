@@ -3,6 +3,7 @@ package com.vixteam.framework.common.support;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class Schema {
 
     public class Item {

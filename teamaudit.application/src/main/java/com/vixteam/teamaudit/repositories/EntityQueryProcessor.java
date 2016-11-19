@@ -1,7 +1,7 @@
 package com.vixteam.teamaudit.repositories;
 
 import com.vixteam.framework.common.support.CalculatedPath;
-import com.vixteam.framework.common.support.EntityQuery;
+import com.vixteam.teamaudit.core.usecase.EntityQuery;
 import org.hibernate.jpa.internal.metamodel.SingularAttributeImpl;
 
 import javax.persistence.Transient;
