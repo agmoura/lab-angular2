@@ -10,10 +10,9 @@ import java.util.*;
 //import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
-import com.vixteam.framework.common.support.ErrorItem;
-import com.vixteam.framework.core.usecase.commons.PagedList;
-import com.vixteam.framework.common.support.QueryObject;
-import com.vixteam.framework.core.domain.commons.IEntity;
+import com.vixteam.teamaudit.core.usecase.commons.PagedList;
+import com.vixteam.teamaudit.repositories.QueryObject;
+import com.vixteam.teamaudit.core.domain.commons.IEntity;
 import com.vixteam.teamaudit.repositories.EntityRepository;
 import com.vixteam.teamaudit.services.IEntityService;
 

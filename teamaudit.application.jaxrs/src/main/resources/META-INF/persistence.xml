@@ -7,7 +7,7 @@
         <!--<jta-data-source>java:comp/env/jdbc/TeamAuditDS</jta-data-source>-->
         <!--<jar-file>lib/teamaudit.domain-1.0.0.jar</jar-file>-->
         <!--<jar-file></jar-file>-->
-        <class>com.vixteam.teamaudit.core.domain.BaseEntity</class>
+        <class>com.vixteam.teamaudit.core.domain.baseentity.BaseEntity</class>
         <class>com.vixteam.teamaudit.core.domain.UnidadeOrganizacional</class>
         <class>com.vixteam.teamaudit.core.domain.Escopo</class>
         <class>com.vixteam.teamaudit.core.domain.CategoriaObjetivo</class>

@@ -8,8 +8,8 @@ import {EntitySchemaService} from "./entity-schema.service";
 import {HandleErrorsComponent} from "../shared/components/handle-errors.component";
 
 //import {DataTableModule} from 'primeng/components/datatable/datatable';
-//import {DevExtremeModule} from 'devextreme-angular'
-import {GridModule} from "@progress/kendo-angular-grid";
+import {DevExtremeModule} from 'devextreme-angular'
+//import {GridModule} from "@progress/kendo-angular-grid";
 
 @NgModule({
     imports: [
@@ -18,8 +18,8 @@ import {GridModule} from "@progress/kendo-angular-grid";
         ReactiveFormsModule,
         entityRouting,
         //DataTableModule,
-        //DevExtremeModule,
-        GridModule
+        DevExtremeModule,
+        //GridModule
     ],
     declarations: [
         EntityListComponent,

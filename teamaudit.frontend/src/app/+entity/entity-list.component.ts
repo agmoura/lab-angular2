@@ -5,6 +5,7 @@ import {EntitySchema} from "../shared/model/schema";
 import {DataService} from "../shared/services/data.service";
 import {Page} from "../shared/model/paged-list";
 import {EntitySchemaService} from "./entity-schema.service";
+import {EntityQuery} from "../shared/model/query";
 
 @Component({
     selector: 'entity-list',
@@ -15,6 +16,7 @@ export class EntityListComponent implements OnInit {
     routeSubscription: any;
     entityName: string;
     entitySchema: EntitySchema;
+    entityQuery: EntityQuery;
     entityList = [];
     gridData: any[] =
         [{
@@ -64,8 +66,16 @@ export class EntityListComponent implements OnInit {
             this.page = new Page();
             this.page.size = 0;
 
+            this.entityQuery = new EntityQuery(this.entityName)
+                .selectList(this.entitySchema.listView.fields.map(field => field.path))
+                .select(this.entitySchema.id.path)
+                .pageItem(this.page)
+                .orderByList(this.entitySchema.listView.sorts);
+
+            this.entitySchema.id.index = this.entityQuery.projections.length - 1;
+
             this.gridColumns = this.entitySchema.listView.fields.map((field, index) => {
-                let columnOption: any = {dataField: `${index + 1}`, caption: field.label};
+                let columnOption: any = {dataField: `${field.index}`, caption: field.label};
                 if (field.required) columnOption.validationRules = [{type: "required"}];
                 return columnOption
             });
@@ -79,14 +89,14 @@ export class EntityListComponent implements OnInit {
     }
 
     load() {
-        let projections = this.entitySchema.listView.fields.map(field => field.path);
-        projections.splice(0, 0, this.entitySchema.id.path);
+        /*let projections = this.entitySchema.listView.fields.map(field => field.path);
+        projections.splice(0, 0, this.entitySchema.id.path);*/
 
-        this.dataService.findAll(this.entityName, this.page, this.entitySchema.listView.sorts, null, projections)
+        this.dataService.find(this.entityQuery)
             .subscribe(
                 data => {
                     this.entityList = data.list;
-                    this.page = new Page(data.page);
+                    this.entityQuery.pageItem(this.page = new Page(data.page));
                 },
                 error => this.errors = error
             );
@@ -104,7 +114,7 @@ export class EntityListComponent implements OnInit {
 
     delete(entity: any) {
         if (confirm('Tem certeza que deseja exluir esse registro ?')) {
-            this.dataService.delete(this.entityName, entity[0]).subscribe(
+            this.dataService.delete(this.entityName, entity[this.entitySchema.id.index]).subscribe(
                 data => this.load(),
                 error => this.errors = error
             );
@@ -113,7 +123,7 @@ export class EntityListComponent implements OnInit {
 
     gotoEdit(entity: any = null) {
         if (entity)
-            this.router.navigate(['entity', this.entityName, 'edit', entity[0]]);
+            this.router.navigate(['entity', this.entityName, 'edit', entity[this.entitySchema.id.index]]);
         else
             this.router.navigate(['entity', this.entityName, 'edit']);
     }

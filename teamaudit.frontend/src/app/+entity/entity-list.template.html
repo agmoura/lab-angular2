@@ -25,7 +25,7 @@
             </footer>
         </p-dataTable>-->
 
-        <kendo-grid [data]="entityList" [selectable]="true"  [height]="300">
+        <!--<kendo-grid [data]="entityList" [selectable]="true"  [height]="300">
             <kendo-grid-column *ngFor="let field of entitySchema.listView.fields; let index = index" field="[{{index+1}}]" title="{{field.label}}"></kendo-grid-column>
             <kendo-grid-column>
                 <template kendoHeaderTemplate>
@@ -36,7 +36,7 @@
                     <button (click)="delete(dataItem)" class="k-button k-button-icontext k-grid-delete">Delete</button>
                 </template>
             </kendo-grid-column>
-        </kendo-grid>
+        </kendo-grid>-->
 
         <!--<kendo-grid [data]="entityList">
             <kendo-grid-column field="[1]" title="ID"></kendo-grid-column>
@@ -44,7 +44,7 @@
             <kendo-grid-column field="[3]" title="Unit Price"></kendo-grid-column>
         </kendo-grid>-->
 
-        <!--<dx-data-grid [dataSource]="entityList"
+        <dx-data-grid [dataSource]="entityList"
                       [loadPanel]="{enabled: false}"
                       [columns]="gridColumns"
                       [filterRow]="{visible: true, applyFilter: 'auto'}"
@@ -66,14 +66,14 @@
                       [export]="{enabled: true, fileName: entityName, allowExportSelectedData: true}"
                       [paging]="{pageSize: 10}"
                       [pager]="{showPageSizeSelector: true, allowedPageSizes: [5, 10, 20], showInfo: true}">
-            &lt;!&ndash;<dxi-column *ngFor="let field of entitySchema.listView.fields; let index = index" [dataField]="[index+1]" caption="{{field.label}}"></dxi-column>&ndash;&gt;
+            <!--<dxi-column *ngFor="let field of entitySchema.listView.fields; let index = index" [dataField]="[index+1]" caption="{{field.label}}"></dxi-column>-->
 
-            &lt;!&ndash;<div *dxTemplate="let cellData of 'phoneCellTemplate'">
+            <!--<div *dxTemplate="let cellData of 'phoneCellTemplate'">
                 <dx-button (onClick)="callNumber(cellData.value)" [text]="cellData.text"></dx-button>
-            </div>&ndash;&gt;
-        </dx-data-grid>-->
+            </div>-->
+        </dx-data-grid>
 
-        <!--<div class="table-responsive">
+        <div class="table-responsive">
             <table class="table table-condensed table-hover">
                 <thead>
                 <tr>
@@ -83,7 +83,7 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let entity of entityList">
-                    <td *ngFor="let field of entitySchema.listView.fields; let index = index">{{entity[index+1]}}</td>
+                    <td *ngFor="let field of entitySchema.listView.fields; let index = index">{{entity[field.index]}}</td>
                     <td>
                         <a href="javascript:void(0)" (click)="gotoEdit(entity)">Editar</a>
                         <a href="javascript:void(0)" (click)="delete(entity)">Excluir</a>
@@ -100,6 +100,6 @@
                 </button>
                 <span>Total Registros: {{page.totalItens}}</span>
             </div>
-        </div>-->
+        </div>
     </div>
 </div>

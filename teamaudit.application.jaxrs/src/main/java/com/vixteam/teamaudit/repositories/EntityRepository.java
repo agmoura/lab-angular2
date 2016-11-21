@@ -3,11 +3,9 @@ package com.vixteam.teamaudit.repositories;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.io.Serializable;
-import com.vixteam.framework.core.usecase.commons.Page;
-import com.vixteam.framework.core.usecase.commons.PagedList;
-import com.vixteam.framework.common.support.QueryObject;
-import com.vixteam.framework.common.support.Schema;
-import com.vixteam.framework.core.domain.commons.IEntity;
+import com.vixteam.teamaudit.core.usecase.commons.Page;
+import com.vixteam.teamaudit.core.usecase.commons.PagedList;
+import com.vixteam.teamaudit.core.domain.commons.IEntity;
 
 public class EntityRepository implements IEntityRepository {
 
@@ -30,7 +28,7 @@ public class EntityRepository implements IEntityRepository {
             query.setMaxResults(page.getSize());
         }
 
-        return new PagedList(query.getResultList(), page, new Schema());
+        return new PagedList(query.getResultList(), page);
     }
 
     @Override

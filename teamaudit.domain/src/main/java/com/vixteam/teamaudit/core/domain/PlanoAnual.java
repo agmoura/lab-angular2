@@ -1,6 +1,7 @@
 
 package com.vixteam.teamaudit.core.domain;
 
+import com.vixteam.teamaudit.core.domain.baseentity.BaseEntity;
 import com.vixteam.teamaudit.core.domain.enums.TipoPlanoAnualEnum;
 import com.vixteam.teamaudit.core.domain.enums.TipoPlanoAnualEnumConverter;
 

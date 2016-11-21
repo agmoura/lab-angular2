@@ -5,6 +5,7 @@ import {EntityBase} from '../shared/model/models';
 import {DataService} from '../shared/services/data.service';
 import {EntitySchema} from '../shared/model/schema';
 import {EntitySchemaService} from './entity-schema.service';
+import {EntityQuery} from "../shared/model/query";
 
 @Component({
     selector: 'entity-edit',
@@ -37,10 +38,12 @@ export class EntityEditComponent implements OnInit {
             .filter(field => field.type === 'select')
             .forEach(field => {
 
-                let path = field.referencePath || field.path;
-                let projections = [field.select.value, field.select.text];
+                var entityQuery = new EntityQuery(field.referencePath || field.path)
+                    .select(field.select.value)
+                    .select(field.select.text)
+                    .orderBy(field.select.text);
 
-                this.dataService.findAll(path, null, [field.select.text], null, projections).subscribe(
+                this.dataService.find(entityQuery).subscribe(
                     data => this.entityReferences[field.path] = data.list
                 );
             });

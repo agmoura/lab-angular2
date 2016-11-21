@@ -1,6 +1,6 @@
 export interface EntitySchema {
     label: {singular: string, plural: string};
-    id: {path: string};
+    id: {index?: number; path: string};
     listView: {
         fields: EntityFieldSchema[],
         sorts: string[]
@@ -15,6 +15,7 @@ export interface EntitySchemaMap {
 }
 
 export interface EntityFieldSchema {
+    index?: number;
     label: string;
     path: string;
     referencePath?: string;

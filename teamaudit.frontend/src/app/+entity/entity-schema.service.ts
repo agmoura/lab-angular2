@@ -111,6 +111,11 @@ export class EntitySchemaService {
     };
 
     constructor() {
+        // Atribuir Índice de Todos Campos da Visão de Listagem
+        for (var attribute in this.entitySchemaMap) {
+            var entitySchema = this.entitySchemaMap[attribute];
+            entitySchema.listView.fields.forEach((item, index) => item.index = index);
+        }
     }
 
     public getEntitySchema(entityPath:string):EntitySchema {

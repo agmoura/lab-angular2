@@ -1,6 +1,8 @@
 
 package com.vixteam.teamaudit.core.domain;
 
+import com.vixteam.teamaudit.core.domain.baseentity.BaseEntity;
+
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -5,6 +5,7 @@ import {Http, Headers} from "@angular/http";
 
 import {PagedList, Page} from "../model/paged-list";
 import {EntityBase} from "../model/models";
+import {EntityQuery} from "../model/query";
 
 @Injectable()
 export class DataService {
@@ -32,6 +33,14 @@ export class DataService {
         if (projections) projections.forEach(projection => url += '&projections=' + projection);
 
         return this.http.get(url).map(response => new PagedList(response.json()));
+    }
+
+    find(entityQuery: EntityQuery): Observable<PagedList> {
+        let headers = new Headers({'Content-Type': 'application/json'});
+        let url: string = this.baseUrl + entityQuery.entityPath + '/query';
+
+        return this.http.post(url, JSON.stringify(entityQuery), {headers: headers})
+            .map(response => new PagedList(response.json()));
     }
 
     getByUri<TEntity extends EntityBase>(uri: string): Observable<TEntity> {

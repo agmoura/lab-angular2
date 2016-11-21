@@ -1,6 +1,7 @@
 
 package com.vixteam.teamaudit.core.domain;
 
+import com.vixteam.teamaudit.core.domain.baseentity.BaseEntity;
 import com.vixteam.teamaudit.core.domain.enums.SimNaoEnum;
 import com.vixteam.teamaudit.core.domain.enums.SimNaoEnumConverter;
 import javax.persistence.*;
@@ -13,7 +14,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "CATRI")
 @AttributeOverride(name="id", column=@Column(name = "CD_CATRI", columnDefinition = "CHAR(32)"))
-public class CategoriaRisco extends BaseEntity{
+public class CategoriaRisco extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "CD_ESCPO", columnDefinition = "CHAR(32)")
