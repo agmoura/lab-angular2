@@ -61,8 +61,8 @@
 
                       [editing]="{mode: 'form', allowUpdating: true, allowDeleting: true, allowAdding: true}"
                       (onRowRemoved)="delete($event.data)"
-                      [selection]="{mode: 'multiple'}"
-                      [stateStoring]="{enabled: true, type: 'localStorage', storageKey: entityName}"
+                      [selection]="false"
+
                       [export]="{enabled: true, fileName: entityName, allowExportSelectedData: true}"
                       [paging]="{pageSize: 10}"
                       [pager]="{showPageSizeSelector: true, allowedPageSizes: [5, 10, 20], showInfo: true}">
@@ -73,7 +73,7 @@
             </div>-->
         </dx-data-grid>
 
-        <div class="table-responsive">
+        <!--<div class="table-responsive">
             <table class="table table-condensed table-hover">
                 <thead>
                 <tr>
@@ -100,6 +100,6 @@
                 </button>
                 <span>Total Registros: {{page.totalItens}}</span>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>

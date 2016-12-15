@@ -9,7 +9,7 @@ import {EntityQuery} from "../shared/model/query";
 
 @Component({
     selector: 'entity-edit',
-    templateUrl: 'entity-edit.template.html',
+    templateUrl: './entity-edit.template.html'
 })
 export class EntityEditComponent implements OnInit {
 

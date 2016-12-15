@@ -1,7 +1,7 @@
-import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import 'rxjs/operator/map';
-import {Http, Headers} from "@angular/http";
+import {Injectable} from "@angular/core";
+import 'rxjs/Rx';
+import {Http, Headers, Response} from "@angular/http";
 
 import {PagedList, Page} from "../model/paged-list";
 import {EntityBase} from "../model/models";

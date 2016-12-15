@@ -8,7 +8,7 @@ import {TreeItem} from "../shared/model/tree-list";
 
 @Component({
     selector: 'categoria-risco-list',
-    templateUrl: 'categoria-risco.component.html',
+    templateUrl: './categoria-risco.component.html'
 })
 export class CategoriaRiscoComponent implements OnInit {
 

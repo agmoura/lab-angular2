@@ -7,7 +7,7 @@ import {Page} from "../shared/model/paged-list";
 
 @Component({
     selector: 'objetivo-list',
-    templateUrl: 'objetivo-list.component.html',
+    templateUrl: './objetivo-list.component.html',
 })
 export class ObjetivoListComponent implements OnInit {
 

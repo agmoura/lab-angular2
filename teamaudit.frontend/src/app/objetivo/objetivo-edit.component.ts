@@ -6,7 +6,7 @@ import {DataService} from "../shared/services/data.service";
 
 @Component({
     selector: 'objetivo-edit',
-    templateUrl: 'objetivo-edit.component.html',
+    templateUrl: './objetivo-edit.component.html'
 })
 export class ObjetivoEditComponent implements OnInit {
 

@@ -9,7 +9,7 @@ import {EntityQuery} from "../shared/model/query";
 
 @Component({
     selector: 'entity-list',
-    templateUrl: 'entity-list.template.html',
+    templateUrl: './entity-list.template.html'
 })
 export class EntityListComponent implements OnInit {
 
@@ -18,38 +18,7 @@ export class EntityListComponent implements OnInit {
     entitySchema: EntitySchema;
     entityQuery: EntityQuery;
     entityList = [];
-    gridData: any[] =
-        [{
-            "ProductID": 1,
-            "ProductName": "Chai",
-            "UnitPrice": 18.0000,
-            "Discontinued": true
-        }, {
-            "ProductID": 2,
-            "ProductName": "Chang",
-            "UnitPrice": 19.0000,
-            "Discontinued": false
-        }, {
-            "ProductID": 3,
-            "ProductName": "Aniseed Syrup",
-            "UnitPrice": 10.0000,
-            "Discontinued": false
-        }, {
-            "ProductID": 4,
-            "ProductName": "Chef Anton's Cajun Seasoning",
-            "UnitPrice": 22.0000,
-            "Discontinued": false
-        }, {
-            "ProductID": 5,
-            "ProductName": "Chef Anton's Gumbo Mix",
-            "UnitPrice": 21.3500,
-            "Discontinued": false
-        }, {
-            "ProductID": 6,
-            "ProductName": "Grandma's Boysenberry Spread",
-            "UnitPrice": 25.0000,
-            "Discontinued": false
-        }];
+    entityReferences: any = {};
     page: Page;
     errors: any;
 
@@ -67,18 +36,52 @@ export class EntityListComponent implements OnInit {
             this.page.size = 0;
 
             this.entityQuery = new EntityQuery(this.entityName)
-                .selectList(this.entitySchema.listView.fields.map(field => field.path))
-                .select(this.entitySchema.id.path)
+            /*.selectList(this.entitySchema.listView.fields.map(field => field.path))
+             .select(this.entitySchema.id.path)*/
                 .pageItem(this.page)
                 .orderByList(this.entitySchema.listView.sorts);
 
             this.entitySchema.id.index = this.entityQuery.projections.length - 1;
 
-            this.gridColumns = this.entitySchema.listView.fields.map((field, index) => {
-                let columnOption: any = {dataField: `${field.index}`, caption: field.label};
-                if (field.required) columnOption.validationRules = [{type: "required"}];
-                return columnOption
-            });
+            /*this.gridColumns = this.entitySchema.listView.fields.map((field, index) => {
+             let columnOption: any = {dataField: `${field.index}`, caption: field.label};
+             if (field.required) columnOption.validationRules = [{type: "required"}];
+             return columnOption
+             });*/
+
+            this.entitySchema.formView.fields
+                .filter(field => field.type === 'select')
+                .forEach(field => {
+
+                    var entityQuery = new EntityQuery(field.referencePath || field.path)
+                        .select(field.select.value)
+                        .select(field.select.text)
+                        .orderBy(field.select.text);
+
+                    //this.entityReferences[field.path] = [];
+
+                    this.dataService.find(entityQuery).subscribe(
+                        data => this.entityReferences[field.path] = data.list
+                    );
+                });
+
+
+            this.gridColumns = this.entitySchema.formView.fields.map((field, index) => {
+                    let columnOption: any = {dataField: field.path, caption: field.label};
+
+                    if (field.select) {
+                        columnOption.dataField += '.' + field.select.value;
+                        columnOption.lookup = {
+                            dataSource: this.entityReferences[field.path],
+                            valueExpr: "0",
+                            displayExpr: "1"
+                        }
+                    }
+                    if (field.required) columnOption.validationRules = [{type: "required"}];
+                    return columnOption
+                }
+            );
+
 
             this.load();
         });
@@ -90,7 +93,7 @@ export class EntityListComponent implements OnInit {
 
     load() {
         /*let projections = this.entitySchema.listView.fields.map(field => field.path);
-        projections.splice(0, 0, this.entitySchema.id.path);*/
+         projections.splice(0, 0, this.entitySchema.id.path);*/
 
         this.dataService.find(this.entityQuery)
             .subscribe(

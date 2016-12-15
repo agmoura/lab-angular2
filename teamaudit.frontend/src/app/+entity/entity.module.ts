@@ -8,7 +8,7 @@ import {EntitySchemaService} from "./entity-schema.service";
 import {HandleErrorsComponent} from "../shared/components/handle-errors.component";
 
 //import {DataTableModule} from 'primeng/components/datatable/datatable';
-import {DevExtremeModule} from 'devextreme-angular'
+import {DxDataGridModule} from 'devextreme-angular';
 //import {GridModule} from "@progress/kendo-angular-grid";
 
 @NgModule({
@@ -18,7 +18,7 @@ import {DevExtremeModule} from 'devextreme-angular'
         ReactiveFormsModule,
         entityRouting,
         //DataTableModule,
-        DevExtremeModule,
+        DxDataGridModule,
         //GridModule
     ],
     declarations: [
