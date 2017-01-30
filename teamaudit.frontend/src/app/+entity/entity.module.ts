@@ -9,6 +9,9 @@ import {HandleErrorsComponent} from "../shared/components/handle-errors.componen
 
 //import {DataTableModule} from 'primeng/components/datatable/datatable';
 import {DxDataGridModule} from 'devextreme-angular';
+
+import {TextInputComponent} from "./input/text-input";
+import {ReferenceInputComponent} from "./input/reference-input";
 //import {GridModule} from "@progress/kendo-angular-grid";
 
 @NgModule({
@@ -19,11 +22,14 @@ import {DxDataGridModule} from 'devextreme-angular';
         entityRouting,
         //DataTableModule,
         DxDataGridModule,
-        //GridModule
+        //GridModule,
     ],
     declarations: [
         EntityListComponent,
         EntityEditComponent,
+        ReferenceInputComponent,
+        TextInputComponent,
+
         HandleErrorsComponent
     ],
     providers: [

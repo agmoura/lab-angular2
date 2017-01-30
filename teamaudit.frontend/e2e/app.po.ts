@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class TeamauditPage {
+export class TaPage {
   navigateTo() {
     return browser.get('/');
   }

@@ -106,6 +106,7 @@ class EntityQueryProcessor<TSource, TTarget> {
         List<Order> orders = new ArrayList<>();
 
         for (String sort : sorts) {
+            sort = sort.toLowerCase();
             boolean isDescending = sort.endsWith(" desc");
             sort = isDescending ? sort.replace(" desc", "") : sort.replace(" asc", "");
             String[] names = sort.split(Pattern.quote("."));

@@ -1,7 +1,12 @@
 package com.vixteam.teamaudit.consumer.controllers;
 
-import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vixteam.teamaudit.consumer.commons.ValidationException;
+import com.vixteam.teamaudit.core.domain.baseentity.BaseEntity;
+import com.vixteam.teamaudit.core.usecase.baseentity.*;
+import com.vixteam.teamaudit.core.usecase.commons.PagedList;
+import com.vixteam.teamaudit.core.usecase.commons.UseCaseFacade;
+import com.vixteam.teamaudit.provider.domain.baseentity.EntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -9,19 +14,13 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import com.vixteam.teamaudit.core.usecase.commons.PagedList;
-import com.vixteam.teamaudit.core.usecase.commons.UseCaseFacade;
-import com.vixteam.teamaudit.core.usecase.baseentity.*;
-import com.vixteam.teamaudit.consumer.commons.ValidationException;
-
-import com.vixteam.teamaudit.core.domain.baseentity.BaseEntity;
-import com.vixteam.teamaudit.provider.domain.baseentity.EntityRepository;
-
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.util.List;
 
 @RestController()
-@RequestMapping("api")
-public class BaseEntityController {
+@RequestMapping("admin")
+public class EntityAdminController {
 
     @Autowired
     Validator validator;
@@ -30,13 +29,18 @@ public class BaseEntityController {
     private UseCaseFacade facade;
 
     @RequestMapping(value = "{queryPath}", method = RequestMethod.GET)
-    public PagedList findEntities(@PathVariable String queryPath, EntityQuery entityQuery) {
-        return queryEntities(queryPath, entityQuery);
+    public List findEntities(@PathVariable String queryPath, @RequestParam List<String> sort, @RequestParam List<String> filter, @RequestParam Integer[] range) {
+
+        EntityQuery entityQuery = new EntityQuery();
+        entityQuery.setEntityPath(queryPath);
+        entityQuery.setSorts(sort);
+
+        return facade.execute(entityQuery).getList();
     }
 
-    @RequestMapping(value = "{queryPath}/query")
+    /*@RequestMapping(value = "{queryPath}/query")
     public PagedList queryEntities(@PathVariable String queryPath, @RequestBody EntityQuery entityQuery) {
-        entityQuery.setEntityPath(queryPath);
+        assert queryPath.equals(entityQuery.getEntityPath());
         return facade.execute(entityQuery);
     }
 
@@ -77,5 +81,5 @@ public class BaseEntityController {
     @RequestMapping(value = "{commandPath}/{id}", method = RequestMethod.DELETE)
     public void deleteEntity(@PathVariable String commandPath, @PathVariable String id) throws ClassNotFoundException {
         facade.execute(new DeleteBaseEntityCommand(commandPath, id));
-    }
+    }*/
 }

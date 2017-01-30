@@ -36,18 +36,12 @@ export class EntityListComponent implements OnInit {
             this.page.size = 0;
 
             this.entityQuery = new EntityQuery(this.entityName)
-            /*.selectList(this.entitySchema.listView.fields.map(field => field.path))
-             .select(this.entitySchema.id.path)*/
+                .selectList(this.entitySchema.formView.fields.map(field => field.path))
+                .select(this.entitySchema.id.path)
                 .pageItem(this.page)
                 .orderByList(this.entitySchema.listView.sorts);
 
             this.entitySchema.id.index = this.entityQuery.projections.length - 1;
-
-            /*this.gridColumns = this.entitySchema.listView.fields.map((field, index) => {
-             let columnOption: any = {dataField: `${field.index}`, caption: field.label};
-             if (field.required) columnOption.validationRules = [{type: "required"}];
-             return columnOption
-             });*/
 
             this.entitySchema.formView.fields
                 .filter(field => field.type === 'select')
@@ -65,9 +59,9 @@ export class EntityListComponent implements OnInit {
                     );
                 });
 
-
+            // dxDataGrid
             this.gridColumns = this.entitySchema.formView.fields.map((field, index) => {
-                    let columnOption: any = {dataField: field.path, caption: field.label};
+                    let columnOption: any = {dataField: `${index}`, caption: field.label};
 
                     if (field.select) {
                         columnOption.dataField += '.' + field.select.value;
@@ -82,7 +76,6 @@ export class EntityListComponent implements OnInit {
                 }
             );
 
-
             this.load();
         });
     }
@@ -92,8 +85,6 @@ export class EntityListComponent implements OnInit {
     }
 
     load() {
-        /*let projections = this.entitySchema.listView.fields.map(field => field.path);
-         projections.splice(0, 0, this.entitySchema.id.path);*/
 
         this.dataService.find(this.entityQuery)
             .subscribe(

@@ -17,14 +17,10 @@
                 <!--TODO: Entender funcionamento do ng-container-->
                 <ng-container [ngSwitch]="field.type">
                     <input *ngSwitchCase="'hidden'" type="hidden" name="{{field.path}}" [ngModel]="entity[field.path]">
-                    <input *ngSwitchCase="'text'" type="text" name="{{field.path}}" [ngModel]="entity[field.path]" class="form-control" [required]="field.required || false">
+                    <text-input *ngSwitchCase="'text'" name="{{field.path}}" [ngModel]="entity[field.path]"></text-input>
+                    <!--<input *ngSwitchCase="'text'" type="text" name="{{field.path}}" [ngModel]="entity[field.path]" class="form-control" [required]="field.required || false">-->
                     <input *ngSwitchCase="'number'" type="number" step="0.01" name="{{field.path}}" [ngModel]="entity[field.path]" class="form-control" [required]="field.required">
-                    <select *ngSwitchCase="'select'" ngModelGroup="{{field.path}}" name="{{field.select.value}}" ngModel="{{entity[field.path] && entity[field.path][field.select.value]}}" class="form-control" [required]="field.required" >
-                        <option value=""> --- Selecione ---</option>
-                        <option *ngFor="let item of entityReferences[field.path]" [value]="item[0]">
-                            {{item[1]}}
-                        </option>
-                    </select>
+                    <reference-input *ngSwitchCase="'select'" name="{{field.select.value}}" ngModelGroup="{{field.path}}" [ngModel]="entity[field.path] && entity[field.path][field.select.value]" [field]="field" [items]="entityReferences[field.path]"></reference-input>
                 </ng-container>
             </div>
 
@@ -37,7 +33,7 @@
 
     <div class="card-footer text-muted">
         <!--TODO: Remover Informações de Depuração -->
-        <strong>this.objetivo:</strong> {{objetivo | json}} <br/>
+        <strong>this.entity:</strong> {{entity | json}} <br/>
         <strong>form.value:</strong> {{form.value | json}}
     </div>
 </div>

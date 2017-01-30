@@ -1,10 +1,10 @@
-import { TeamauditPage } from './app.po';
+import { TaPage } from './app.po';
 
-describe('teamaudit App', function() {
-  let page: TeamauditPage;
+describe('ta App', function() {
+  let page: TaPage;
 
   beforeEach(() => {
-    page = new TeamauditPage();
+    page = new TaPage();
   });
 
   it('should display message saying app works', () => {
