@@ -1,105 +1,18 @@
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">Manter {{entitySchema.label.plural}}</h3>
-        <button (click)="gotoEdit(null)" class="btn btn-info">Novo Registro</button>
-    </div>
-
-    <div class="card-block">
-        <handle-errors [errors]="errors"></handle-errors>
-
-        <!--<div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
-            <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
-            <input #gb type="text" pInputText size="50" style="float:left" placeholder="Global Filter">
-        </div>-->
-
-        <!--<p-dataTable [value]="entityList" [rows]="10" [paginator]="true" [pageLinks]="3"
-                     [rowsPerPageOptions]="[5,10,100]" [responsive]="true">
-            <p-column *ngFor="let field of entitySchema.listView.fields; let index = index"
-                      [field]="[index+1]" [header]="field.label" [editable]="false" [filter]="true" [sortable]="true">
-            </p-column>
-            <footer>
-                <div class="ui-helper-clearfix" style="width:100%">
-                    <button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()"
-                            label="Add"></button>
-                </div>
-            </footer>
-        </p-dataTable>-->
-
-        <!--<kendo-grid [data]="entityList" [selectable]="true"  [height]="300">
-            <kendo-grid-column *ngFor="let field of entitySchema.listView.fields; let index = index" field="[{{index+1}}]" title="{{field.label}}"></kendo-grid-column>
-            <kendo-grid-column>
-                <template kendoHeaderTemplate>
-                    Editing
-                </template>
-                <template kendoCellTemplate let-dataItem>
-                    <button (click)="onEdit(dataItem)" class="k-button k-button-icontext k-grid-edit">Edit</button>
-                    <button (click)="delete(dataItem)" class="k-button k-button-icontext k-grid-delete">Delete</button>
-                </template>
-            </kendo-grid-column>
-        </kendo-grid>-->
-
-        <!--<kendo-grid [data]="entityList">
-            <kendo-grid-column field="[1]" title="ID"></kendo-grid-column>
-            <kendo-grid-column field="[2]" title="Product Name"></kendo-grid-column>
-            <kendo-grid-column field="[3]" title="Unit Price"></kendo-grid-column>
-        </kendo-grid>-->
-
-        <dx-data-grid [dataSource]="entityList"
-                      [loadPanel]="{enabled: false}"
-                      [columns]="gridColumns"
-                      [filterRow]="{visible: true, applyFilter: 'auto'}"
-                      [searchPanel]="{visible: true, width: 240}"
-                      [headerFilter]="{visible: true}"
-
-                      [groupPanel]="{visible: true}"
-                      [allowColumnReordering]="true"
-                      [allowColumnResizing]="true"
-                      [columnHidingEnabled]="true"
-                      [columnAutoWidth]="true"
-                      [columnChooser]="{enabled: true}"
-                      [columnFixing]="{enabled: true}"
-
-                      [editing]="{mode: 'form', allowUpdating: true, allowDeleting: true, allowAdding: true}"
-                      (onRowRemoved)="delete($event.data)"
-                      [selection]="false"
-
-                      [export]="{enabled: true, fileName: entityName, allowExportSelectedData: true}"
-                      [paging]="{pageSize: 10}"
-                      [pager]="{showPageSizeSelector: true, allowedPageSizes: [5, 10, 20], showInfo: true}">
-            <!--<dxi-column *ngFor="let field of entitySchema.listView.fields; let index = index" [dataField]="[index+1]" caption="{{field.label}}"></dxi-column>-->
-
-            <!--<div *dxTemplate="let cellData of 'phoneCellTemplate'">
-                <dx-button (onClick)="callNumber(cellData.value)" [text]="cellData.text"></dx-button>
-            </div>-->
-        </dx-data-grid>
-
-        <!--<div class="table-responsive">
-            <table class="table table-condensed table-hover">
-                <thead>
-                <tr>
-                    <th *ngFor="let field of entitySchema.listView.fields">{{field.label}}</th>
-                    <th>Ações</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let entity of entityList">
-                    <td *ngFor="let field of entitySchema.listView.fields; let index = index">{{entity[field.index]}}</td>
-                    <td>
-                        <a href="javascript:void(0)" (click)="gotoEdit(entity)">Editar</a>
-                        <a href="javascript:void(0)" (click)="delete(entity)">Excluir</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <div>
-                <button (click)="previousPage()" [disabled]="page.number <= 0" class="btn btn-default">
-                    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-                </button>
-                <button (click)="nextPage()" [disabled]="page.number >= page.totalPages-1" class="btn btn-default">
-                    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-                </button>
-                <span>Total Registros: {{page.totalItens}}</span>
-            </div>
-        </div>-->
-    </div>
+<div class="page-content">
+    <md-card class="page-card">
+        <md-card-title>
+            <span>Manter {{entitySchema.label.plural}}</span>
+            <a class="card-title-menu" md-ripple [md-menu-trigger-for]="cardTitleMenu">
+                <i class="material-icons">more_vert</i>
+            </a>
+            <md-menu #cardTitleMenu="mdMenu">
+                <button md-menu-item>Ação 1</button>
+                <button md-menu-item>Ação 2</button>
+                <button md-menu-item>Ação 3</button>
+            </md-menu>
+        </md-card-title>
+        <md-card-content>
+            <div id="gridContainer"></div>
+        </md-card-content>
+    </md-card>
 </div>

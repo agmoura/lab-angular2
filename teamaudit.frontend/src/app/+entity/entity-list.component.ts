@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
+import * as $ from "jquery";
+import DevExpress from 'devextreme/bundles/dx.all';
+import 'devextreme/ui/data_grid.js';
+
 import {EntitySchema} from "../shared/model/schema";
 import {DataService} from "../shared/services/data.service";
 import {Page} from "../shared/model/paged-list";
@@ -22,18 +26,46 @@ export class EntityListComponent implements OnInit {
     page: Page;
     errors: any;
 
+    dataGrid: DevExpress.ui.dxDataGrid;
     gridColumns: any[];
 
     constructor(private route: ActivatedRoute, private router: Router, private dataService: DataService, private schemaService: EntitySchemaService) {
 
     }
 
+    createGrid(): DevExpress.ui.dxDataGrid {
+        let options : DevExpress.ui.dxDataGridOptions = {
+            filterRow: {visible: true, applyFilter: "auto"},
+            searchPanel: {visible: true, width: 240, placeholder: "Pesquisa..."},
+            headerFilter: {visible: true},
+            paging: {pageSize: 10},
+            pager: {showPageSizeSelector: true, allowedPageSizes: [5, 10, 20], showInfo: true},
+
+            groupPanel: {visible: true},
+            allowColumnReordering: true,
+            allowColumnResizing: true,
+            columnHidingEnabled: true,
+            columnAutoWidth: true,
+            columnChooser: {enabled: true},
+            columnFixing: {enabled: true},
+
+            editing: {mode: 'form', allowUpdating: true, allowDeleting: true, allowAdding: true},
+            selection: false,
+
+            export: {enabled: true, fileName: 'export.list', allowExportSelectedData: true}
+        };
+
+        return $("#gridContainer").dxDataGrid(options).dxDataGrid('instance');
+    }
+
     ngOnInit() {
+        this.dataGrid = this.createGrid();
+
         this.routeSubscription = this.route.params.subscribe(params => {
             this.entityName = params['entity'];
             this.entitySchema = this.schemaService.getEntitySchema(this.entityName);
             this.page = new Page();
-            this.page.size = 0;
+            this.page.size = 0; // dxDataGrid
 
             this.entityQuery = new EntityQuery(this.entityName)
                 .selectList(this.entitySchema.formView.fields.map(field => field.path))
@@ -91,6 +123,9 @@ export class EntityListComponent implements OnInit {
                 data => {
                     this.entityList = data.list;
                     this.entityQuery.pageItem(this.page = new Page(data.page));
+
+                    // dxDataGrid
+                    this.dataGrid.option({dataSource: this.entityList, columns: this.gridColumns});
                 },
                 error => this.errors = error
             );

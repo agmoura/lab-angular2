@@ -37,7 +37,7 @@
 
             <div class="form-group">
                 <label>Categoria:</label>
-                <select ngModelGroup="categoriaObjetivo" name="id" ngModel="{{objetivo.categoriaObjetivo?.id}}"  class="form-control" required>
+                <select ngModelGroup="categoriaObjetivo" name="id" ngModel="{{objetivo.categoriaObjetivo?.id}}" class="form-control" required>
                     <option value=""> --- Selecione ---</option>
                     <option *ngFor="let item of categorias" [value]="item.id">
                         {{item.nome}}

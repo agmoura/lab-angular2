@@ -27,18 +27,24 @@
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.7.2",
 
+    "@angular/material": "^2.0.0-beta.1",
+    "daemonite-material": "^4.0.0-alpha.6",
+    "font-awesome": "^4.7.0",
+    "hammerjs": "^2.0.8",
+    "material-design-icon-fonts": "^3.0.1",
+    "md2": "0.0.13",
+
+    "ng2-translate": "^5.0.0",
+
+
     "devextreme": "^16.2",
-    "devextreme-angular": "^16.2",
-
-    "bootstrap": "^4.0.0-alpha.5",
-
-    "jquery": "2.2.3",
-    "primeng": "^2.0.0-rc.2"
+    "jquery": "~3.1.1"
   },
   "devDependencies": {
     "@angular/compiler-cli": "^2.3.1",
     "@types/jasmine": "2.5.38",
     "@types/node": "^6.0.42",
+    "@types/jquery": "^2.0.40",
     "angular-cli": "1.0.0-beta.26",
     "codelyzer": "~2.0.0-beta.1",
     "jasmine-core": "2.5.2",

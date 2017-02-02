@@ -1,24 +1,180 @@
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#"><strong>TEAM</strong>AUDIT</a>
-    <div class="collapse navbar-collapse" id="navbarDefault">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/home">Home</a></li>
-            <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/entity/escopo">Escopos</a></li>
-            <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/entity/categoriaObjetivo">Categorias Objetivos</a></li>
-            <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/entity/objetivo">Objetivos</a></li>
-            <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/entity/classificacaoRisco">Classificação Risco</a></li>
-            <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/entity/categoriaRisco">Categoria Risco</a></li>
-            <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/objetivo">Objetivos (Old)</a></li>
-            <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/categoria-risco">Categoria Risco (Old)</a></li>
-        </ul>
+<!--Top toolbar-->
+<md-toolbar *ngIf="!appService.getState().pageFullscreen" class="topnav-container" color="primary">
+    <!--Side Nav Button-->
+    <a md-icon-button class="topnav-menu-btn" (click)="toggleSidenav()">
+        <md-icon>menu</md-icon>
+    </a>
+    <!--Application Title-->
+    <span class="topnav-title">
+    <img src="assets/img/logo-half-light.svg"
+         *ngIf="appService.getState().sidenavMode === 'side'">
+    {{appService.getState().topnavTitle}}</span>
+    <span class="toolbar-filler"></span>
+    <!--Apps Menu-->
+    <span fxShow.sm="false" fxShow.xs="false">
+  <a md-icon-button
+     (click)="toggleTopnavSearch()">
+    <md-icon>search</md-icon>
+  </a>
+  </span>
+    <div class="topnav-search" fxShow.sm="false" fxShow.xs="false">
+        <md2-autocomplete
+                [class.show]="showTopnavSearch"
+                [items]="searchItems"
+                item-text="title"
+                item-value="link"
+                (change)="selectedSearchItem($event)"
+                [(ngModel)]="searchItem">
+        </md2-autocomplete>
     </div>
-</nav>
+    <span fxShow.sm="false" fxShow.xs="false">
+  <a md-icon-button (click)="toggleFullscreen()">
+    <md-icon>fullscreen</md-icon>
+  </a>
+  </span>
+    <span fxShow.sm="false" fxShow.xs="false">
+  <a md-icon-button [md-menu-trigger-for]="topnavAppsMenu">
+    <span class="notify">6</span>
+    <md-icon>apps</md-icon>
+  </a>
+  </span>
+    <md-menu #topnavAppsMenu="mdMenu">
+        <div class="menu-card">
+            <div>
+                <a class="menu-block-btn"><img src="assets/img/icon-atom.png"><span>Atom</span></a>
+                <a class="menu-block-btn"><img src="assets/img/icon-bootstrap.png"><span>Bootstrap</span></a>
+                <a class="menu-block-btn"><img src="assets/img/icon-ts.png"><span>TypeScript</span></a>
+            </div>
+            <div>
+                <a class="menu-block-btn"><img src="assets/img/icon-facebook.png"><span>Facebook</span></a>
+                <a class="menu-block-btn"><img src="assets/img/icon-google.png"><span>Google</span></a>
+                <a class="menu-block-btn"><img src="assets/img/icon-swift.png"><span>Swift</span></a>
+            </div>
+            <a class="menu-block-bottom-btn">More</a>
+        </div>
+    </md-menu>
+    <!--Notifications Menu-->
+    <a md-icon-button [md-menu-trigger-for]="topnavNotificationsMenu">
+        <span class="notify">3</span>
+        <md-icon>notifications</md-icon>
+    </a>
+    <md-menu #topnavNotificationsMenu="mdMenu">
+        <div class="menu-card">
+            <md-list>
+                <md-list-item>
+                    <img md-list-avatar src="assets/img/avatar3.png" alt="...">
+                    <h3 md-line> Tim Max <span class="pull-right"> <small>just now</small></span></h3>
+                    <p md-line>
+                        <span> <small>Make some fun tonight?</small></span>
+                    </p>
+                </md-list-item>
+                <md-list-item>
+                    <img md-list-avatar src="assets/img/avatar.jpg" alt="...">
+                    <h3 md-line> Chiho Sin <span class="pull-right"> <small>2 min ago</small></span></h3>
+                    <p md-line>
+                        <span> <small>Hello!</small></span>
+                    </p>
+                </md-list-item>
+                <md-list-item>
+                    <img md-list-avatar src="assets/img/avatar1.png" alt="...">
+                    <h3 md-line> Alex Chan <span class="pull-right"> <small>8 min ago</small></span></h3>
+                    <p md-line>
+                        <span> <small>I'm finish my job!</small></span>
+                    </p>
+                </md-list-item>
+            </md-list>
+            <a class="menu-block-bottom-btn">View all</a>
+        </div>
+    </md-menu>
+    <!--User Menu-->
+    <a md-icon-button [md-menu-trigger-for]="topnavUserMenu">
+        <img class="topnav-avatar" src="assets/img/avatar.jpg">
+    </a>
+    <md-menu #topnavUserMenu="mdMenu">
+        <button md-menu-item>
+            <md-icon>person</md-icon>
+            <span>Profile</span></button>
+        <button md-menu-item>
+            <md-icon>settings</md-icon>
+            <span>Setting</span></button>
+        <button md-menu-item>
+            <md-icon>lock_outline</md-icon>
+            <span>Lock</span></button>
+    </md-menu>
+</md-toolbar>
+<!--Page container-->
+<md-sidenav-container>
 
-<div class="container-fluid">
-    <main>
+    <!--Side nva bar-->
+    <md-sidenav
+            [class.sidenav-collapse]="appService.getState().sidenavCollapse"
+            *ngIf="!appService.getState().pageFullscreen"
+            mode="{{appService.getState().sidenavMode}}"
+            opened="{{ appService.getState().sidenavOpen }}"
+            (close)="closeSidenav()"
+            (open)="openSidenav()"
+            (mouseout)="toggleSidenavCollapse()">
+        <div class="sidenav-container">
+            <md-nav-list *ngIf="mainMenu">
+                <template ngFor let-menuItem [ngForOf]="mainMenu">
+                    <template [ngIf]="!menuItem.sub">
+                        <md-list-item
+                                (click)="toggleSidenavMenu(menuItem.name, false, false)"
+                                routerLink="{{menuItem.link}}"
+                                routerLinkActive="active">
+                            <a md-line>
+                                <i class="material-icons" aria-hidden="true"
+                                   *ngIf="menuItem.mdIcon">{{menuItem.mdIcon}}</i>
+                                <i class="fa fa-lg {{menuItem.faIcon}}" aria-hidden="true"
+                                   *ngIf="menuItem.faIcon && !menuItem.mdIcon"></i>
+                                &nbsp;&nbsp;<span class="sidenav-collapse-item">{{menuItem.title}}</span></a>
+                            <span *ngIf="menuItem.notifyContent" class="{{menuItem.notifyClass}}">{{menuItem.notifyContent}}</span>
+                        </md-list-item>
+                    </template>
+                    <template [ngIf]="menuItem.sub">
+                        <md-list-item
+                                (click)="toggleSidenavMenu(menuItem.name, false, true)"
+                                [class.active]="activeSubMenuName === menuItem.name">
+                            <a md-line>
+                                <i class="material-icons" aria-hidden="true"
+                                   *ngIf="menuItem.mdIcon">{{menuItem.mdIcon}}</i>
+                                <i class="fa fa-lg {{menuItem.faIcon}}" aria-hidden="true"
+                                   *ngIf="menuItem.faIcon && !menuItem.mdIcon"></i>
+                                &nbsp;&nbsp;<span class="sidenav-collapse-item">{{menuItem.title}}</span></a>
+                            <span *ngIf="menuItem.notifyContent" class="{{menuItem.notifyClass}}">{{menuItem.notifyContent}}</span>
+                            <i *ngIf="activeSubMenuName === menuItem.name"
+                               class="material-icons sidenav-collapse-item">expand_more</i>
+                            <i *ngIf="activeSubMenuName !== menuItem.name"
+                               class="material-icons sidenav-collapse-item">chevron_right</i>
+                        </md-list-item>
+                        <md-list-item
+                                class="sidenav-menu-sub"
+                                *ngFor="let subMenuItem of menuItem.sub"
+                                (click)="toggleSidenavMenu(subMenuItem.name, true, false )"
+                                [class.show]="activeSubMenuName === menuItem.name"
+                                routerLink="{{subMenuItem.link}}"
+                                routerLinkActive="active">
+                            <a md-line class="sidenav-menu-sub-title"><span class="sidenav-collapse-item">{{subMenuItem.title}}</span></a>
+                            <i class="material-icons sidenav-collapse-item">chevron_right</i>
+                        </md-list-item>
+                    </template>
+                </template>
+            </md-nav-list>
+        </div>
+    </md-sidenav>
+
+    <!--Page content-->
+    <div [class.page-container]="!appService.getState().pageFullscreen">
         <router-outlet></router-outlet>
-    </main>
-</div>
+        <!--Page footer-->
+        <md-toolbar class="page-footer" *ngIf="appService.getState().pageFooter">
+            © 2016 Lokra Studio.
+            <span class="filler"></span>
+            <button md-button>About</button>
+            <button md-button>Contact</button>
+        </md-toolbar>
+    </div>
+</md-sidenav-container>
+<button md-fab color="warn" style="position: absolute;bottom: 16px;right: 16px;z-index: 5;" (click)="openThemeDialog()">
+    <md-icon>brush</md-icon>
+</button>
