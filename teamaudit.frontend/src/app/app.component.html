@@ -5,10 +5,7 @@
         <md-icon>menu</md-icon>
     </a>
     <!--Application Title-->
-    <span class="topnav-title">
-    <img src="assets/img/logo-half-light.svg"
-         *ngIf="appService.getState().sidenavMode === 'side'">
-    {{appService.getState().topnavTitle}}</span>
+    <span class="topnav-title">TEAMAUDIT</span>
     <span class="toolbar-filler"></span>
     <!--Apps Menu-->
     <span fxShow.sm="false" fxShow.xs="false">
@@ -33,7 +30,7 @@
   </a>
   </span>
     <span fxShow.sm="false" fxShow.xs="false">
-  <a md-icon-button [md-menu-trigger-for]="topnavAppsMenu">
+    <a md-icon-button [md-menu-trigger-for]="topnavAppsMenu">
     <span class="notify">6</span>
     <md-icon>apps</md-icon>
   </a>
@@ -102,6 +99,7 @@
             <span>Lock</span></button>
     </md-menu>
 </md-toolbar>
+
 <!--Page container-->
 <md-sidenav-container>
 
@@ -155,7 +153,7 @@
                                 routerLink="{{subMenuItem.link}}"
                                 routerLinkActive="active">
                             <a md-line class="sidenav-menu-sub-title"><span class="sidenav-collapse-item">{{subMenuItem.title}}</span></a>
-                            <i class="material-icons sidenav-collapse-item">chevron_right</i>
+                            <!-- <i class="material-icons sidenav-collapse-item">chevron_right</i>-->
                         </md-list-item>
                     </template>
                 </template>
@@ -168,7 +166,7 @@
         <router-outlet></router-outlet>
         <!--Page footer-->
         <md-toolbar class="page-footer" *ngIf="appService.getState().pageFooter">
-            © 2016 Lokra Studio.
+            © 2016 Vixteam Consultoria & Sistemas
             <span class="filler"></span>
             <button md-button>About</button>
             <button md-button>Contact</button>

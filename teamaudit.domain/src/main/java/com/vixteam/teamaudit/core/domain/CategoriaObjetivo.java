@@ -35,7 +35,6 @@ public class CategoriaObjetivo extends BaseEntity {
     @Column(name="ID_CATOB_INTR_SIST", length=1, nullable=false)
     private SimNaoEnum indicadorInternoSistema;
 
-    @JsonIgnore
     @Valid
     @OneToMany(mappedBy = "categoriaObjetivo")
     private List<Objetivo> objetivos;

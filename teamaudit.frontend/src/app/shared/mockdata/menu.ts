@@ -10,33 +10,9 @@ export class MenuMock {
             link: '/dashboard'
         },
         {
-            name: 'dashboard-edge',
-            title: 'Dashboard Edge',
-            faIcon: 'fa-window-maximize',
-            link: '/dashboard-edge',
-            // Notify title
-            notifyContent: 'new',
-            // Notify title class
-            notifyClass: 'bg-warn label',
-        },
-        {
-            // Data menu name
-            name: 'widgets',
-            // Show title
-            title: 'Widget',
-            // Fontawesome icon class
-            faIcon: 'fa-magic',
-            // Router link
-            link: '/widgets',
-            // Notify title
-            notifyContent: 'new',
-            // Notify title class
-            notifyClass: 'bg-primary label',
-        },
-        {
-            name: 'component',
-            title: 'Component',
-            faIcon: 'fa-tasks',
+            name: 'masterdata',
+            title: 'Cadastro',
+            faIcon: 'fa-pencil-square-o',
             // Sub menu, only one level (Match Material Design)
             sub: [
                 {
@@ -63,87 +39,7 @@ export class MenuMock {
                     name: 'categoriaRisco',
                     title: 'Categoria Risco',
                     link: '/entity/categoriaRisco'
-                },
-                {
-                    name: 'notifications',
-                    title: 'Notifications',
-                    link: '/component-notifications'
-                },
-                {
-                    name: 'checkbox',
-                    title: 'Checkbox',
-                    link: '/component-checkbox'
-                },
-                {
-                    name: 'chips',
-                    title: 'Chips',
-                    link: '/component-chips'
-                },
-                {
-                    name: 'date-picker',
-                    title: 'Date Picker',
-                    link: '/component-date-picker'
-                },
-                {
-                    name: 'list',
-                    title: 'List',
-                    link: '/component-list'
-                },
-                {
-                    name: 'media-player',
-                    title: 'Media Player',
-                    link: '/component-media-player'
-                },
-                {
-                    name: 'menu',
-                    title: 'Menu',
-                    link: '/component-menu'
-                },
-                {
-                    name: 'grid-list',
-                    title: 'Grid List',
-                    link: '/component-grid-list'
-                },
-                {
-                    name: 'select',
-                    title: 'Select',
-                    link: '/component-select'
-                },
-                {
-                    name: 'slide-toggle',
-                    title: 'Slide Toggle',
-                    link: '/component-slide-toggle'
-                },
-                {
-                    name: 'radio-button',
-                    title: 'Radio Button',
-                    link: '/component-radio-button'
-                },
-                {
-                    name: 'slider',
-                    title: 'Slider',
-                    link: '/component-slider'
-                },
-                {
-                    name: 'tabs',
-                    title: 'Tabs',
-                    link: '/component-tabs'
-                },
-                {
-                    name: 'text-editor',
-                    title: 'Text Editor',
-                    link: '/component-text-editor'
-                },
-                {
-                    name: 'toolbar',
-                    title: 'Toolbar',
-                    link: '/component-toolbar'
-                },
-                {
-                    name: 'tooltip',
-                    title: 'Tooltip',
-                    link: '/component-tooltip'
-                },
+                }
             ]
         },
         {
