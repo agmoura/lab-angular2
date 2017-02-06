@@ -28,9 +28,11 @@ export class EditComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.entityName = this.route.snapshot.params['entity'];
-        this.entityId= this.route.snapshot.params['id'];
-        this.setup();
+        if(!this.entityName) {
+            this.entityName = this.route.snapshot.params['entity'];
+            this.entityId = this.route.snapshot.params['id'];
+            this.setup();
+        }
     }
 
     ngOnChanges(changes: SimpleChanges): void {
