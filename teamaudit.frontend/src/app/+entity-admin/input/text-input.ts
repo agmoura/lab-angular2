@@ -19,16 +19,11 @@ import {ValueAccessorBase} from "./value-accessor";
 @Component({
     selector: 'text-input',
     template: `
-    <div>
-        <label *ngIf="label" [attr.for]="identifier">{{label}}</label>
-        <input
-            type="text"
-            class="form-control"
-            [placeholder]="placeholder"
-            [(ngModel)]="value"
-            [ngClass]="{invalid: (invalid | async)}"
-            [id]="identifier"
-        />
+    <div class="card-form-input" fxflex>
+        <md-input-container>
+            <input md-input [placeholder]="label" type="text" [(ngModel)]="value" [name]="name" required>
+        </md-input-container>
+        <!--<p class="text-danger" *ngIf="firstName.errors?.required">You must include a first name.</p>-->
     </div>
   `,
     providers: [{
@@ -38,6 +33,7 @@ import {ValueAccessorBase} from "./value-accessor";
     }],
 })
 export class TextInputComponent extends ValueAccessorBase<string> {
+    @Input() public name: string;
     @Input() public label: string;
     @Input() public placeholder: string;
 

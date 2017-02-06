@@ -2,6 +2,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 // Custom style sheet
 //----------------------------------------------------------------------------------------------------------------------
+/*
 @mixin custom-theme($theme) {
 
   $primary: map-get($theme, primary);
@@ -33,3 +34,4 @@ body.dark {
   $theme: md-dark-theme($theme-primary, $theme-accent, $theme-warn);
   @include custom-theme($theme);
 }
+*/

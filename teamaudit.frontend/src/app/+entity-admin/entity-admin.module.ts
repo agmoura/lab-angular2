@@ -2,9 +2,11 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule}   from '@angular/common';
 import {MaterialModule} from "@angular/material";
-import {entityRouting} from "./entity.routes";
-import {EntityListComponent} from "./entity-list.component";
-import {EntityEditComponent} from "./entity-edit.component";
+import {Md2Module} from 'md2/module';
+import {TranslateModule} from 'ng2-translate';
+import {entityAdminRouting} from "./entity-admin.routes";
+import {ListComponent} from "./list/list.component";
+import {EditComponent} from "./detail/edit.component";
 import {EntitySchemaService} from "./entity-schema.service";
 import {HandleErrorsComponent} from "../shared/components/handle-errors.component";
 
@@ -13,6 +15,9 @@ import {HandleErrorsComponent} from "../shared/components/handle-errors.componen
 
 import {TextInputComponent} from "./input/text-input";
 import {ReferenceInputComponent} from "./input/reference-input";
+import {NumberInputComponent} from "./input/number-input";
+import {DatagridComponent} from "./list/datagrid.component";
+import {ReferenceManyComponent} from "./detail/referencemany.component";
 
 //import {GridModule} from "@progress/kendo-angular-grid";
 
@@ -22,16 +27,21 @@ import {ReferenceInputComponent} from "./input/reference-input";
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        entityRouting,
+        Md2Module,
+        TranslateModule,
+        entityAdminRouting,
         //DataTableModule,
         //DxDataGridModule,
         //GridModule,
     ],
     declarations: [
-        EntityListComponent,
-        EntityEditComponent,
+        ListComponent,
+        EditComponent,
+        DatagridComponent,
+        ReferenceManyComponent,
         ReferenceInputComponent,
         TextInputComponent,
+        NumberInputComponent,
 
         HandleErrorsComponent
     ],
@@ -39,5 +49,5 @@ import {ReferenceInputComponent} from "./input/reference-input";
         EntitySchemaService
     ]
 })
-export class EntityModule {
+export class EntityAdminModule {
 }

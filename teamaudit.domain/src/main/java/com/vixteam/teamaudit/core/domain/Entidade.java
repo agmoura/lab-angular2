@@ -15,6 +15,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "EQAUD")
+@AttributeOverride(name = "id", column = @Column(name = "CD_EQAUD", columnDefinition = "CHAR(32)"))
 public class Entidade extends BaseEntity {
     @NotNull
     @Size(max = 50)
@@ -48,6 +49,9 @@ public class Entidade extends BaseEntity {
 
     @OneToMany(mappedBy = "entidade")
     private List<PlanoAnual> planosAnuaisAuditoria;
+
+    @ManyToMany
+    private List<Objetivo> objetivos;
 
     /* Getters and Setters */
     public List<PlanoAnual> getPlanosAnuaisAuditoria() {
@@ -104,5 +108,13 @@ public class Entidade extends BaseEntity {
 
     public void setCodigoImportacao(String codigoImportacao) {
         this.codigoImportacao = codigoImportacao;
+    }
+
+    public List<Objetivo> getObjetivos() {
+        return objetivos;
+    }
+
+    public void setObjetivos(List<Objetivo> objetivos) {
+        this.objetivos = objetivos;
     }
 }

@@ -1,0 +1,76 @@
+<div class="page-content">
+    <md-card class="page-card">
+        <md-card-title>
+            <span>Editar {{entityName | translate}}</span>
+            <a class="card-title-menu" md-ripple [md-menu-trigger-for]="cardTitleMenu">
+                <i class="material-icons">more_vert</i>
+            </a>
+            <md-menu #cardTitleMenu="mdMenu">
+                <button md-menu-item>Ação 1</button>
+                <button md-menu-item>Ação 2</button>
+                <button md-menu-item>Ação 3</button>
+            </md-menu>
+        </md-card-title>
+
+        <md-card-content>
+            <form #form="ngForm" (ngSubmit)="save(form.value)">
+
+                <input type="hidden" name="id" [ngModel]="entityId">
+
+                <div *ngFor="let field of entitySchema.formView.fields" class="form-group">
+                    <ng-container [ngSwitch]="field.type">
+                        <input *ngSwitchCase="FieldType.Hidden"
+                               type="hidden"
+                               name="{{field.path}}"
+                               [ngModel]="entity[field.path]">
+
+                        <text-input *ngSwitchCase="FieldType.Text"
+                                    [name]="field.path"
+                                    [label]="field.label"
+                                    [ngModel]="entity[field.path]">
+                        </text-input>
+
+                        <number-input *ngSwitchCase="FieldType.Number"
+                                      [name]="field.path"
+                                      [label]="field.label"
+                                      [ngModel]="entity[field.path]">
+                        </number-input>
+
+                        <reference-input *ngSwitchCase="FieldType.Reference"
+                                         [name]="field.select.value"
+                                         [label]="field.label"
+                                         ngModelGroup="{{field.path}}"
+                                         [ngModel]="entity[field.path] && entity[field.path][field.select.value]"
+                                         [field]="field"
+                                         [items]="entityReferences[field.path]">
+                        </reference-input>
+                    </ng-container>
+                </div>
+            </form>
+        </md-card-content>
+        <md-card-actions>
+            <button md-raised-button (click)="goBack()">VOLTAR</button>
+            <button md-raised-button (click)="save(form.value)">SALVAR</button>
+        </md-card-actions>
+        <!--<md-card-footer>
+            <md-progress-bar mode="indeterminate"></md-progress-bar>
+        </md-card-footer>-->
+    </md-card>
+
+    <md-card class="page-card" *ngIf="entitySchema.formView.relationships">
+        <md-tab-group>
+            <md-tab *ngFor="let relationship of entitySchema.formView.relationships" label="{{relationship.path.toUpperCase() | translate}}">
+                <md-card-content>
+                    <reference-many [entityName]="relationship.path"></reference-many>
+                </md-card-content>
+            </md-tab>
+        </md-tab-group>
+
+    </md-card>
+</div>
+
+
+
+
+
+

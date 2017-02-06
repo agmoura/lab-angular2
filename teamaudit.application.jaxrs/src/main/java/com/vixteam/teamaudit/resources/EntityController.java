@@ -78,7 +78,7 @@ public class EntityController {
     }
 
     private Response saveEntity(String entityName, String entityId, String entityData) throws ClassNotFoundException {
-        // Build Object Entity from JSON Data
+        // Build Object Entity from JSON Date
         IEntity entity = (IEntity) new Gson().fromJson(entityData, Class.forName(entityName));
 
         // Validate Entity

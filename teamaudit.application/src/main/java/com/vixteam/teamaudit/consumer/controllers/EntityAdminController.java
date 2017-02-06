@@ -64,7 +64,7 @@ public class EntityAdminController {
     }
 
     private BaseEntity validateEntity(String commandPath, String entityId, String entityData) throws ClassNotFoundException, IOException, NoSuchMethodException, MethodArgumentNotValidException {
-        // Build Object Entity from JSON Data
+        // Build Object Entity from JSON Date
         String entityName = EntityRepository.getEntityName(commandPath);
         BaseEntity entity = (BaseEntity) new ObjectMapper().readValue(entityData, Class.forName(entityName));
 

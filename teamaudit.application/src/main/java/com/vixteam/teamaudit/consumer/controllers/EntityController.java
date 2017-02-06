@@ -76,7 +76,7 @@ public class EntityController {
 
 
     private Object saveEntity(String entityPath, String entityId, String entityData) throws ClassNotFoundException, IOException, NoSuchMethodException, MethodArgumentNotValidException {
-        // Build Object Entity from JSON Data
+        // Build Object Entity from JSON Date
         String entityName = EntityRepository.getEntityName(entityPath);
         IEntity entity = (IEntity) new ObjectMapper().readValue(entityData, Class.forName(entityName));
 
@@ -114,7 +114,7 @@ public class EntityController {
     }
 
     private Object saveEntity(String entityName, String entityId, String entityData, HttpServletResponse response) throws ClassNotFoundException, IOException {
-        // Build Object Entity from JSON Data
+        // Build Object Entity from JSON Date
         Object entity = new ObjectMapper().readValue(entityData, Class.forName(entityName));
 
         // Validate Entity

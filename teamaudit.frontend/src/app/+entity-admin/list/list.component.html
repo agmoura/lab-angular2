@@ -1,7 +1,7 @@
 <div class="page-content">
     <md-card class="page-card">
         <md-card-title>
-            <span>Manter {{entitySchema.label.plural}}</span>
+            <span>Manter {{entityName | translate}}</span>
             <a class="card-title-menu" md-ripple [md-menu-trigger-for]="cardTitleMenu">
                 <i class="material-icons">more_vert</i>
             </a>
@@ -12,7 +12,7 @@
             </md-menu>
         </md-card-title>
         <md-card-content>
-            <div id="gridContainer"></div>
+            <datagrid [entityName]="entityName" (onEdit)="gotoEdit($event)"></datagrid>
         </md-card-content>
     </md-card>
 </div>

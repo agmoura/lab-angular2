@@ -6,15 +6,11 @@ import {ValueAccessorBase} from "./value-accessor";
 @Component({
     selector: 'reference-input',
     template: `
-    <div>
-        <label *ngIf="label" [attr.for]="identifier">{{label}}</label>
-        <select [(ngModel)]="value" class="form-control" [required]="field.required" >
-            <option value=""> --- Selecione ---</option>
-            <option *ngFor="let item of items" [value]="item[0]">
-                {{item[1]}}
-            </option>
-        </select>
-    </div>
+    <md-select [placeholder]="label" [(ngModel)]="value" [name]="name" [required]="field.required">
+        <md-option *ngFor="let item of items" [value]="item[0]">
+            {{item[1]}}
+        </md-option>
+    </md-select>
     `,
     providers: [{
         provide: NG_VALUE_ACCESSOR,
@@ -23,10 +19,10 @@ import {ValueAccessorBase} from "./value-accessor";
     }]
 })
 export class ReferenceInputComponent extends ValueAccessorBase<string> {
-
-    @Input() label: string;
-    @Input() field: EntityFieldSchema;
-    @Input() items = [];
+    @Input() public name: string;
+    @Input() public label: string;
+    @Input() public field: EntityFieldSchema;
+    @Input() public items = [];
 
     constructor() {
         super();

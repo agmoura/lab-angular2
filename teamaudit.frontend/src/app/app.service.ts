@@ -28,7 +28,7 @@ export class AppService {
     private state: InternalStateType = {
         appName: 'TeamAudit',
         darkMode: false,
-        defaultLang: 'en',
+        defaultLang: 'pt',
         topnavTitle: 'TeamAudit 2017',
         sidenavOpen: false,
         sidenavMode: 'over',

@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
                 private router: Router) {
         // Change your page title here
         appService.getState().topnavTitle = 'Loading';
-        translate.addLangs(['en', 'zh-cn']);
+        translate.addLangs(['pt', 'en', 'zh-cn']);
         translate.setDefaultLang(appService.getState().defaultLang);
     }
 

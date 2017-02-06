@@ -1,7 +1,26 @@
 {
-  "DASHBOARD": {
-    "ALERT": "Clear and ready for packing to any platform Template.",
-    "CHART-TITLE-1": "Cluster Load",
-    "CHART-TITLE-2": "Storage"
-  }
+  "ESCOPO": "Escopo [EN]",
+  "ESCOPO.SINGULAR": "Escopo [EN]",
+  "ESCOPO.PLURAL": "Escopos [EN]",
+  "ESCOPO.NOME": "Nome [EN]",
+  "ESCOPO.DESCRICAO": "Descrição [EN]",
+  "ESCOPO.CODIGOIMPORTACAO": "Codigo Importação [EN]",
+  "CATEGORIAOBJETIVO": "Categoria Objetivo [EN]",
+  "CATEGORIAOBJETIVO.SINGULAR": "Categoria Objetivo [EN]",
+  "CATEGORIAOBJETIVO.PLURAL": "Categorias Objetivos [EN]",
+  "CATEGORIAOBJETIVO.ESCOPO": "Escopo [EN]",
+  "CATEGORIAOBJETIVO.NOME": "Nome [EN]",
+  "CATEGORIAOBJETIVO.DESCRICAO": "Descrição [EN]",
+  "CATEGORIAOBJETIVO.INDICADORINTERNOSISTEMA": "Indicador Interno Sistema [EN]",
+  "CATEGORIAOBJETIVO.OBJETIVOS": "Objetivos [EN]",
+  "OBJETIVO": "Objetivo [EN]",
+  "OBJETIVO.SINGULAR": "Objetivo [EN]",
+  "OBJETIVO.PLURAL": "Objetivos [EN]",
+  "OBJETIVO.NOME": "Nome [EN]",
+  "OBJETIVO.DESCRICAO": "Descrição [EN]",
+  "OBJETIVO.UNIDADEORGANIZACIONAL": "Unidade Organizacional [EN]",
+  "OBJETIVO.CATEGORIAOBJETIVO": "Categoria Objetivo [EN]",
+  "OBJETIVO.DESCRICAOMETA": "Descrição Meta [EN]",
+  "OBJETIVO.VALORMETA": "Valor Meta [EN]",
+  "OBJETIVO.PERCENTUALMETA": "Percentual Meta [EN]"
 }

@@ -11,13 +11,13 @@ import {rootRoutesModule} from './app.routes';
 
 import {AppService} from "./app.service";
 import {DataService} from "./shared/services/data.service";
-import {EntitySchemaService} from "./+entity/entity-schema.service";
+import {EntitySchemaService} from "./+entity-admin/entity-schema.service";
 import {HomeComponent} from "./home/home.component";
 import {ObjetivoEditComponent} from "./objetivo/objetivo-edit.component";
 import {ObjetivoListComponent} from "./objetivo/objetivo-list.component";
 import {CategoriaRiscoComponent} from "./categoria-risco/categoria-risco.component";
 import {About} from "./about/about";
-import {EntityModule} from "./+entity/entity.module";
+import {EntityAdminModule} from "./+entity-admin/entity-admin.module";
 
 import {DialogExampleComponent} from "./shared/dialog/dialog-example/dialog-example.component";
 import {DialogThemeComponent} from "./shared/dialog/dialog-theme/dialog-theme.component";
@@ -44,7 +44,7 @@ import {DialogThemeComponent} from "./shared/dialog/dialog-theme/dialog-theme.co
         TranslateModule.forRoot({provide: TranslateLoader, useFactory: (createTranslateLoader), deps: [Http]}),
 
         rootRoutesModule,
-        EntityModule
+        EntityAdminModule
     ],
     providers: [
         AppService,

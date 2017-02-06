@@ -4,6 +4,7 @@ import com.vixteam.teamaudit.core.domain.baseentity.BaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Entity
 @Table (name="OBJEM")
@@ -95,4 +96,5 @@ public class Objetivo extends BaseEntity {
     public void setPercentualMeta(Double percentualMeta) {
         this.percentualMeta = percentualMeta;
     }
+
 }

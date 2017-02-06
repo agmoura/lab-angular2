@@ -1,31 +1,45 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
-import {EntityBase} from '../shared/model/models';
-import {DataService} from '../shared/services/data.service';
-import {EntitySchema} from '../shared/model/schema';
-import {EntitySchemaService} from './entity-schema.service';
-import {EntityQuery} from "../shared/model/query";
+import {EntityBase} from '../../shared/model/models';
+import {DataService} from '../../shared/services/data.service';
+import {EntitySchema, FieldType} from '../../shared/model/schema';
+import {EntitySchemaService} from '../entity-schema.service';
+import {EntityQuery} from "../../shared/model/query";
 
 @Component({
-    selector: 'entity-edit',
-    templateUrl: './entity-edit.template.html'
+    selector: 'edit',
+    templateUrl: 'edit.component.html'
 })
-export class EntityEditComponent implements OnInit {
+export class EditComponent implements OnInit, OnChanges {
 
-    entityName: string;
+    @Input() entityName: string;
+    @Input() entityId: string;
+
     entitySchema: EntitySchema;
     entity: EntityBase = <EntityBase>{};
+
     entityReferences: any = {};
     errors: any;
+
+    FieldType: typeof FieldType = FieldType;
 
     constructor(private route: ActivatedRoute, private router: Router, private dataService: DataService, private schemaService: EntitySchemaService) {
     }
 
     ngOnInit() {
         this.entityName = this.route.snapshot.params['entity'];
+        this.entityId= this.route.snapshot.params['id'];
+        this.setup();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        this.setup();
+    }
+
+    setup(){
         this.entitySchema = this.schemaService.getEntitySchema(this.entityName);
-        this.load(this.route.snapshot.params['id']);
+        this.load(this.entityId);
     }
 
     load(id: string) {
@@ -35,7 +49,7 @@ export class EntityEditComponent implements OnInit {
             );
 
         this.entitySchema.formView.fields
-            .filter(field => field.type === 'select')
+            .filter(field => field.type === FieldType.Reference)
             .forEach(field => {
 
                 var entityQuery = new EntityQuery(field.referencePath || field.path)

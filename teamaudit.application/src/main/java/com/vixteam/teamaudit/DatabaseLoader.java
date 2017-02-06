@@ -1,5 +1,6 @@
 package com.vixteam.teamaudit;
 
+import java.util.Date;
 import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,12 +28,14 @@ public class DatabaseLoader implements ApplicationListener<ContextRefreshedEvent
         int objetivoCount = 1000;
         int classificacaoRiscoCount = 5;
         int categoriaRiscoCount = 100;
+        int entidadeCount = 100;
 
         UnidadeOrganizacional[] unidades = new UnidadeOrganizacional[unidadeCount];
         Escopo[] escopos = new Escopo[escopoCount];
         CategoriaObjetivo[] categoriaObjetivos = new CategoriaObjetivo[categoriaCount];
         ClassificacaoRisco[] classificacaoRiscos = new ClassificacaoRisco[classificacaoRiscoCount];
         CategoriaRisco[] categoriaRiscos = new CategoriaRisco[categoriaRiscoCount];
+        Entidade[] entidades = new Entidade[entidadeCount];
         Random random = new Random();
 
         for (int i = 0; i < unidadeCount; i++) {
@@ -89,7 +92,7 @@ public class DatabaseLoader implements ApplicationListener<ContextRefreshedEvent
             categoriaRisco.setIndicadorInternoSistema(SimNaoEnum.Nao);
             categoriaRisco.setEscopo(escopos[random.nextInt(escopoCount)]);
 
-            int j = floorDiv(i-1, 3);
+            int j = floorDiv(i - 1, 3);
 
             if (j == 0) {
                 categoriaRisco.setOrdem("0");
@@ -104,6 +107,16 @@ public class DatabaseLoader implements ApplicationListener<ContextRefreshedEvent
             }
 
             categoriaRiscos[i] = this.entityManager.merge(categoriaRisco);
+        }
+
+        for (int i = 0; i < entidadeCount; i++) {
+            Entidade entidade = new Entidade();
+            String number = String.format("%04d", i);
+            entidade.setNome("Entidade " + number);
+            entidade.setDescricao("Descrição da Entidade " + number);
+            entidade.setDataInicio(new Date());
+            entidade.setDataFim(new Date(entidade.getDataInicio().getTime() + 1000 * 60 * 60 * 24 * (i + 1)));
+            entidades[i] = this.entityManager.merge(entidade);
         }
 
     }
