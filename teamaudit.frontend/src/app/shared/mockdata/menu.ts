@@ -40,6 +40,12 @@ export class MenuMock {
                     title: 'Categoria Risco',
                     link: '/entity/categoriaRisco'
                 }
+                ,
+                {
+                    name: 'entidade',
+                    title: 'Entidade',
+                    link: '/entity/entidade'
+                }
             ]
         },
         {

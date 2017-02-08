@@ -1,33 +1,30 @@
-import {Component, OnInit, OnChanges, SimpleChanges, OnDestroy, Input, EventEmitter, Output, ElementRef} from '@angular/core';
+import {Component, OnInit, OnChanges, SimpleChanges, OnDestroy, Input, EventEmitter, Output, ElementRef, Directive} from '@angular/core';
 import {TranslateService} from 'ng2-translate';
 import * as $ from "jquery";
 import DevExpress from 'devextreme/bundles/dx.all';
 import 'devextreme/ui/data_grid.js';
+import 'devextreme/ui/button.js';
 
-import {EntitySchema, FieldType} from "../../shared/model/schema";
+import {EntitySchema, ListViewSchema, FieldType} from "../../shared/model/schema";
 import {DataService} from "../../shared/services/data.service";
 import {Page} from "../../shared/model/paged-list";
-import {EntitySchemaService} from "../entity-schema.service";
 import {EntityQuery} from "../../shared/model/query";
 
-@Component({
-    selector: 'datagrid',
-    template: `
-        <div></div>
-    `
+@Directive({
+    selector: 'datagrid'
 })
 export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input() entityName: string;
+    @Input() listViewSchema: ListViewSchema;
+    @Input() filter: any;
 
-    @Output() onNew = new EventEmitter<string>();
+    @Output() onCreate = new EventEmitter<string>();
     @Output() onEdit = new EventEmitter<string>();
     @Output() onSelect = new EventEmitter<Array<any>>();
 
-    entitySchema: EntitySchema;
     entityQuery: EntityQuery;
     entityList = [];
-    entityReferences: any = {};
     page: Page;
     errors: any;
 
@@ -35,7 +32,6 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
     gridColumns: any[];
 
     constructor(private dataService: DataService,
-                private schemaService: EntitySchemaService,
                 private element: ElementRef,
                 private translateService: TranslateService) {
 
@@ -46,6 +42,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnDestroy() {
+        $(this.element.nativeElement).remove();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -53,46 +50,79 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private createGrid(): DevExpress.ui.dxDataGrid {
+        let self = this;
+        let contentReady = false;
+
         let options: DevExpress.ui.dxDataGridOptions = {
-            filterRow: {visible: true, applyFilter: "auto"},
-            searchPanel: {visible: true, width: 240, placeholder: "Pesquisa..."},
-            headerFilter: {visible: true},
+            filterRow: {visible: false, applyFilter: "auto"},
+            headerFilter: {visible: false},
+            searchPanel: {visible: true, placeholder: "Pesquisa..."},
             paging: {pageSize: 10},
             pager: {showPageSizeSelector: true, allowedPageSizes: [5, 10, 20], showInfo: true},
 
             /*groupPanel: {visible: true},*/
             allowColumnReordering: true,
             allowColumnResizing: true,
-            columnHidingEnabled: true,
-            columnAutoWidth: true,
+            columnHidingEnabled: false,
+            columnAutoWidth: false,
             columnChooser: {enabled: true},
-            columnFixing: {enabled: true},
+            /*columnFixing: {enabled: true},*/
 
             /*editing: {mode: 'form', allowUpdating: true, allowDeleting: true, allowAdding: true},*/
             selection: false,
 
-            export: {enabled: true, fileName: 'export.list', allowExportSelectedData: true}
+            export: {enabled: true, fileName: 'export.list', allowExportSelectedData: true},
+            onContentReady: function (e) {
+                if (!contentReady) {
+                    let createButton = $('<div>').dxButton({
+                        icon: 'add', onClick: function () {
+                            self.create();
+                        }
+                    });
+
+                    let toggleFilterButton = $('<div>').dxButton({
+                        icon: 'filter', onClick: function () {
+                            self.create();
+                        }
+                    });
+
+                    e.element.find('.dx-toolbar-after').prepend(toggleFilterButton).prepend(createButton);
+
+                    contentReady = true;
+                }
+            }
+
         };
 
         return $(this.element.nativeElement).dxDataGrid(options).dxDataGrid('instance');
     }
 
     private setup() {
-        this.entitySchema = this.schemaService.getEntitySchema(this.entityName);
         this.page = new Page();
         this.page.size = 0; // dxDataGrid
 
         this.entityQuery = new EntityQuery(this.entityName)
-            .selectList(this.entitySchema.listView.fields.map(field => field.path))
+            .selectList(this.listViewSchema.fields.map(field => field.source))
             .select('id')
+            .where(this.filter)
             .pageItem(this.page)
-            .orderByList(this.entitySchema.listView.orders);
+            .orderByList(this.listViewSchema.orders);
 
         // dxDataGrid
-        this.gridColumns = this.entitySchema.listView.fields.map((field, index) => {
+        this.gridColumns = this.listViewSchema.fields.map((field, index) => {
+                let dataType;
+
+                switch (field.type) {
+                    case FieldType.Date: dataType = 'date'; break;
+                    case FieldType.Boolean: dataType = 'boolean'; break;
+                    case FieldType.Number: dataType = 'number'; break;
+                    case FieldType.Text: dataType = 'string'; break;
+                }
+
                 return {
                     dataField: `${index}`,
                     caption: this.translateService.instant(field.label),
+                    dataType: dataType,
                     visible: !field.hidden
                 };
             }
@@ -107,7 +137,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
                 $('<a/>').addClass('dx-link')
                     .text('Editar')
                     .on('dxclick', function (e) {
-                        self.gotoEdit(options.data);
+                        self.edit(options.data);
                     })
                     .appendTo(container);
             }
@@ -127,9 +157,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
                 data => {
                     this.entityList = data.list;
                     this.entityQuery.pageItem(this.page = new Page(data.page));
-
-                    // dxDataGrid
-                    this.dataGrid.option({dataSource: this.entityList, columns: this.gridColumns});
+                    this.dataGrid.option({dataSource: this.entityList, columns: this.gridColumns});  // dxDataGrid
                 },
                 error => this.errors = error
             );
@@ -144,11 +172,11 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
         }
     }
 
-    private gotoNew() {
-        this.onNew.emit(null /*this.parentId*/);
+    private create() {
+        this.onCreate.emit(null /*this.parentId*/);
     }
 
-    private gotoEdit(entity: any) {
+    private edit(entity: any) {
         this.onEdit.emit(this.getId(entity));
     }
 }

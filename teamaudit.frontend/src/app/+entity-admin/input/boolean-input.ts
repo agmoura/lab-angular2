@@ -3,23 +3,21 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ValueAccessorBase} from "./value-accessor";
 
 @Component({
-    selector: 'number-input',
+    selector: 'boolean-input',
     template: `
-    <md-input-container class="form-input">
-        <input md-input [placeholder]="label | translate" type="number" step="0.01" [(ngModel)]="value" [name]="name">
-    </md-input-container>
+    <md-slide-toggle [(ngModel)]="value" [name]="name">{{label | translate}}</md-slide-toggle>
     `,
     providers: [{
         provide: NG_VALUE_ACCESSOR,
-        useExisting: NumberInputComponent,
+        useExisting: BooleanInputComponent,
         multi: true,
     }],
 })
-export class NumberInputComponent extends ValueAccessorBase<string> {
+export class BooleanInputComponent extends ValueAccessorBase<string> {
     @Input() public name: string;
     @Input() public label: string;
 
-    public identifier = `number-input-${identifier++}`;
+    public identifier = `boolean-input-${identifier++}`;
 
     constructor() {
         super();

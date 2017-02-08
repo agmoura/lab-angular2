@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vixteam.teamaudit.core.domain.baseentity.BaseEntity;
+import com.vixteam.teamaudit.core.domain.enums.BooleanConverter;
 import com.vixteam.teamaudit.core.domain.enums.SimNaoEnum;
 import com.vixteam.teamaudit.core.domain.enums.SimNaoEnumConverter;
 import java.util.List;
@@ -31,9 +32,9 @@ public class CategoriaObjetivo extends BaseEntity {
     private String descricao;
 
     @NotNull
-    @Convert(converter = SimNaoEnumConverter.class)
+    @Convert(converter = BooleanConverter.class)
     @Column(name="ID_CATOB_INTR_SIST", length=1, nullable=false)
-    private SimNaoEnum indicadorInternoSistema;
+    private Boolean indicadorInternoSistema;
 
     @JsonIgnore
     @Valid
@@ -64,11 +65,11 @@ public class CategoriaObjetivo extends BaseEntity {
         this.descricao = descricao;
     }
 
-    public SimNaoEnum getIndicadorInternoSistema() {
+    public Boolean getIndicadorInternoSistema() {
         return indicadorInternoSistema;
     }
 
-    public void setIndicadorInternoSistema(SimNaoEnum indicadorInternoSistema) {
+    public void setIndicadorInternoSistema(Boolean indicadorInternoSistema) {
         this.indicadorInternoSistema = indicadorInternoSistema;
     }
 
@@ -81,7 +82,7 @@ public class CategoriaObjetivo extends BaseEntity {
     }
 
 
-    @ManyToMany(mappedBy = "objetivos")
+    @ManyToMany(mappedBy = "categoriasObjetivos")
     private List<Entidade> entidades;
 
     public List<Entidade> getEntidades() {

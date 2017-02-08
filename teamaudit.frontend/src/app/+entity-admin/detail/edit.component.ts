@@ -1,46 +1,60 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, OnInit, OnDestroy, OnChanges, Input, SimpleChanges} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Location} from "@angular/common";
 
 import {EntityBase} from '../../shared/model/models';
 import {DataService} from '../../shared/services/data.service';
-import {EntitySchema, FieldType} from '../../shared/model/schema';
+import {FieldType, FormViewSchema} from '../../shared/model/schema';
 import {EntitySchemaService} from '../entity-schema.service';
 import {EntityQuery} from "../../shared/model/query";
+import {isUndefined} from "util";
 
 @Component({
     selector: 'edit',
     templateUrl: 'edit.component.html'
 })
-export class EditComponent implements OnInit, OnChanges {
+export class EditComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input() entityName: string;
     @Input() entityId: string;
+    @Input() parentId: string;
+    @Input() formViewSchema: FormViewSchema;
 
-    entitySchema: EntitySchema;
+    childEdit: any;
+
+    toogleEdit: boolean;
+
+    //entitySchema: EntitySchema;
+    routeSubscription: any;
     entity: EntityBase = <EntityBase>{};
-
-    entityReferences: any = {};
+    referencesData: any = {};
     errors: any;
 
     FieldType: typeof FieldType = FieldType;
 
-    constructor(private route: ActivatedRoute, private router: Router, private dataService: DataService, private schemaService: EntitySchemaService) {
+    constructor(private route: ActivatedRoute,
+                private router: Router,
+                private location: Location,
+                private dataService: DataService,
+                private schemaService: EntitySchemaService) {
     }
 
     ngOnInit() {
-        if(!this.entityName) {
-            this.entityName = this.route.snapshot.params['entity'];
-            this.entityId = this.route.snapshot.params['id'];
-            this.setup();
+        if (!this.entityName) {
+            this.routeSubscription = this.route.params.subscribe(params => {
+                this.entityName = this.route.snapshot.params['entity'];
+                this.entityId = this.route.snapshot.params['id'];
+                this.formViewSchema = this.schemaService.getEntitySchema(this.entityName).formView;
+                this.load(this.entityId);
+            });
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        this.setup();
+    ngOnDestroy() {
+        if (this.routeSubscription) this.routeSubscription.unsubscribe();
     }
 
-    setup(){
-        this.entitySchema = this.schemaService.getEntitySchema(this.entityName);
+    ngOnChanges(changes: SimpleChanges): void {
         this.load(this.entityId);
     }
 
@@ -50,25 +64,25 @@ export class EditComponent implements OnInit, OnChanges {
                 data => this.entity = data
             );
 
-        this.entitySchema.formView.fields
+        this.formViewSchema.fields
             .filter(field => field.type === FieldType.Reference)
             .forEach(field => {
 
-                var entityQuery = new EntityQuery(field.referencePath || field.path)
+                var entityQuery = new EntityQuery(field.referencePath || field.source)
                     .select(field.select.value)
                     .select(field.select.text)
                     .orderBy(field.select.text);
 
                 this.dataService.find(entityQuery).subscribe(
-                    data => this.entityReferences[field.path] = data.list
+                    data => this.referencesData[field.source] = data.list
                 );
             });
     }
 
     // Remove Undefined, Null and Empty Attributes
-    cleanEntity(entity: EntityBase) {
+    /*cleanEntity(entity: EntityBase) {
         for (let attribute in entity) {
-            if (!entity[attribute]) {
+            if (entity[attribute] === undefined) {
                 delete entity[attribute];
             }
             else if (typeof entity[attribute] === 'object') {
@@ -78,20 +92,21 @@ export class EditComponent implements OnInit, OnChanges {
                     delete entity[attribute];
             }
         }
-    }
+    }*/
 
     save(entity: EntityBase) {
 
-        this.cleanEntity(entity);
+        /*this.cleanEntity(entity);*/
 
         this.dataService.save(this.entityName, entity).subscribe(
             data => this.entity = data,
             error => this.errors = error,
-            () => this.goBack()
+            () => this.entityId = this.entity.id
         );
     }
 
     goBack() {
-        this.router.navigate(['entity', this.entityName]);
+        //this.router.navigate(['entity', this.entityName]);
+        this.location.back();
     }
 }

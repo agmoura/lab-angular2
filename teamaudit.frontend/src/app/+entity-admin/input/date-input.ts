@@ -13,30 +13,27 @@ import {
     NG_ASYNC_VALIDATORS,
 } from '@angular/forms';
 
-//import {ElementBase, animations} from '../form';
 import {ValueAccessorBase} from "./value-accessor";
 
 @Component({
-    selector: 'text-input',
+    selector: 'date-input',
     template: `
-    <md-input-container class="form-input">
-        <input md-input [placeholder]="label | translate" type="text" [(ngModel)]="value" [name]="name" required>
-    </md-input-container>
-    <!--<p class="text-danger" *ngIf="firstName.errors?.required">You must include a first name.</p>-->
-  `,
+    <md2-datepicker type="date" [name]="name" placeholder="{{label | translate}}" format="{{format}}" [(ngModel)]="value" class="form-input"></md2-datepicker>
+    `,
     providers: [{
         provide: NG_VALUE_ACCESSOR,
-        useExisting: TextInputComponent,
+        useExisting: DateInputComponent,
         multi: true,
-    }]
+    }],
 })
-export class TextInputComponent extends ValueAccessorBase<string> {
+export class DateInputComponent extends ValueAccessorBase<string> {
     @Input() public name: string;
     @Input() public label: string;
+    @Input() public format: string;
 
     @ViewChild(NgModel) model: NgModel;
 
-    public identifier = `text-input-${identifier++}`;
+    public identifier = `date-input-${identifier++}`;
 
     constructor() {
         super();

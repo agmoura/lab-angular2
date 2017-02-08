@@ -1,16 +1,19 @@
 package com.vixteam.teamaudit.provider.domain.baseentity;
 
+import com.vixteam.teamaudit.consumer.commons.ApplicationException;
 import com.vixteam.teamaudit.core.domain.commons.CalculatedPath;
+import com.vixteam.teamaudit.core.domain.commons.IEntity;
 import com.vixteam.teamaudit.core.usecase.baseentity.EntityQuery;
+import org.hibernate.jpa.criteria.path.PluralAttributePath;
 import org.hibernate.jpa.internal.metamodel.SingularAttributeImpl;
 
 import javax.persistence.Transient;
 import javax.persistence.criteria.*;
+import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
 import java.util.regex.Pattern;
 
 class EntityQueryProcessor<TSource, TTarget> {
@@ -150,18 +153,43 @@ class EntityQueryProcessor<TSource, TTarget> {
         Expression path = getPath(entry.getKey(), false);
         Map.Entry<String, Object> operator = ((HashMap<String, Object>) entry.getValue()).entrySet().iterator().next();
 
-        if (operator.getKey().equals("contains"))
+        if ("like".equals(operator.getKey())) {
             predicate = builder.like(path.as(String.class), "%" + operator.getValue() + "%");
 
-        else if (operator.getKey().equals("eq")) {
+        } else if ("eq".equals(operator.getKey())) {
             if (operator.getValue() == null)
                 predicate = builder.isNull(path);
             else
                 predicate = builder.equal(path, operator.getValue());
+        } else if ("ne".equals(operator.getKey())) {
+            if (operator.getValue() == null)
+                predicate = builder.isNotNull(path);
+            else
+                predicate = builder.notEqual(path, operator.getValue());
+        } else if ("contains".equals(operator.getKey())) {
+            predicate = isMember(path, entry, operator);
         } else
             throw new UnsupportedOperationException();
 
         return predicate;
+    }
+
+    private Predicate isMember(Expression path, Map.Entry<String, Object> entry, Map.Entry<String, Object> operator) {
+
+        try {
+            Class<IEntity<Serializable>> targetClass = ((PluralAttributePath) path).getPersister().getElementType().getReturnedClass();
+
+            Expression<Collection<Object>> expression = root.get(entry.getKey());
+
+            IEntity<Serializable> targetEntity = targetClass.newInstance();
+
+            targetEntity.setId((Serializable) operator.getValue());
+
+            return builder.isMember(targetEntity, expression);
+
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new ApplicationException("Falha ao executar operador 'contains' no campo " + path, e);
+        }
     }
 
     //< 'and' | 'or' >: [ < array of predicates > ]
@@ -170,18 +198,18 @@ class EntityQueryProcessor<TSource, TTarget> {
 
 
     /*Operator	Aliases	Description
-    gt	’>’	Greater than specified value
-    ge	’>=’	Greater than or equal to specified value
-    lt	’<’	Less than specified value
-    le	’<=’	Less than or equal to specified value
-    eq	’==’	Equal to specified value
-    ne	’!=’	Not equal to specified value
+    gt	’>’	        Greater than specified value
+    ge	’>=’	        Greater than or equal to specified value
+    lt	’<’	        Less than specified value
+    le	’<=’	        Less than or equal to specified value
+    eq	’==’	        Equal to specified value
+    ne	’!=’        	Not equal to specified value
     startsWith	 	String starts with specified string
     endsWith	 	String ends with specified string
-    contains	 	String contains specified string
-    in	 	is equal to one of the values in the specified list
-    any	some	the result of applying the specified predicate is true for at least one of the entities resulting from the left hand property expression.
-    all	every	the result of applying the specified predicate is true for all of the entities resulting from the left hand property expression.*/
+    like    	 	String contains specified string
+    in	 	        is equal to one of the values in the specified list
+    any	some	    the result of applying the specified predicate is true for at least one of the entities resulting from the left hand property expression.
+    all	every	    the result of applying the specified predicate is true for all of the entities resulting from the left hand property expression.*/
 
     private Expression<?> fieldNameToExpression(Expression<?> path,String name){
     	Field f = null;

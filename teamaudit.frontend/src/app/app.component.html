@@ -125,7 +125,8 @@
                                    *ngIf="menuItem.mdIcon">{{menuItem.mdIcon}}</i>
                                 <i class="fa fa-lg {{menuItem.faIcon}}" aria-hidden="true"
                                    *ngIf="menuItem.faIcon && !menuItem.mdIcon"></i>
-                                &nbsp;&nbsp;<span class="sidenav-collapse-item">{{menuItem.title}}</span></a>
+                                &nbsp;&nbsp;<span class="sidenav-collapse-item">{{menuItem.title}}</span>
+                            </a>
                             <span *ngIf="menuItem.notifyContent" class="{{menuItem.notifyClass}}">{{menuItem.notifyContent}}</span>
                         </md-list-item>
                     </template>

@@ -1,6 +1,8 @@
 package com.vixteam.teamaudit;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,15 +26,16 @@ public class DatabaseLoader implements ApplicationListener<ContextRefreshedEvent
 
         int unidadeCount = 2;
         int escopoCount = 5;
-        int categoriaCount = 10;
+        int categoriaCount = 15;
         int objetivoCount = 1000;
         int classificacaoRiscoCount = 5;
         int categoriaRiscoCount = 100;
-        int entidadeCount = 100;
+        int entidadeCount = 20;
 
         UnidadeOrganizacional[] unidades = new UnidadeOrganizacional[unidadeCount];
         Escopo[] escopos = new Escopo[escopoCount];
         CategoriaObjetivo[] categoriaObjetivos = new CategoriaObjetivo[categoriaCount];
+        Objetivo[] objetivos = new Objetivo[objetivoCount];
         ClassificacaoRisco[] classificacaoRiscos = new ClassificacaoRisco[classificacaoRiscoCount];
         CategoriaRisco[] categoriaRiscos = new CategoriaRisco[categoriaRiscoCount];
         Entidade[] entidades = new Entidade[entidadeCount];
@@ -58,7 +61,7 @@ public class DatabaseLoader implements ApplicationListener<ContextRefreshedEvent
             String number = String.format("%04d", i);
             categoriaObjetivo.setNome("Categoria " + number);
             categoriaObjetivo.setDescricao("Descrição da Categoria " + number);
-            categoriaObjetivo.setIndicadorInternoSistema(SimNaoEnum.Nao);
+            categoriaObjetivo.setIndicadorInternoSistema(false);
             categoriaObjetivo.setEscopo(escopos[random.nextInt(escopoCount)]);
             categoriaObjetivos[i] = this.entityManager.merge(categoriaObjetivo);
         }
@@ -72,7 +75,7 @@ public class DatabaseLoader implements ApplicationListener<ContextRefreshedEvent
             objetivo.setUnidadeOrganizacional(unidades[random.nextInt(unidadeCount)]);
             objetivo.setValorMeta(2.5 * i);
             objetivo.setPercentualMeta(i / 10.0);
-            this.entityManager.merge(objetivo);
+            objetivos[i] = this.entityManager.merge(objetivo);
         }
 
         for (int i = 0; i < classificacaoRiscoCount; i++) {
@@ -109,6 +112,8 @@ public class DatabaseLoader implements ApplicationListener<ContextRefreshedEvent
             categoriaRiscos[i] = this.entityManager.merge(categoriaRisco);
         }
 
+        List<CategoriaObjetivo> categoriaObjetivoList =  Arrays.asList(categoriaObjetivos).subList(0, 9);
+
         for (int i = 0; i < entidadeCount; i++) {
             Entidade entidade = new Entidade();
             String number = String.format("%04d", i);
@@ -116,6 +121,7 @@ public class DatabaseLoader implements ApplicationListener<ContextRefreshedEvent
             entidade.setDescricao("Descrição da Entidade " + number);
             entidade.setDataInicio(new Date());
             entidade.setDataFim(new Date(entidade.getDataInicio().getTime() + 1000 * 60 * 60 * 24 * (i + 1)));
+            entidade.setCategoriasObjetivos(categoriaObjetivoList);
             entidades[i] = this.entityManager.merge(entidade);
         }
 

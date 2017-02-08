@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule, Http} from '@angular/http';
 import {MaterialModule} from "@angular/material";
+import {FlexLayoutModule} from '@angular/flex-layout';
 import {Md2Module} from 'md2/module';
 import {TranslateStaticLoader, TranslateLoader, TranslateModule} from 'ng2-translate';
 
@@ -40,6 +41,7 @@ import {DialogThemeComponent} from "./shared/dialog/dialog-theme/dialog-theme.co
         HttpModule,
 
         MaterialModule.forRoot(),
+        FlexLayoutModule.forRoot(),
         Md2Module.forRoot(),
         TranslateModule.forRoot({provide: TranslateLoader, useFactory: (createTranslateLoader), deps: [Http]}),
 

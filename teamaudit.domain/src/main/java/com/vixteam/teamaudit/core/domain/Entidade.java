@@ -35,12 +35,12 @@ public class Entidade extends BaseEntity {
     private PlanoAnual planoAnualAtivo;
 
     @NotNull
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DT_INI", nullable = false)
     private Date dataInicio;
 
     @NotNull
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DT_FIM", nullable = false)
     private Date dataFim;
 
@@ -51,7 +51,7 @@ public class Entidade extends BaseEntity {
     private List<PlanoAnual> planosAnuaisAuditoria;
 
     @ManyToMany
-    private List<Objetivo> objetivos;
+    private List<CategoriaObjetivo> categoriasObjetivos;
 
     /* Getters and Setters */
     public List<PlanoAnual> getPlanosAnuaisAuditoria() {
@@ -110,11 +110,12 @@ public class Entidade extends BaseEntity {
         this.codigoImportacao = codigoImportacao;
     }
 
-    public List<Objetivo> getObjetivos() {
-        return objetivos;
+
+    public List<CategoriaObjetivo> getCategoriasObjetivos() {
+        return categoriasObjetivos;
     }
 
-    public void setObjetivos(List<Objetivo> objetivos) {
-        this.objetivos = objetivos;
+    public void setCategoriasObjetivos(List<CategoriaObjetivo> categoriasObjetivos) {
+        this.categoriasObjetivos = categoriasObjetivos;
     }
 }

@@ -1,42 +1,19 @@
-/*export interface EntitySchema {
- label: {singular: string, plural: string};
- id: {index?: number; path: string};
- listView: {
- fields: EntityFieldSchema[],
- sorts: string[]
- };
- formView: {
- fields: EntityFieldSchema[]
- };
- }
+export enum FieldType {
+    Hidden, Text, RichText, Number, Boolean, Date, Reference, ReferenceMany
+}
 
- export interface EntitySchemaMap {
- [entityPath: string]: EntitySchema;
- }
-
- export interface EntityFieldSchema {
- index?: number;
- label: string;
- path: string;
- referencePath?: string;
- type?: string;
- required?: boolean;
- select?: {value: string, text: string};
- }*/
+export enum ReferenceType {
+    OneToMany, ManyToOne, ManyToMany, OneToOne
+}
 
 export interface EntitySchemaMap {
-    [entityPath: string]: EntitySchema;
+    [source: string]: EntitySchema;
 }
 
 export interface EntitySchema {
-// O nome da entidade do qual o schema se trata, uso necessário apenas ao definir um EntitySchmea nos Details de um FormView.
-
     listView: ListViewSchema;
     formView: FormViewSchema;
     treeView?: TreeViewSchema;
-
-    label?: {singular: string, plural: string};
-    parentId?: any; // TODO REMOVER
 }
 
 export interface ListViewSchema {
@@ -44,36 +21,40 @@ export interface ListViewSchema {
     orders?: string[];
     filter?: any;
     select?: boolean;
+
     actions?: ActionSchema[];
     insert?: boolean;
     link?: boolean;
-
 }
 
 export interface FormViewSchema {
     fields: EntityFormFieldSchema[];
-    relationships?: RelationshipSchema[];
+    references?: ReferenceSchema[];
     details?: EntitySchema[];
 }
 
+//TODO: Revisar
 export interface TreeViewSchema {
     loadFrom?: string;
     recursiveRelationship?: boolean;
     treeNodes: TreeNodeSchema[];
 }
 
-export interface RelationshipSchema extends EntitySchema {
-    path: string;
-    type: RelationshipType;
+export interface ReferenceSchema extends EntitySchema {
+    source: string;
+    type: ReferenceType;
+    target: string;
+    /*parentId: {path: string};
     referencePath?: string;
-    relationPath?: {path: string};
+    relationPath?: {path: string};*/
     childSelectListView?: ListViewSchema;
 }
 
 export interface EntityFieldSchema {
-    path: string;       // O caminho para o campo em sua entidade
+    source: string;       // O caminho para o campo em sua entidade
     index?: number;     // TODO REMOVER
     label?: string;     // O label do campo
+    type?: FieldType;   // Indica o Tipo do campo a ser renderizado
     isEnum?: boolean;   // Indica se os valores selecionaveis deste campo são enums. Default: false
 }
 
@@ -84,7 +65,6 @@ export interface EntityColumnSchema extends EntityFieldSchema {
 export interface EntityFormFieldSchema extends EntityFieldSchema {
     referencePath?: string; // TODO REMOPVER - nome correto do tipo do objeto para considerar ao inves do path
     dependsOn?: string;     // TODO REMOVER - Nao é mais usado?
-    type?: FieldType;               // Indica o Tipo do campo a ser renderizado
     isParent?: boolean;                 // Indica que este campo é o 'Parent' desta entidade
     required?: boolean;                 // Indica que este campo é obrigatorio
     readOnly?: boolean;                 // Indica que o campo é readOnly
@@ -126,26 +106,18 @@ export interface ActionSchema {
     parameterSelectedEntities?: boolean;
 }
 
-export enum FieldType {
-    Hidden, Text, RichText, Number, Boolean, Date, Reference, ReferenceMany
-}
-
-export enum RelationshipType {
-    OneToMany, ManyToOne, ManyToMany, OneToOne
-}
-
 
 /*export class TextInput implements EntityFormFieldSchema {
-    public type?: FieldType = FieldType.Text;
+ public type?: FieldType = FieldType.Text;
 
-    constructor(public path: string) {
-    }
-}
+ constructor(public path: string) {
+ }
+ }
 
-export class ReferenceInput implements EntityFormFieldSchema {
-    public type: FieldType = FieldType.Reference;
+ export class ReferenceInput implements EntityFormFieldSchema {
+ public type: FieldType = FieldType.Reference;
 
-    constructor(public path: string, public referencePath: string = null) {
+ constructor(public path: string, public referencePath: string = null) {
 
-    }
-}*/
+ }
+ }*/

@@ -12,7 +12,11 @@
             </md-menu>
         </md-card-title>
         <md-card-content>
-            <datagrid [entityName]="entityName" (onEdit)="gotoEdit($event)"></datagrid>
+            <datagrid [entityName]="entityName"
+                      [listViewSchema]="listViewSchema"
+                      (onCreate)="onCreate()"
+                      (onEdit)="onEdit($event)">
+            </datagrid>
         </md-card-content>
     </md-card>
 </div>

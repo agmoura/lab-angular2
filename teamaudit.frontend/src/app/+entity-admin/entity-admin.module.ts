@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule}   from '@angular/common';
 import {MaterialModule} from "@angular/material";
+import {FlexLayoutModule} from '@angular/flex-layout';
 import {Md2Module} from 'md2/module';
 import {TranslateModule} from 'ng2-translate';
 import {entityAdminRouting} from "./entity-admin.routes";
@@ -17,7 +18,9 @@ import {TextInputComponent} from "./input/text-input";
 import {ReferenceInputComponent} from "./input/reference-input";
 import {NumberInputComponent} from "./input/number-input";
 import {DatagridComponent} from "./list/datagrid.component";
-import {ReferenceManyComponent} from "./detail/referencemany.component";
+import {DateInputComponent} from "./input/date-input";
+import {ReferenceManyComponent} from "./detail/reference-many.component";
+import {BooleanInputComponent} from "./input/boolean-input";
 
 //import {GridModule} from "@progress/kendo-angular-grid";
 
@@ -27,6 +30,7 @@ import {ReferenceManyComponent} from "./detail/referencemany.component";
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
+        FlexLayoutModule,
         Md2Module,
         TranslateModule,
         entityAdminRouting,
@@ -38,10 +42,14 @@ import {ReferenceManyComponent} from "./detail/referencemany.component";
         ListComponent,
         EditComponent,
         DatagridComponent,
+
         ReferenceManyComponent,
+
         ReferenceInputComponent,
         TextInputComponent,
         NumberInputComponent,
+        DateInputComponent,
+        BooleanInputComponent,
 
         HandleErrorsComponent
     ],

@@ -50,7 +50,7 @@ public class DatabaseLoader {
             String number = String.format("%04d", i);
             categoriaObjetivo.setNome("Categoria " + number);
             categoriaObjetivo.setDescricao("Descrição da Categoria " + number);
-            categoriaObjetivo.setIndicadorInternoSistema(SimNaoEnum.Nao);
+            categoriaObjetivo.setIndicadorInternoSistema(false);
             categoriaObjetivo.setEscopo(escopos[random.nextInt(escopoCount)]);
             categoriaObjetivos[i] = repository.save(categoriaObjetivo);
         }
