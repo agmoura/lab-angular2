@@ -82,7 +82,6 @@
             </md-card>
         </md-tab>
     </md-tab-group>
-
 </div>
 
 <edit *ngIf="childEdit"
@@ -90,7 +89,7 @@
       [entityId]="childEdit.entityId"
       [parentId]="entityId"
       [formViewSchema]="childEdit.referenceSchema.formView">
-    <button md-button (click)="childEdit = undefined">VOLTAR2</button>
+    <button md-button (click)="childEdit = null">VOLTAR2</button>
 </edit>
 
 

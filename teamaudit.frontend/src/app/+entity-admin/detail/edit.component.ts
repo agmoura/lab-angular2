@@ -1,5 +1,5 @@
 import {Component, OnInit, OnDestroy, OnChanges, Input, SimpleChanges} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Location} from "@angular/common";
 
 import {EntityBase} from '../../shared/model/models';
@@ -7,7 +7,7 @@ import {DataService} from '../../shared/services/data.service';
 import {FieldType, FormViewSchema} from '../../shared/model/schema';
 import {EntitySchemaService} from '../entity-schema.service';
 import {EntityQuery} from "../../shared/model/query";
-import {isUndefined} from "util";
+import {MdSnackBar} from "@angular/material";
 
 @Component({
     selector: 'edit',
@@ -22,21 +22,17 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
 
     childEdit: any;
 
-    toogleEdit: boolean;
-
-    //entitySchema: EntitySchema;
     routeSubscription: any;
     entity: EntityBase = <EntityBase>{};
     referencesData: any = {};
-    errors: any;
 
     FieldType: typeof FieldType = FieldType;
 
     constructor(private route: ActivatedRoute,
-                private router: Router,
                 private location: Location,
                 private dataService: DataService,
-                private schemaService: EntitySchemaService) {
+                private schemaService: EntitySchemaService,
+                public snackBar: MdSnackBar) {
     }
 
     ngOnInit() {
@@ -81,18 +77,18 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
 
     // Remove Undefined, Null and Empty Attributes
     /*cleanEntity(entity: EntityBase) {
-        for (let attribute in entity) {
-            if (entity[attribute] === undefined) {
-                delete entity[attribute];
-            }
-            else if (typeof entity[attribute] === 'object') {
-                this.cleanEntity(entity[attribute]);
+     for (let attribute in entity) {
+     if (entity[attribute] === undefined) {
+     delete entity[attribute];
+     }
+     else if (typeof entity[attribute] === 'object') {
+     this.cleanEntity(entity[attribute]);
 
-                if (Object.keys(entity[attribute]).length === 0)
-                    delete entity[attribute];
-            }
-        }
-    }*/
+     if (Object.keys(entity[attribute]).length === 0)
+     delete entity[attribute];
+     }
+     }
+     }*/
 
     save(entity: EntityBase) {
 
@@ -100,8 +96,11 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
 
         this.dataService.save(this.entityName, entity).subscribe(
             data => this.entity = data,
-            error => this.errors = error,
-            () => this.entityId = this.entity.id
+            error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),
+            () => {
+                this.entityId = this.entity.id;
+                this.snackBar.open('Operação realizada com sucesso', 'OK', {duration: 2000})
+            }
         );
     }
 
