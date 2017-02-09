@@ -67,6 +67,7 @@ export class EntitySchemaService {
                         source: 'entidade',
                         type: ReferenceType.ManyToMany,
                         target: 'categoriasObjetivos',
+                        targetInverse: 'entidades',
                         listView: {
                             fields: [
                                 {source: 'nome'},

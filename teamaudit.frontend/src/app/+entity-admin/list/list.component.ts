@@ -10,7 +10,7 @@ import {ListViewSchema} from "../../shared/model/schema";
 export class ListComponent implements OnInit, OnDestroy {
 
     routeSubscription: any;
-    entityName: string;
+    source: string;
     listViewSchema: ListViewSchema;
 
     constructor(private route: ActivatedRoute, private router: Router, private schemaService: EntitySchemaService) {
@@ -19,8 +19,8 @@ export class ListComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.routeSubscription = this.route.params.subscribe(params => {
-            this.entityName = params['entity'];
-            this.listViewSchema = this.schemaService.getEntitySchema(this.entityName).listView;
+            this.source = params['entity'];
+            this.listViewSchema = this.schemaService.getEntitySchema(this.source).listView;
         });
     }
 
@@ -29,10 +29,10 @@ export class ListComponent implements OnInit, OnDestroy {
     }
 
     onCreate() {
-        this.router.navigate(['entity', this.entityName, 'edit']);
+        this.router.navigate(['entity', this.source, 'edit']);
     }
 
     onEdit(id: string) {
-        this.router.navigate(['entity', this.entityName, 'edit', id]);
+        this.router.navigate(['entity', this.source, 'edit', id]);
     }
 }

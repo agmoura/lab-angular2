@@ -2,6 +2,7 @@ package com.vixteam.teamaudit.consumer.controllers;
 
 import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vixteam.teamaudit.consumer.commons.ApplicationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -57,6 +58,22 @@ public class BaseEntityController {
     public Object updateEntity(@PathVariable String commandPath, @PathVariable String id, @RequestBody String entityData) throws ClassNotFoundException, IOException, NoSuchMethodException, MethodArgumentNotValidException {
         BaseEntity entity = validateEntity(commandPath, id, entityData);
         return facade.execute(new UpdateBaseEntityCommand(entity));
+    }
+
+    @Transactional
+    @RequestMapping(value = "{commandPath}/{id}", method = RequestMethod.PATCH)
+    public Object patchEntity(@PathVariable String commandPath, @PathVariable String id, @RequestBody String entityData) throws ClassNotFoundException {
+
+        BaseEntity entity;
+        Object currentEntity = get(commandPath, id);
+
+        try {
+            entity = new ObjectMapper().readerForUpdating(currentEntity).readValue(entityData);
+        } catch (IOException ex) {
+            throw new ApplicationException("Erro ao deserializar '" + entityData + "' na entidade '" + commandPath + "'");
+        }
+
+        return this.facade.execute(new UpdateBaseEntityCommand(entity));
     }
 
     private BaseEntity validateEntity(String commandPath, String entityId, String entityData) throws ClassNotFoundException, IOException, NoSuchMethodException, MethodArgumentNotValidException {

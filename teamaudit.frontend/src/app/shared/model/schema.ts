@@ -44,7 +44,8 @@ export interface ReferenceSchema extends EntitySchema {
     source: string;
     type: ReferenceType;
     target: string;
-    /*parentId: {path: string};
+    targetInverse?: string;
+    /*targetId: {path: string};
     referencePath?: string;
     relationPath?: {path: string};*/
     childSelectListView?: ListViewSchema;

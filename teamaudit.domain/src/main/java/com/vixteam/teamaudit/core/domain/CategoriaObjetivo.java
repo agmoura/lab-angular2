@@ -82,7 +82,7 @@ public class CategoriaObjetivo extends BaseEntity {
     }
 
 
-    @ManyToMany(mappedBy = "categoriasObjetivos")
+    @ManyToMany()
     private List<Entidade> entidades;
 
     public List<Entidade> getEntidades() {

@@ -9,7 +9,7 @@
 <div class="page-content" *ngIf="!childEdit">
     <md-card class="page-card">
         <md-card-title>
-            <span>{{entityId ? "Atualizar" : "Incluir"}} {{entityName | translate}}</span>
+            <span>{{sourceId ? "Atualizar" : "Incluir"}} {{source | translate}}</span>
             <a class="card-title-menu" [md-menu-trigger-for]="cardTitleMenu">
                 <i class="material-icons">more_vert</i>
             </a>
@@ -22,7 +22,7 @@
 
         <md-card-content>
             <form #form="ngForm" (ngSubmit)="save(form.value)">
-                <input type="hidden" name="id" [ngModel]="entityId">
+                <input type="hidden" name="id" [ngModel]="sourceId">
 
                 <div *ngFor="let field of formViewSchema.fields">
                     <ng-container [ngSwitch]="field.type">
@@ -60,10 +60,10 @@
     </md-card>
 
     <!--TODO: Remover Informações de Depuração-->
-    <strong>this.entity:</strong> {{entity | json}} <br/>
-    <strong>form.value:</strong> {{form.value | json}}
+    <!--<strong>this.entity:</strong> {{entity | json}} <br/>
+    <strong>form.value:</strong> {{form.value | json}}-->
 
-    <md-tab-group *ngIf="entityId && formViewSchema.references">
+    <md-tab-group *ngIf="sourceId && formViewSchema.references">
         <md-tab *ngFor="let reference of formViewSchema.references" label="{{reference.source.toUpperCase() | translate}}">
             <md-card class="page-card">
                 <md-card-title>
@@ -77,7 +77,7 @@
                     </md-menu>
                 </md-card-title>
                 <md-card-content>
-                    <reference-many [referenceSchema]="reference" [parentId]="entityId" (onEdit)="childEdit = $event"></reference-many>
+                    <reference-many [referenceSchema]="reference" [source]="source" [targetId]="sourceId" (onEdit)="childEdit = $event"></reference-many>
                 </md-card-content>
             </md-card>
         </md-tab>
@@ -85,9 +85,10 @@
 </div>
 
 <edit *ngIf="childEdit"
-      [entityName]="childEdit.referenceSchema.source"
-      [entityId]="childEdit.entityId"
-      [parentId]="entityId"
+      [source]="childEdit.referenceSchema.source"
+      [sourceId]="childEdit.sourceId"
+      [target]="childEdit.referenceSchema.target"
+      [targetId]="sourceId"
       [formViewSchema]="childEdit.referenceSchema.formView">
     <button md-button (click)="childEdit = null">VOLTAR2</button>
 </edit>

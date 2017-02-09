@@ -50,7 +50,7 @@ public class Entidade extends BaseEntity {
     @OneToMany(mappedBy = "entidade")
     private List<PlanoAnual> planosAnuaisAuditoria;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "entidades", cascade = CascadeType.MERGE)
     private List<CategoriaObjetivo> categoriasObjetivos;
 
     /* Getters and Setters */
@@ -117,5 +117,13 @@ public class Entidade extends BaseEntity {
 
     public void setCategoriasObjetivos(List<CategoriaObjetivo> categoriasObjetivos) {
         this.categoriasObjetivos = categoriasObjetivos;
+    }
+
+    public PlanoAnual getPlanoAnualAtivo() {
+        return planoAnualAtivo;
+    }
+
+    public void setPlanoAnualAtivo(PlanoAnual planoAnualAtivo) {
+        this.planoAnualAtivo = planoAnualAtivo;
     }
 }

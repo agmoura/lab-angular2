@@ -15,9 +15,10 @@ import {MdSnackBar} from "@angular/material";
 })
 export class EditComponent implements OnInit, OnDestroy, OnChanges {
 
-    @Input() entityName: string;
-    @Input() entityId: string;
-    @Input() parentId: string;
+    @Input() source: string;
+    @Input() sourceId: string; // sourceId
+    @Input() target: string;
+    @Input() targetId: string;
     @Input() formViewSchema: FormViewSchema;
 
     childEdit: any;
@@ -36,12 +37,12 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnInit() {
-        if (!this.entityName) {
+        if (!this.source) {
             this.routeSubscription = this.route.params.subscribe(params => {
-                this.entityName = this.route.snapshot.params['entity'];
-                this.entityId = this.route.snapshot.params['id'];
-                this.formViewSchema = this.schemaService.getEntitySchema(this.entityName).formView;
-                this.load(this.entityId);
+                this.source = this.route.snapshot.params['entity'];
+                this.sourceId = this.route.snapshot.params['id'];
+                this.formViewSchema = this.schemaService.getEntitySchema(this.source).formView;
+                this.load(this.sourceId);
             });
         }
     }
@@ -51,12 +52,12 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        this.load(this.entityId);
+        this.load(this.sourceId);
     }
 
     load(id: string) {
         if (id)
-            this.dataService.get<EntityBase>(this.entityName, id).subscribe(
+            this.dataService.get<EntityBase>(this.source, id).subscribe(
                 data => this.entity = data
             );
 
@@ -76,36 +77,48 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     // Remove Undefined, Null and Empty Attributes
-    /*cleanEntity(entity: EntityBase) {
-     for (let attribute in entity) {
-     if (entity[attribute] === undefined) {
-     delete entity[attribute];
-     }
-     else if (typeof entity[attribute] === 'object') {
-     this.cleanEntity(entity[attribute]);
+    cleanEntity(entity: EntityBase) {
+        for (let attribute in entity) {
+            if (entity[attribute] == undefined || entity[attribute] == null) {
+                delete entity[attribute];
+            }
+            else if (typeof entity[attribute] === 'object') {
+                this.cleanEntity(entity[attribute]);
 
-     if (Object.keys(entity[attribute]).length === 0)
-     delete entity[attribute];
-     }
-     }
-     }*/
+                if (Object.keys(entity[attribute]).length === 0)
+                    delete entity[attribute];
+            }
+        }
+    }
 
     save(entity: EntityBase) {
 
-        /*this.cleanEntity(entity);*/
+        this.cleanEntity(entity);
 
-        this.dataService.save(this.entityName, entity).subscribe(
+        //TODO: Refatorar código
+        if (this.target) {
+            let targetPath: string[] = this.target.split('.');
+
+            if(targetPath.length > 1) {
+                if (!entity[targetPath[0]]) entity[targetPath[0]] = {[targetPath[1]]: this.targetId};
+            }
+            else {
+                entity[targetPath[0]] = [{id: this.targetId}];
+            }
+        }
+
+        this.dataService.save(this.source, entity).subscribe(
             data => this.entity = data,
             error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),
             () => {
-                this.entityId = this.entity.id;
+                this.sourceId = this.entity.id;
                 this.snackBar.open('Operação realizada com sucesso', 'OK', {duration: 2000})
             }
         );
     }
 
     goBack() {
-        //this.router.navigate(['entity', this.entityName]);
+        //this.router.navigate(['entity', this.source]);
         this.location.back();
     }
 }

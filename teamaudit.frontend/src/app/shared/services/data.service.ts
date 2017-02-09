@@ -63,6 +63,13 @@ export class DataService {
             .map(response => response.json());
     }
 
+    patch<TEntity extends EntityBase>(path: string, entity: TEntity): Observable<TEntity> {
+        let headers = new Headers({'Content-Type': 'application/json'});
+
+        return <Observable<TEntity>> this.http.patch(this.baseUrl + path + "/" + entity.id, JSON.stringify(entity), {headers: headers})
+            .map(response => <TEntity> response.json());
+    }
+
     delete(path: string, id: string) {
         return this.http.delete(this.baseUrl + path + "/" + id);
     }
