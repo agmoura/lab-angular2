@@ -3,12 +3,14 @@ import {Router} from "@angular/router";
 import {ReferenceSchema, ReferenceType} from "../../shared/model/schema";
 import {DataService} from "../../shared/services/data.service";
 import {MdSnackBar} from "@angular/material";
+import {DatagridComponent} from "../list/datagrid.component";
 
 @Component({
     selector: 'reference-many',
     template: `
     <ng-container *ngIf="referenceSchema.type === ReferenceType.ManyToMany">
-        <datagrid [source]="referenceSchema.source" 
+        <datagrid #datagrid
+                  [source]="referenceSchema.source" 
                   [listViewSchema]="referenceSchema.listView"
                   [filter]="filter"
                   (onCreate)="edit()"
@@ -25,7 +27,7 @@ import {MdSnackBar} from "@angular/material";
             </datagrid>
             <md2-dialog-footer>
                 <button md-button (click)="dialog.close()">CANCELAR</button>
-                <button md-button (click)="link(); dialog.close()">ASSOCIAR</button>
+                <button md-button (click)="link(datagrid); dialog.close()">ASSOCIAR</button>
             </md2-dialog-footer>
         </md2-dialog>
     </ng-container>
@@ -72,9 +74,7 @@ export class ReferenceManyComponent implements OnChanges {
         });
     }
 
-    link() {
-        alert(this.selectedKeys);
-
+    link(dataGrid: DatagridComponent) {
         let entity = {id: this.targetId};
 
         entity[this.referenceSchema.targetInverse] = this.selectedKeys.map(item => {
@@ -84,9 +84,10 @@ export class ReferenceManyComponent implements OnChanges {
         this.dataService.patch(this.source, entity).subscribe(
             data => entity = data,
             error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),
-            () => this.snackBar.open('Operação realizada com sucesso', 'OK', {duration: 2000})
+            () => {
+                dataGrid.load();
+                this.snackBar.open('Operação realizada com sucesso', 'OK', {duration: 2000});
+            }
         );
     }
-
-
 }

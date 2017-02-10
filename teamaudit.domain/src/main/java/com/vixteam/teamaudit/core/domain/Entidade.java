@@ -50,8 +50,14 @@ public class Entidade extends BaseEntity {
     @OneToMany(mappedBy = "entidade")
     private List<PlanoAnual> planosAnuaisAuditoria;
 
-    @ManyToMany(mappedBy = "entidades", cascade = CascadeType.MERGE)
-    private List<CategoriaObjetivo> categoriasObjetivos;
+
+
+    public Entidade() {
+    }
+
+    public Entidade(String id) {
+        super(id);
+    }
 
     /* Getters and Setters */
     public List<PlanoAnual> getPlanosAnuaisAuditoria() {
@@ -110,6 +116,19 @@ public class Entidade extends BaseEntity {
         this.codigoImportacao = codigoImportacao;
     }
 
+    public PlanoAnual getPlanoAnualAtivo() {
+        return planoAnualAtivo;
+    }
+
+    public void setPlanoAnualAtivo(PlanoAnual planoAnualAtivo) {
+        this.planoAnualAtivo = planoAnualAtivo;
+    }
+
+
+
+
+    @ManyToMany(mappedBy = "entidades")
+    private List<CategoriaObjetivo> categoriasObjetivos;
 
     public List<CategoriaObjetivo> getCategoriasObjetivos() {
         return categoriasObjetivos;
@@ -119,11 +138,4 @@ public class Entidade extends BaseEntity {
         this.categoriasObjetivos = categoriasObjetivos;
     }
 
-    public PlanoAnual getPlanoAnualAtivo() {
-        return planoAnualAtivo;
-    }
-
-    public void setPlanoAnualAtivo(PlanoAnual planoAnualAtivo) {
-        this.planoAnualAtivo = planoAnualAtivo;
-    }
 }

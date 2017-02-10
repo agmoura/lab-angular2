@@ -12,6 +12,14 @@ public abstract class BaseEntity implements IEntity<String> {
     @Id
     protected String id;
 
+    public BaseEntity() {
+
+    }
+
+    public BaseEntity(String id) {
+        setId(id);
+    }
+
     @Override
     public void setId(String id) {
         this.id = id;

@@ -36,8 +36,6 @@ public class CategoriaObjetivo extends BaseEntity {
     @Column(name="ID_CATOB_INTR_SIST", length=1, nullable=false)
     private Boolean indicadorInternoSistema;
 
-    @JsonIgnore
-    @Valid
     @OneToMany(mappedBy = "categoriaObjetivo")
     private List<Objetivo> objetivos;
 
@@ -82,7 +80,20 @@ public class CategoriaObjetivo extends BaseEntity {
     }
 
 
-    @ManyToMany()
+
+
+    @OneToMany(mappedBy = "categoriaObjetivo")
+    private List<Objetivo> objetivosPrimarios;
+
+    public List<Objetivo> getObjetivosPrimarios() {
+        return objetivosPrimarios;
+    }
+
+    public void setObjetivosPrimarios(List<Objetivo> objetivosPrimarios) {
+        this.objetivosPrimarios = objetivosPrimarios;
+    }
+
+    @ManyToMany
     private List<Entidade> entidades;
 
     public List<Entidade> getEntidades() {

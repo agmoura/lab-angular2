@@ -58,7 +58,32 @@ export class EntitySchemaService {
                                 {source: 'descricaoMeta', type: FieldType.Text},
                                 {source: 'valorMeta', type: FieldType.Number},
                                 {source: 'percentualMeta', type: FieldType.Number},
-                                /*{source: 'categoriaObjetivo', type: FieldType.Reference, select: {value: 'id', text: 'nome'}},*/
+                                {source: 'categoriaObjetivoPrimaria', /*reference:'categoriaObjetivo',*/ type: FieldType.Reference, select: {value: 'id', text: 'nome'}},
+                                {source: 'unidadeOrganizacional', type: FieldType.Reference, select: {value: 'id', text: 'nome'}}
+                            ]
+                        }
+                    },
+                    {
+                        source: 'objetivo',
+                        type: ReferenceType.OneToMany,
+                        target: 'categoriaObjetivoPrimaria.id',
+                        listView: {
+                            fields: [
+                                {source: 'categoriaObjetivo.escopo.nome', hidden:true},
+                                {source: 'categoriaObjetivo.nome', hidden:true},
+                                {source: 'nome'},
+                                {source: 'descricao'}
+                            ],
+                            orders: ['nome asc']
+                        },
+                        formView: {
+                            fields: [
+                                {source: 'nome', type: FieldType.Text, required: true},
+                                {source: 'descricao', type: FieldType.Text, required: true},
+                                {source: 'descricaoMeta', type: FieldType.Text},
+                                {source: 'valorMeta', type: FieldType.Number},
+                                {source: 'percentualMeta', type: FieldType.Number},
+                                {source: 'categoriaObjetivo', type: FieldType.Reference, select: {value: 'id', text: 'nome'}},
                                 {source: 'unidadeOrganizacional', type: FieldType.Reference, select: {value: 'id', text: 'nome'}}
                             ]
                         }

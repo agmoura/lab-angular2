@@ -31,6 +31,7 @@ public class Objetivo extends BaseEntity {
     @JoinColumn(name="CD_CATOB", nullable=false)
     private CategoriaObjetivo categoriaObjetivo;
 
+
     @Size(max = 255)
     @Column(name="DS_OBJEM_META", length=255)
     private String descricaoMeta;
@@ -97,4 +98,18 @@ public class Objetivo extends BaseEntity {
         this.percentualMeta = percentualMeta;
     }
 
+
+
+
+    @ManyToOne
+    @JoinColumn(name="CD_CATOB_PRIMARIA")
+    private CategoriaObjetivo categoriaObjetivoPrimaria;
+
+    public CategoriaObjetivo getCategoriaObjetivoPrimaria() {
+        return categoriaObjetivoPrimaria;
+    }
+
+    public void setCategoriaObjetivoPrimaria(CategoriaObjetivo categoriaObjetivoPrimaria) {
+        this.categoriaObjetivoPrimaria = categoriaObjetivoPrimaria;
+    }
 }

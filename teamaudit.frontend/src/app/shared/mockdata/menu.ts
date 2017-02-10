@@ -16,6 +16,11 @@ export class MenuMock {
             // Sub menu, only one level (Match Material Design)
             sub: [
                 {
+                    name: 'categoriaObjetivo',
+                    title: 'Categoria Objetivo (New)',
+                    link: '/masterdata/categoriaObjetivo'
+                },
+                {
                     name: 'escopo',
                     title: 'Escopo',
                     link: '/entity/escopo'

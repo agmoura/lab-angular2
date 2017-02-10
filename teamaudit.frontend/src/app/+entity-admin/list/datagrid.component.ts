@@ -1,4 +1,4 @@
-import {Component, OnInit, OnChanges, SimpleChanges, OnDestroy, Input, EventEmitter, Output, ElementRef, Directive} from '@angular/core';
+import {Component, OnInit, OnChanges, SimpleChanges, OnDestroy, Input, EventEmitter, Output, ElementRef, ViewChild} from '@angular/core';
 import {TranslateService} from 'ng2-translate';
 import * as $ from "jquery";
 import DevExpress from 'devextreme/bundles/dx.all';
@@ -11,16 +11,17 @@ import {Page} from "../../shared/model/paged-list";
 import {EntityQuery} from "../../shared/model/query";
 import {MdSnackBar} from "@angular/material";
 
-@Directive({
-    selector: 'datagrid'
+@Component({
+    selector: 'datagrid',
+    template: '<div #container></div>'
 })
 export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
 
+    @ViewChild('container') container: ElementRef;
     @Input() source: string;
     @Input() listViewSchema: ListViewSchema;
     @Input() filter: any;
     @Input() selectedKeys = [];
-
     @Output() onCreate = new EventEmitter();
     @Output() onEdit = new EventEmitter<string>();
     @Output() onLink = new EventEmitter<Array<any>>();
@@ -34,7 +35,6 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
     gridColumns: any[];
 
     constructor(private dataService: DataService,
-                private element: ElementRef,
                 private translateService: TranslateService,
                 public snackBar: MdSnackBar) {
 
@@ -42,15 +42,16 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
 
     ngOnInit() {
         this.dataGrid = this.createGrid();
-        this.setup();
+
     }
 
     ngOnDestroy() {
-        $(this.element.nativeElement).remove();
+        $(this.container.nativeElement).remove();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-
+        if(changes['source'])
+            this.setup();
     }
 
     private createGrid(): DevExpress.ui.dxDataGrid {
@@ -86,7 +87,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
                     if(self.onLink.observers.length > 0)
                         toolbar.prepend($('<div>').dxButton({ icon: 'tags', onClick: function () { self.link();}}));
 
-                    contentReady = true;
+                    //contentReady = true;
                 }
             }
 
@@ -99,7 +100,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
             }
         }
 
-        return $(this.element.nativeElement).dxDataGrid(options).dxDataGrid('instance');
+        return $(this.container.nativeElement).dxDataGrid(options).dxDataGrid('instance');
     }
 
     private setup() {
@@ -157,7 +158,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
         return entity[this.entityQuery.projections.length - 1];
     }
 
-    private load() {
+    public load() {
 
         this.dataService.find(this.entityQuery)
             .subscribe(

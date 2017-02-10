@@ -21,6 +21,9 @@ import {DatagridComponent} from "./list/datagrid.component";
 import {DateInputComponent} from "./input/date-input";
 import {ReferenceManyComponent} from "./detail/reference-many.component";
 import {BooleanInputComponent} from "./input/boolean-input";
+import {TextFieldComponent} from "./field/text-field";
+import {BooleanFieldComponent} from "./field/boolean-field";
+import {TableDataComponent, TableCellComponent} from "./field/table-data";
 
 //import {GridModule} from "@progress/kendo-angular-grid";
 
@@ -51,10 +54,31 @@ import {BooleanInputComponent} from "./input/boolean-input";
         DateInputComponent,
         BooleanInputComponent,
 
-        HandleErrorsComponent
+        TextFieldComponent,
+        BooleanFieldComponent,
+        TableDataComponent,
+        TableCellComponent
     ],
     providers: [
         EntitySchemaService
+    ],
+    exports: [
+        ListComponent,
+        EditComponent,
+        DatagridComponent,
+
+        ReferenceManyComponent,
+
+        ReferenceInputComponent,
+        TextInputComponent,
+        NumberInputComponent,
+        DateInputComponent,
+        BooleanInputComponent,
+
+        TextFieldComponent,
+        BooleanFieldComponent,
+        TableDataComponent,
+        TableCellComponent
     ]
 })
 export class EntityAdminModule {

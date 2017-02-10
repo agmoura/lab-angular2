@@ -22,6 +22,7 @@ import {EntityAdminModule} from "./+entity-admin/entity-admin.module";
 
 import {DialogExampleComponent} from "./shared/dialog/dialog-example/dialog-example.component";
 import {DialogThemeComponent} from "./shared/dialog/dialog-theme/dialog-theme.component";
+import {MasterDataModule} from "./+master-data/master-data.module";
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import {DialogThemeComponent} from "./shared/dialog/dialog-theme/dialog-theme.co
         TranslateModule.forRoot({provide: TranslateLoader, useFactory: (createTranslateLoader), deps: [Http]}),
 
         rootRoutesModule,
-        EntityAdminModule
+        EntityAdminModule,
+        MasterDataModule
     ],
     providers: [
         AppService,
