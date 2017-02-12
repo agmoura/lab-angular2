@@ -24,11 +24,7 @@ import {ValueAccessorBase} from "./value-accessor";
     </md-input-container>
     <!--<p class="text-danger" *ngIf="firstName.errors?.required">You must include a first name.</p>-->
   `,
-    providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: TextInputComponent,
-        multi: true,
-    }]
+    providers: [{provide: NG_VALUE_ACCESSOR, useExisting: TextInputComponent, multi: true}]
 })
 export class TextInputComponent extends ValueAccessorBase<string> {
     @Input() public name: string;

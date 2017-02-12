@@ -23,7 +23,8 @@ import {ReferenceManyComponent} from "./detail/reference-many.component";
 import {BooleanInputComponent} from "./input/boolean-input";
 import {TextFieldComponent} from "./field/text-field";
 import {BooleanFieldComponent} from "./field/boolean-field";
-import {TableDataComponent, TableCellComponent} from "./field/table-data";
+import {TableDataComponent, TableFieldDirective} from "./field/table-data";
+import {SimpleFormComponent} from "./field/simple-form";
 
 //import {GridModule} from "@progress/kendo-angular-grid";
 
@@ -57,7 +58,8 @@ import {TableDataComponent, TableCellComponent} from "./field/table-data";
         TextFieldComponent,
         BooleanFieldComponent,
         TableDataComponent,
-        TableCellComponent
+        TableFieldDirective,
+        SimpleFormComponent
     ],
     providers: [
         EntitySchemaService
@@ -78,7 +80,13 @@ import {TableDataComponent, TableCellComponent} from "./field/table-data";
         TextFieldComponent,
         BooleanFieldComponent,
         TableDataComponent,
-        TableCellComponent
+        //TableFieldDirective,
+
+        SimpleFormComponent
+    ],
+    entryComponents: [
+        TextFieldComponent,
+        BooleanFieldComponent
     ]
 })
 export class EntityAdminModule {

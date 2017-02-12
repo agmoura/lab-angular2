@@ -1,24 +1,38 @@
 <!--<list-view>-->
-    <table-data [data]="data">
-        <!--<text-field source='escopo.descricao'></text-field>-->
-        <text-field source='nome'></text-field>
-        <text-field source='descricao'></text-field>
-        <boolean-field source='indicadorInternoSistema'></boolean-field>
-        <!--<edit-button></edit-button>-->
-    </table-data>
+<table-data [data]="data" (onEdit)="record = $event">
+    <!--<text-field source='escopo.descricao'></text-field>-->
+    <text-field source="nome" label="Nome"></text-field>
+    <text-field source="descricao" label="Descrição"></text-field>
+    <boolean-field source="indicadorInternoSistema" label="Interno"></boolean-field>
+    <!--<edit-button></edit-button>-->
+</table-data>
+
+
 <!--</list-view>-->
 
-
-<!--<categoria-objetivo-edit>
-    <simple-form>
-        <text-input name='nome'></text-input>
-        <text-input name='descricao'></text-input>
-        <boolean-input name='indicadorInternoSistema'></boolean-input>
+<!--<edit-view>-->
+    <simple-form *ngIf="record" [record]="record">
+        <text-input name="nome" label="Nome" [ngModel]="record.nome"></text-input>
+        <text-input name="descricao" label="Descrição" [(ngModel)]="record.descricao"></text-input>
+        <boolean-input name="indicadorInternoSistema" label="Interno"></boolean-input>
+        <!--<reference-many-field reference="objetivo" target="categoriaObjetivo.id" >
+            <table-data>
+                <text-field source="nome" label="Nome"></text-field>
+                <text-field source="descricao" label="Descrição"></text-field>
+            </table-data>
+        </reference-many-field>
+        <reference-many-to-many-field reference="entidade" target="categoriasObjetivos" >
+            <table-data>
+                <text-field source="nome" label="Nome"></text-field>
+                <text-field source="descricao" label="Descrição"></text-field>
+            </table-data>
+        </reference-many-to-many-field>-->
     </simple-form>
-</categoria-objetivo-edit>-->
+<!--</edit-view>-->
+
 
 <!--
-https://angular.io/docs/ts/latest/cookbook/dynamic-component-loader.html
+htgular.io/docs/ts/latest/cookbook/dynamic-component-loader.html
 http://stackoverflow.com/questions/36325212/angular-2-dynamic-tabs-with-user-click-chosen-components/36325468#36325468
 https://www.ag-grid.com/ag-grid-angular-aot-dynamic-components/
 -->

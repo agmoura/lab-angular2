@@ -13,6 +13,8 @@ export class CategoriaObjetivoComponent implements OnInit {
         {nome: 'Categoria 4', descricao: 'Descricao 4', indicadorInternoSistema: false}
     ];
 
+    record: any;
+
     constructor() {
     }
 

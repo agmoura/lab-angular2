@@ -1,6 +1,7 @@
 import {ControlValueAccessor} from '@angular/forms';
+import {FieldComponent} from "../field/field";
 
-export abstract class ValueAccessorBase<T> implements ControlValueAccessor {
+export abstract class ValueAccessorBase<T> extends FieldComponent implements ControlValueAccessor {
     private innerValue: T;
 
     private changed = [];

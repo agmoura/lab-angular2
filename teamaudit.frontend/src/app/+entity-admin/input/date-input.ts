@@ -20,11 +20,7 @@ import {ValueAccessorBase} from "./value-accessor";
     template: `
     <md2-datepicker type="date" [name]="name" placeholder="{{label | translate}}" format="{{format}}" [(ngModel)]="value" class="form-input"></md2-datepicker>
     `,
-    providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: DateInputComponent,
-        multi: true,
-    }],
+    providers: [{provide: NG_VALUE_ACCESSOR, useExisting: DateInputComponent, multi: true}],
 })
 export class DateInputComponent extends ValueAccessorBase<string> {
     @Input() public name: string;

@@ -1,5 +1,5 @@
-import {Component, Input, ContentChildren, QueryList, ElementRef, AfterContentInit, OnInit, ViewContainerRef, ComponentFactoryResolver} from '@angular/core';
-import {TextFieldComponent} from "./text-field";
+import {Component, Input, ContentChildren, QueryList, AfterContentInit, OnInit, ViewContainerRef, ComponentFactoryResolver, Type, Directive, Output, EventEmitter} from '@angular/core';
+import {FieldComponent} from "./field";
 
 @Component({
     selector: 'table-data',
@@ -7,16 +7,18 @@ import {TextFieldComponent} from "./text-field";
     <table class="table table-condensed table-hover">
         <thead>
             <tr>
-                <th *ngFor="let field of fieldComponents" [hidden]="field.hidden">
-                    {{field.source | translate}}
+                <th *ngFor="let field of fields">
+                    {{field.label | translate}}
                 </th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let record of data">
-                <td *ngFor="let field of fieldComponents">
-                    <table-cell [componentType]="field.constructor.name" ></table-cell>
+                <td *ngFor="let field of fields">
+                    <template [table-field]="field" [record]="record"></template>
                 </td>
+                <button (click)="edit(record)">EDIT</button>
             </tr>
         </tbody>
     </table>
@@ -25,55 +27,36 @@ import {TextFieldComponent} from "./text-field";
 export class TableDataComponent implements AfterContentInit {
     @Input() data: Array<any>;
     @Input() label: string;
-    @ContentChildren(TextFieldComponent) fieldComponents: QueryList<TextFieldComponent>;
-
-    private fields = [
-        {label: 'Nome', source: 'nome'},
-        {label: 'Descricao', source: 'descricao'},
-        {label: 'Interno', source: 'indicadorInternoSistema'}
-    ];
+    @Output() onEdit = new EventEmitter<any>();
+    @ContentChildren(FieldComponent) fields: QueryList<FieldComponent>;
 
     constructor() {
     }
 
     ngAfterContentInit(): void {
-        let i = this.fieldComponents.length
+
+    }
+
+    edit(record:any) {
+        this.onEdit.emit(record);
     }
 }
 
-
-@Component({
-    selector: 'grid-component',
-    template: `
-        <div class="row" *ngFor="let cellComponentType of cellComponentTypes">
-            <div class="col-lg-12">
-                <grid-cell [componentType]="cellComponentType"></grid-cell>
-            </div>
-        </div>
-    `
+@Directive({
+    selector: '[table-field]'
 })
-export class Grid {
-    @Input() componentTypes: any;
-    cellComponentTypes: any[] = [];
-
-    addDynamicCellComponent(selectedComponentType: any) {
-        this.cellComponentTypes.push(selectedComponentType);
-    }
-}
-
-
-@Component({
-    selector: 'table-cell',
-    template: ''
-})
-export class TableCellComponent implements OnInit {
-    @Input() componentType: any;
+export class TableFieldDirective implements OnInit {
+    @Input('table-field') field: FieldComponent;
+    @Input() record: Array<any>;
 
     constructor(private container: ViewContainerRef, private resolver: ComponentFactoryResolver) {
+
     }
 
     ngOnInit() {
-        let factory = this.resolver.resolveComponentFactory(this.componentType);
-        this.container.createComponent(factory);
+        let factory = this.resolver.resolveComponentFactory(<Type<FieldComponent>> this.field.constructor);
+        let component = this.container.createComponent(factory);
+        component.instance.source = this.field.source;
+        component.instance.record = this.record;
     }
 }
