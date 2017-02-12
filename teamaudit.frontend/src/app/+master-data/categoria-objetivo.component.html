@@ -1,20 +1,20 @@
-<!--<list-view>-->
-<table-data [data]="data" (onEdit)="record = $event">
-    <!--<text-field source='escopo.descricao'></text-field>-->
-    <text-field source="nome" label="Nome"></text-field>
-    <text-field source="descricao" label="Descrição"></text-field>
-    <boolean-field source="indicadorInternoSistema" label="Interno"></boolean-field>
-    <!--<edit-button></edit-button>-->
-</table-data>
+<list-view>
+    <table-data>
 
+        <text-field source="id" label="ID"></text-field>
+        <text-field source="nome" label="Nome"></text-field>
+        <text-field source="descricao" label="Descrição"></text-field>
+        <boolean-field source="indicadorInternoSistema" label="Interno"></boolean-field>
+        <text-field source='escopo.descricao' label="Escopo"></text-field>
+        <!--<edit-button></edit-button>-->
+    </table-data>
+</list-view>
 
-<!--</list-view>-->
-
-<!--<edit-view>-->
-    <simple-form *ngIf="record" [record]="record">
+<edit-view>
+    <simple-form>
         <text-input name="nome" label="Nome" [ngModel]="record.nome"></text-input>
         <text-input name="descricao" label="Descrição" [(ngModel)]="record.descricao"></text-input>
-        <boolean-input name="indicadorInternoSistema" label="Interno"></boolean-input>
+        <boolean-input name="indicadorInternoSistema" label="Interno" [(ngModel)]="record.indicadorInternoSistema"></boolean-input>
         <!--<reference-many-field reference="objetivo" target="categoriaObjetivo.id" >
             <table-data>
                 <text-field source="nome" label="Nome"></text-field>
@@ -28,11 +28,11 @@
             </table-data>
         </reference-many-to-many-field>-->
     </simple-form>
-<!--</edit-view>-->
+</edit-view>
 
-
-<!--
-htgular.io/docs/ts/latest/cookbook/dynamic-component-loader.html
-http://stackoverflow.com/questions/36325212/angular-2-dynamic-tabs-with-user-click-chosen-components/36325468#36325468
-https://www.ag-grid.com/ag-grid-angular-aot-dynamic-components/
--->
+<!--<span>REACTIVE FORM</span>
+<simple-form-reactive *ngIf="record" [record]="record" [formGroup]="form">
+    <text-input formControlName="nome" label="Nome"></text-input>
+    <text-input formControlName="descricao" label="Descrição"></text-input>
+    <boolean-input formControlName="indicadorInternoSistema" label="Interno"></boolean-input>
+</simple-form-reactive>-->

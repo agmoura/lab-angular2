@@ -25,6 +25,10 @@ import {TextFieldComponent} from "./field/text-field";
 import {BooleanFieldComponent} from "./field/boolean-field";
 import {TableDataComponent, TableFieldDirective} from "./field/table-data";
 import {SimpleFormComponent} from "./field/simple-form";
+import {SimpleFormReactiveComponent} from "./field/simple-form-reactive";
+import {EditViewComponent} from "./field/edit-view";
+import {ListViewComponent} from "./field/list-view";
+import {ResourceService} from "./shared/resource.service";
 
 //import {GridModule} from "@progress/kendo-angular-grid";
 
@@ -59,10 +63,14 @@ import {SimpleFormComponent} from "./field/simple-form";
         BooleanFieldComponent,
         TableDataComponent,
         TableFieldDirective,
-        SimpleFormComponent
+        SimpleFormComponent,
+        SimpleFormReactiveComponent,
+        EditViewComponent,
+        ListViewComponent
     ],
     providers: [
-        EntitySchemaService
+        EntitySchemaService,
+        ResourceService
     ],
     exports: [
         ListComponent,
@@ -80,9 +88,11 @@ import {SimpleFormComponent} from "./field/simple-form";
         TextFieldComponent,
         BooleanFieldComponent,
         TableDataComponent,
-        //TableFieldDirective,
 
-        SimpleFormComponent
+        SimpleFormComponent,
+        SimpleFormReactiveComponent,
+        EditViewComponent,
+        ListViewComponent
     ],
     entryComponents: [
         TextFieldComponent,
