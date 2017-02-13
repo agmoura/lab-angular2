@@ -1,4 +1,4 @@
-import {Component, Input, ContentChildren, QueryList, AfterContentInit, OnInit, ViewContainerRef, ComponentFactoryResolver, Type, Directive, Output, EventEmitter} from '@angular/core';
+import {Component, Input, ContentChildren, QueryList, AfterContentInit, OnInit, ViewContainerRef, ComponentFactoryResolver, Directive, Type} from '@angular/core';
 import {FieldComponent} from "./field";
 import {ResourceService} from "../shared/resource.service";
 
@@ -26,7 +26,6 @@ import {ResourceService} from "../shared/resource.service";
     `
 })
 export class TableDataComponent implements AfterContentInit {
-    @Output() onEdit = new EventEmitter<any>();
     @ContentChildren(FieldComponent) fields: QueryList<FieldComponent>;
 
     constructor(private resourceService: ResourceService) {

@@ -1,6 +1,5 @@
 <list-view>
     <table-data>
-
         <text-field source="id" label="ID"></text-field>
         <text-field source="nome" label="Nome"></text-field>
         <text-field source="descricao" label="Descrição"></text-field>
@@ -12,7 +11,7 @@
 
 <edit-view>
     <simple-form>
-        <text-input name="nome" label="Nome" [ngModel]="record.nome"></text-input>
+        <text-input name="nome" label="Nome" [(ngModel)]="record.nome"></text-input>
         <text-input name="descricao" label="Descrição" [(ngModel)]="record.descricao"></text-input>
         <boolean-input name="indicadorInternoSistema" label="Interno" [(ngModel)]="record.indicadorInternoSistema"></boolean-input>
         <!--<reference-many-field reference="objetivo" target="categoriaObjetivo.id" >

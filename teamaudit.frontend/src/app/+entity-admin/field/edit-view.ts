@@ -1,7 +1,4 @@
 import {Component, OnInit, OnDestroy, OnChanges, Input, SimpleChanges} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from "@angular/common";
-
 import {EntityBase} from '../../shared/model/models';
 import {DataService} from '../../shared/services/data.service';
 import {MdSnackBar} from "@angular/material";
@@ -78,9 +75,8 @@ export class EditViewComponent implements OnInit, OnDestroy, OnChanges {
         }
     }
 
-    save(entity: EntityBase) {
-
-        this.cleanEntity(entity);
+    save() {
+        //this.cleanEntity(this.resourceService.resourceRecord);
 
         //TODO: Refatorar código
         /*if (this.target) {
@@ -94,7 +90,7 @@ export class EditViewComponent implements OnInit, OnDestroy, OnChanges {
             }
         }*/
 
-        this.dataService.save(this.resource, entity).subscribe(
+        this.dataService.save(this.resource, this.resourceService.resourceRecord).subscribe(
             data => this.resourceService.resourceRecord = data,
             error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),
             () => {
@@ -105,7 +101,7 @@ export class EditViewComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     goBack() {
-        //this.router.navigate(['entity', this.resource]);
-        //this.location.back();
+        this.resourceId = null;
+        this.resourceService.load.next();
     }
 }
