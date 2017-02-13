@@ -14,24 +14,24 @@
         <text-input name="nome" label="Nome" [(ngModel)]="record.nome"></text-input>
         <text-input name="descricao" label="Descrição" [(ngModel)]="record.descricao"></text-input>
         <boolean-input name="indicadorInternoSistema" label="Interno" [(ngModel)]="record.indicadorInternoSistema"></boolean-input>
-        <!--<reference-many-field reference="objetivo" target="categoriaObjetivo.id" >
-            <table-data>
-                <text-field source="nome" label="Nome"></text-field>
-                <text-field source="descricao" label="Descrição"></text-field>
-            </table-data>
-        </reference-many-field>
-        <reference-many-to-many-field reference="entidade" target="categoriasObjetivos" >
-            <table-data>
-                <text-field source="nome" label="Nome"></text-field>
-                <text-field source="descricao" label="Descrição"></text-field>
-            </table-data>
-        </reference-many-to-many-field>-->
     </simple-form>
-</edit-view>
 
-<!--<span>REACTIVE FORM</span>
-<simple-form-reactive *ngIf="record" [record]="record" [formGroup]="form">
-    <text-input formControlName="nome" label="Nome"></text-input>
-    <text-input formControlName="descricao" label="Descrição"></text-input>
-    <boolean-input formControlName="indicadorInternoSistema" label="Interno"></boolean-input>
-</simple-form-reactive>-->
+    <tab-group>
+        <tab-item>
+            <reference-many reference="objetivo" target="categoriaObjetivo.id">
+                <table-data>
+                    <text-field source="nome" label="Nome"></text-field>
+                    <text-field source="descricao" label="Descrição"></text-field>
+                </table-data>
+            </reference-many>
+        </tab-item>
+        <tab-item>
+            <reference-many reference="entidade" target="categoriasObjetivos">
+                <table-data>
+                    <text-field source="nome" label="Nome"></text-field>
+                    <text-field source="descricao" label="Descrição"></text-field>
+                </table-data>
+            </reference-many>
+        </tab-item>
+    </tab-group>
+</edit-view>

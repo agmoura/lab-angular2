@@ -29,11 +29,9 @@ export class TableDataComponent implements AfterContentInit {
     @ContentChildren(FieldComponent) fields: QueryList<FieldComponent>;
 
     constructor(private resourceService: ResourceService) {
-
     }
 
     ngAfterContentInit(): void {
-
     }
 
     edit(record: any) {
@@ -49,7 +47,6 @@ export class TableFieldDirective implements OnInit {
     @Input() record: Array<any>;
 
     constructor(private container: ViewContainerRef, private resolver: ComponentFactoryResolver) {
-
     }
 
     ngOnInit() {
