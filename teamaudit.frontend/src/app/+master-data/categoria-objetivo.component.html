@@ -1,22 +1,27 @@
 <list-view>
     <table-data>
-        <text-field source="id" label="ID"></text-field>
-        <text-field source="nome" label="Nome"></text-field>
-        <text-field source="descricao" label="Descrição"></text-field>
-        <boolean-field source="indicadorInternoSistema" label="Interno"></boolean-field>
-        <text-field source='escopo.descricao' label="Escopo"></text-field>
+        <text-field label="ID" source="id" ></text-field>
+        <text-field label="Nome" source="nome" ></text-field>
+        <text-field label="Descrição" source="descricao" ></text-field>
+        <boolean-field label="Interno" source="indicadorInternoSistema" ></boolean-field>
+        <text-field label="Escopo" source="escopo.descricao" ></text-field>
         <!--<edit-button></edit-button>-->
     </table-data>
 </list-view>
 
 <edit-view>
     <simple-form>
-        <text-input name="nome" label="Nome" [(ngModel)]="record.nome"></text-input>
-        <text-input name="descricao" label="Descrição" [(ngModel)]="record.descricao"></text-input>
-        <boolean-input name="indicadorInternoSistema" label="Interno" [(ngModel)]="record.indicadorInternoSistema"></boolean-input>
+        <text-input label="Nome" [(ngModel)]="record.nome"></text-input>
+        <text-input label="Descrição" [(ngModel)]="record.descricao"></text-input>
+        <boolean-input label="Interno" [(ngModel)]="record.indicadorInternoSistema"></boolean-input>
+        <reference-input resource="escopo">
+            <select-input label="Escopo" sourceValue="id" sourceText="nome" [ngModel]="record.escopo?.id" (ngModelChange)="record.escopo.id=$event"></select-input>
+        </reference-input>
+
+
     </simple-form>
 
-    <tab-group>
+    <!--<tab-group>
         <tab-item>
             <reference-many reference="objetivo" target="categoriaObjetivo.id">
                 <table-data>
@@ -33,5 +38,5 @@
                 </table-data>
             </reference-many>
         </tab-item>
-    </tab-group>
+    </tab-group>-->
 </edit-view>

@@ -6,18 +6,18 @@ export enum ReferenceType {
     OneToMany, ManyToOne, ManyToMany, OneToOne
 }
 
-export interface EntitySchemaMap {
-    [source: string]: EntitySchema;
+export interface ResourceSchemaMap {
+    [resource: string]: ResourceSchema;
 }
 
-export interface EntitySchema {
+export interface ResourceSchema {
     listView: ListViewSchema;
     formView: FormViewSchema;
     treeView?: TreeViewSchema;
 }
 
 export interface ListViewSchema {
-    fields: EntityColumnSchema[];
+    fields: ListFieldSchema[];
     orders?: string[];
     filter?: any;
     select?: boolean;
@@ -28,42 +28,46 @@ export interface ListViewSchema {
 }
 
 export interface FormViewSchema {
-    fields: EntityFormFieldSchema[];
+    fields: FormFieldSchema[];
     references?: ReferenceSchema[];
-    details?: EntitySchema[];
 }
 
-//TODO: Revisar
+//TODO: Refatorar
 export interface TreeViewSchema {
     loadFrom?: string;
     recursiveRelationship?: boolean;
     treeNodes: TreeNodeSchema[];
 }
 
-export interface ReferenceSchema extends EntitySchema {
-    source: string;
+export interface ReferenceSchema extends ResourceSchema {
+    resource: string;
     type: ReferenceType;
     target: string;
     targetInverse?: string;
+
     /*targetId: {path: string};
     referencePath?: string;
-    relationPath?: {path: string};*/
-    childSelectListView?: ListViewSchema;
+    relationPath?: {path: string};
+    childSelectListView?: ListViewSchema;*/
 }
 
-export interface EntityFieldSchema {
-    source: string;       // O caminho para o campo em sua entidade
-    index?: number;     // TODO REMOVER
-    label?: string;     // O label do campo
-    type?: FieldType;   // Indica o Tipo do campo a ser renderizado
+export interface FieldSchema {
+    source: string;       // Field Name
+
+    index?: number;       // Field Index - Read Only
+    label?: string;       // Field Label Key - Default: UpperCase(Resource + '.' + Source)
+
     isEnum?: boolean;   // Indica se os valores selecionaveis deste campo são enums. Default: false
 }
 
-export interface EntityColumnSchema extends EntityFieldSchema {
+export interface ListFieldSchema extends FieldSchema {
+    type?: FieldType;      // Field Type
     hidden?: boolean;
 }
 
-export interface EntityFormFieldSchema extends EntityFieldSchema {
+export interface FormFieldSchema extends FieldSchema {
+    type: FieldType;      // Field Type
+
     referencePath?: string; // TODO REMOPVER - nome correto do tipo do objeto para considerar ao inves do path
     dependsOn?: string;     // TODO REMOVER - Nao é mais usado?
     isParent?: boolean;                 // Indica que este campo é o 'Parent' desta entidade
@@ -71,6 +75,14 @@ export interface EntityFormFieldSchema extends EntityFieldSchema {
     readOnly?: boolean;                 // Indica que o campo é readOnly
     select?: EntitySelectFieldSchema;   // Schema utilizado para definir campos que são definidos a partir de itens selecionaveis
 }
+
+
+
+
+
+
+
+
 
 export interface EntitySelectFieldSchema {
     // O nome da entidade de onde os dados do select virão, geralmente não deve ser informado
@@ -92,7 +104,7 @@ export interface TreeNodeSchema {
     entityName: string;             // O nome da entidade exemplo: AuditoriaAtividade
     entityLabelPath?: string;       // O campo no objeto da entidade com o nome da mesma, exemplo: Atividade da auditoria XPTO
     parentPath: string;             // O campo da entidade com o qual este nó se liga ao nó anterior
-    fields: EntityColumnSchema[];   // Configuração dos campos a exibir na arvore
+    fields: ListFieldSchema[];   // Configuração dos campos a exibir na arvore
     actionsVisible?: boolean;       // Indica se as ações de incluir, editar e excluir estarão fisiveis na arvore, default: true
     sorts?: string[]; // TODO TROCAR PAR ORDERS              // Paths usados para ordenar os resultados da arvore
 }
@@ -108,14 +120,14 @@ export interface ActionSchema {
 }
 
 
-/*export class TextInput implements EntityFormFieldSchema {
+/*export class TextInput implements FormFieldSchema {
  public type?: FieldType = FieldType.Text;
 
  constructor(public path: string) {
  }
  }
 
- export class ReferenceInput implements EntityFormFieldSchema {
+ export class ReferenceInput implements FormFieldSchema {
  public type: FieldType = FieldType.Reference;
 
  constructor(public path: string, public referencePath: string = null) {

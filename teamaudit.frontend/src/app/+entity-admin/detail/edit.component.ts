@@ -6,7 +6,7 @@ import {EntityBase} from '../../shared/model/models';
 import {DataService} from '../../shared/services/data.service';
 import {FieldType, FormViewSchema} from '../../shared/model/schema';
 import {EntitySchemaService} from '../entity-schema.service';
-import {EntityQuery} from "../../shared/model/query";
+import {ResourceQuery} from "../../shared/model/query";
 import {MdSnackBar} from "@angular/material";
 
 @Component({
@@ -15,8 +15,8 @@ import {MdSnackBar} from "@angular/material";
 })
 export class EditComponent implements OnInit, OnDestroy, OnChanges {
 
-    @Input() source: string;
-    @Input() sourceId: string; // sourceId
+    @Input() resource: string;
+    @Input() resourceId: string; // resourceId
     @Input() target: string;
     @Input() targetId: string;
     @Input() formViewSchema: FormViewSchema;
@@ -37,12 +37,12 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnInit() {
-        if (!this.source) {
+        if (!this.resource) {
             this.routeSubscription = this.route.params.subscribe(params => {
-                this.source = this.route.snapshot.params['entity'];
-                this.sourceId = this.route.snapshot.params['id'];
-                this.formViewSchema = this.schemaService.getEntitySchema(this.source).formView;
-                this.load(this.sourceId);
+                this.resource = this.route.snapshot.params['entity'];
+                this.resourceId = this.route.snapshot.params['id'];
+                this.formViewSchema = this.schemaService.getSchema(this.resource).formView;
+                this.load(this.resourceId);
             });
         }
     }
@@ -52,12 +52,12 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        this.load(this.sourceId);
+        this.load(this.resourceId);
     }
 
     load(id: string) {
         if (id)
-            this.dataService.get<EntityBase>(this.source, id).subscribe(
+            this.dataService.get<EntityBase>(this.resource, id).subscribe(
                 data => this.entity = data
             );
 
@@ -65,12 +65,12 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
             .filter(field => field.type === FieldType.Reference)
             .forEach(field => {
 
-                var entityQuery = new EntityQuery(field.referencePath || field.source)
+                var resourceQuery = new ResourceQuery(field.referencePath || field.source)
                     .select(field.select.value)
                     .select(field.select.text)
                     .orderBy(field.select.text);
 
-                this.dataService.find(entityQuery).subscribe(
+                this.dataService.find(resourceQuery).subscribe(
                     data => this.referencesData[field.source] = data.list
                 );
             });
@@ -107,18 +107,18 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
             }
         }
 
-        this.dataService.save(this.source, entity).subscribe(
+        this.dataService.save(this.resource, entity).subscribe(
             data => this.entity = data,
             error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),
             () => {
-                this.sourceId = this.entity.id;
+                this.resourceId = this.entity.id;
                 this.snackBar.open('Operação realizada com sucesso', 'OK', {duration: 2000})
             }
         );
     }
 
     goBack() {
-        //this.router.navigate(['entity', this.source]);
+        //this.router.navigate(['entity', this.resource]);
         this.location.back();
     }
 }

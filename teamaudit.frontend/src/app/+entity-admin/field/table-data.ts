@@ -1,6 +1,5 @@
-import {Component, Input, ContentChildren, QueryList, AfterContentInit, OnInit, ViewContainerRef, ComponentFactoryResolver, Directive, Type} from '@angular/core';
+import {Component, Input, ContentChildren, QueryList, OnInit, ViewContainerRef, ComponentFactoryResolver, Directive, Type, Output, EventEmitter} from '@angular/core';
 import {FieldComponent} from "./field";
-import {ResourceService} from "../shared/resource.service";
 
 @Component({
     selector: 'table-data',
@@ -15,7 +14,7 @@ import {ResourceService} from "../shared/resource.service";
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let record of resourceService.resourceData">
+            <tr *ngFor="let record of data">
                 <td *ngFor="let field of fields">
                     <template [table-field]="field" [record]="record"></template>
                 </td>
@@ -25,17 +24,16 @@ import {ResourceService} from "../shared/resource.service";
     </table>
     `
 })
-export class TableDataComponent implements AfterContentInit {
+export class TableDataComponent {
+    @Input() data: Array<any>;
+    @Output() onEdit = new EventEmitter<any>();
     @ContentChildren(FieldComponent) fields: QueryList<FieldComponent>;
 
-    constructor(private resourceService: ResourceService) {
-    }
-
-    ngAfterContentInit(): void {
+    constructor() {
     }
 
     edit(record: any) {
-        this.resourceService.edit.next(record.id);
+        this.onEdit.emit(record);
     }
 }
 

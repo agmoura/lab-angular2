@@ -5,10 +5,10 @@ import DevExpress from 'devextreme/bundles/dx.all';
 import 'devextreme/ui/data_grid.js';
 import 'devextreme/ui/button.js';
 
-import {EntitySchema, ListViewSchema, FieldType} from "../../shared/model/schema";
+import {ResourceSchema, ListViewSchema, FieldType} from "../../shared/model/schema";
 import {DataService} from "../../shared/services/data.service";
 import {Page} from "../../shared/model/paged-list";
-import {EntityQuery} from "../../shared/model/query";
+import {ResourceQuery} from "../../shared/model/query";
 import {MdSnackBar} from "@angular/material";
 
 @Component({
@@ -18,7 +18,7 @@ import {MdSnackBar} from "@angular/material";
 export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
 
     @ViewChild('container') container: ElementRef;
-    @Input() source: string;
+    @Input() resource: string;
     @Input() listViewSchema: ListViewSchema;
     @Input() filter: any;
     @Input() selectedKeys = [];
@@ -27,7 +27,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
     @Output() onLink = new EventEmitter<Array<any>>();
     @Output() selectedKeysChange = new EventEmitter<Array<any>>();
 
-    entityQuery: EntityQuery;
+    resourceQuery: ResourceQuery;
     entityList = [];
     page: Page;
 
@@ -50,7 +50,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if(changes['source'])
+        if(changes['resource'])
             this.setup();
     }
 
@@ -87,7 +87,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
                     if(self.onLink.observers.length > 0)
                         toolbar.prepend($('<div>').dxButton({ icon: 'tags', onClick: function () { self.link();}}));
 
-                    //contentReady = true;
+                    contentReady = true;
                 }
             }
 
@@ -107,7 +107,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
         this.page = new Page();
         this.page.size = 0; // dxDataGrid
 
-        this.entityQuery = new EntityQuery(this.source)
+        this.resourceQuery = new ResourceQuery(this.resource)
             .selectList(this.listViewSchema.fields.map(field => field.source))
             .select('id')
             .where(this.filter)
@@ -155,22 +155,22 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private getId(entity: any) {
-        return entity[this.entityQuery.projections.length - 1];
+        return entity[this.resourceQuery.projections.length - 1];
     }
 
     public load() {
 
-        this.dataService.find(this.entityQuery)
+        this.dataService.find(this.resourceQuery)
             .subscribe(
                 data => {
                     this.entityList = data.list;
-                    this.entityQuery.pageItem(this.page = new Page(data.page));
+                    this.resourceQuery.pageItem(this.page = new Page(data.page));
                     this.dataGrid.option({
                         dataSource: {
                             store: {
                                 data: this.entityList,
                                 type: 'array',
-                                key: `${this.entityQuery.projections.length - 1}`
+                                key: `${this.resourceQuery.projections.length - 1}`
                             }
                         },
                         columns: this.gridColumns,
@@ -183,7 +183,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
 
     private delete(entity: any) {
         if (confirm('Tem certeza que deseja exluir esse registro ?')) {
-            this.dataService.delete(this.source, this.getId(entity)).subscribe(
+            this.dataService.delete(this.resource, this.getId(entity)).subscribe(
                 data => this.load(),
                 error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK')
             );
@@ -204,7 +204,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private link() {
-        let sourceKeys = this.entityList.map(item => item[this.entityQuery.projections.length - 1]);
-        this.onLink.emit(sourceKeys);
+        let resourceKeys = this.entityList.map(item => item[this.resourceQuery.projections.length - 1]);
+        this.onLink.emit(resourceKeys);
     }
 }

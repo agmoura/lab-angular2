@@ -1,6 +1,6 @@
 import {Page} from "./paged-list";
 
-export class EntityQuery {
+export class ResourceQuery {
 
     projections: string[] = [];
     predicates: any;
@@ -11,17 +11,17 @@ export class EntityQuery {
 
     }
 
-    select(projection: string): EntityQuery {
+    select(projection: string): ResourceQuery {
         this.projections.push(projection);
         return this;
     }
 
-    selectList(projections: string[]): EntityQuery {
+    selectList(projections: string[]): ResourceQuery {
         this.projections = this.projections.concat(projections);
         return this;
     }
 
-    where(predicate: any): EntityQuery {
+    where(predicate: any): ResourceQuery {
         if (predicate)
             this.predicates = Object.assign(this.predicates || {}, predicate);
         return this;
@@ -37,18 +37,18 @@ export class EntityQuery {
         }
     }
 
-    orderBy(sort: string): EntityQuery {
+    orderBy(sort: string): ResourceQuery {
         this.sorts.push(sort);
         return this;
     }
 
-    orderByList(sorts: string[]): EntityQuery {
+    orderByList(sorts: string[]): ResourceQuery {
         if (sorts)
             this.sorts = this.sorts.concat(sorts);
         return this;
     }
 
-    pageItem(page: Page): EntityQuery {
+    pageItem(page: Page): ResourceQuery {
         this.page = page;
         return this;
     }

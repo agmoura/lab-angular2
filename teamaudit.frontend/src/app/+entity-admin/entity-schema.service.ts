@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {EntitySchema, EntitySchemaMap, FieldType, ReferenceType} from "../shared/model/schema";
+import {ResourceSchema, ResourceSchemaMap, FieldType, ReferenceType} from "../shared/model/schema";
 
 @Injectable()
 export class EntitySchemaService {
 
-    private entitySchemaMap: EntitySchemaMap = {
+    private resourceSchemaMap: ResourceSchemaMap = {
         escopo: {
             listView: {
                 fields: [
@@ -39,13 +39,13 @@ export class EntitySchemaService {
                 ],
                 references: [
                     {
-                        source: 'objetivo',
+                        resource: 'objetivo',
                         type: ReferenceType.OneToMany,
                         target: 'categoriaObjetivo.id',
                         listView: {
                             fields: [
-                                {source: 'categoriaObjetivo.escopo.nome', hidden:true},
-                                {source: 'categoriaObjetivo.nome', hidden:true},
+                                {source: 'categoriaObjetivo.escopo.nome', hidden: true},
+                                {source: 'categoriaObjetivo.nome', hidden: true},
                                 {source: 'nome'},
                                 {source: 'descricao'}
                             ],
@@ -64,13 +64,13 @@ export class EntitySchemaService {
                         }
                     },
                     {
-                        source: 'objetivo',
+                        resource: 'objetivo',
                         type: ReferenceType.OneToMany,
                         target: 'categoriaObjetivoPrimaria.id',
                         listView: {
                             fields: [
-                                {source: 'categoriaObjetivo.escopo.nome', hidden:true},
-                                {source: 'categoriaObjetivo.nome', hidden:true},
+                                {source: 'categoriaObjetivo.escopo.nome', hidden: true},
+                                {source: 'categoriaObjetivo.nome', hidden: true},
                                 {source: 'nome'},
                                 {source: 'descricao'}
                             ],
@@ -89,7 +89,7 @@ export class EntitySchemaService {
                         }
                     },
                     {
-                        source: 'entidade',
+                        resource: 'entidade',
                         type: ReferenceType.ManyToMany,
                         target: 'categoriasObjetivos',
                         targetInverse: 'entidades',
@@ -110,11 +110,11 @@ export class EntitySchemaService {
                                 {source: 'descricao', type: FieldType.Text},
                                 {source: 'codigoCarteiraAtiva', type: FieldType.Text},
                                 /*{
-                                    source: 'carteiraAtividades',
-                                    referencePath: 'carteiraAtividades',
-                                    type: FieldType.Reference,
-                                    select: {value: 'id', text: 'nome'}
-                                },*/
+                                 source: 'carteiraAtividades',
+                                 referencePath: 'carteiraAtividades',
+                                 type: FieldType.Reference,
+                                 select: {value: 'id', text: 'nome'}
+                                 },*/
                                 {
                                     source: 'planoAnualAtivo',
                                     referencePath: 'planoAnual',
@@ -125,9 +125,9 @@ export class EntitySchemaService {
                                 {source: 'dataFim', type: FieldType.Date},
                                 {source: 'codigoImportacao', type: FieldType.Text, readOnly: true}
                             ],
-                            references:[
+                            references: [
                                 {
-                                    source: 'categoriaObjetivo',
+                                    resource: 'categoriaObjetivo',
                                     type: ReferenceType.ManyToMany,
                                     target: 'entidades',
                                     listView: {
@@ -212,7 +212,7 @@ export class EntitySchemaService {
                 ],
                 references: [
                     {
-                        source: 'auditorEquipe',
+                        resource: 'auditorEquipe',
                         type: ReferenceType.OneToMany,
                         target: 'entidade.id',
                         listView: {
@@ -236,7 +236,7 @@ export class EntitySchemaService {
                         }
                     },
                     {
-                        source: 'entidadeOrganizacionalEquipe',
+                        resource: 'entidadeOrganizacionalEquipe',
                         type: ReferenceType.OneToMany,
                         target: 'entidade.id',
                         listView: {
@@ -259,24 +259,19 @@ export class EntitySchemaService {
 
     constructor() {
         // Atribuir Índice de Todos Campos da Visão de Listagem
-        for (var attribute in this.entitySchemaMap) {
-            var entitySchema = this.entitySchemaMap[attribute];
-            this.setupEntitySchema(entitySchema, attribute);
-            if (entitySchema.formView.references) {
-                entitySchema.formView.references.forEach(
-                    item => this.setupEntitySchema(item, item.source)
-                );
-            }
+        for (var attribute in this.resourceSchemaMap) {
+            var schema = this.resourceSchemaMap[attribute];
+            this.setupSchema(schema, attribute);
         }
     }
 
-    private setupEntitySchema(entitySchema: EntitySchema, source: string) {
-        entitySchema.listView.fields.forEach((item, index) => this.setupFieldSchema(source, item, index));
-        entitySchema.formView.fields.forEach((item, index) => this.setupFieldSchema(source, item, index));
+    private setupSchema(schema: ResourceSchema, source: string) {
+        schema.listView.fields.forEach((item, index) => this.setupFieldSchema(source, item, index));
+        schema.formView.fields.forEach((item, index) => this.setupFieldSchema(source, item, index));
 
-        if (entitySchema.formView.references) {
-            entitySchema.formView.references.forEach(
-                item => this.setupEntitySchema(item, item.source)
+        if (schema.formView.references) {
+            schema.formView.references.forEach(
+                item => this.setupSchema(item, item.resource)
             );
         }
 
@@ -287,7 +282,7 @@ export class EntitySchemaService {
         if (!item.label) item.label = (source + '.' + item.source).toUpperCase();
     }
 
-    public getEntitySchema(source: string): EntitySchema {
-        return this.entitySchemaMap[source];
+    public getSchema(resource: string): ResourceSchema {
+        return this.resourceSchemaMap[resource];
     }
 }

@@ -15,7 +15,7 @@ import {HandleErrorsComponent} from "../shared/components/handle-errors.componen
 //import {DxDataGridModule} from 'devextreme-angular';
 
 import {TextInputComponent} from "./input/text-input";
-import {ReferenceInputComponent} from "./input/reference-input";
+import {SelectInputComponent} from "./input/select-input";
 import {NumberInputComponent} from "./input/number-input";
 import {DatagridComponent} from "./list/datagrid.component";
 import {DateInputComponent} from "./input/date-input";
@@ -29,6 +29,7 @@ import {SimpleFormReactiveComponent} from "./field/simple-form-reactive";
 import {EditViewComponent} from "./field/edit-view";
 import {ListViewComponent} from "./field/list-view";
 import {ResourceService} from "./shared/resource.service";
+import {ReferenceInputComponent} from "./field/reference-input";
 
 //import {GridModule} from "@progress/kendo-angular-grid";
 
@@ -53,11 +54,12 @@ import {ResourceService} from "./shared/resource.service";
 
         ReferenceManyComponent,
 
-        ReferenceInputComponent,
+        SelectInputComponent,
         TextInputComponent,
         NumberInputComponent,
         DateInputComponent,
         BooleanInputComponent,
+        ReferenceInputComponent,
 
         TextFieldComponent,
         BooleanFieldComponent,
@@ -79,11 +81,12 @@ import {ResourceService} from "./shared/resource.service";
 
         ReferenceManyComponent,
 
-        ReferenceInputComponent,
+        SelectInputComponent,
         TextInputComponent,
         NumberInputComponent,
         DateInputComponent,
         BooleanInputComponent,
+        ReferenceInputComponent,
 
         TextFieldComponent,
         BooleanFieldComponent,

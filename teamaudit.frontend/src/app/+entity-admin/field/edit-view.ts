@@ -3,20 +3,19 @@ import {EntityBase} from '../../shared/model/models';
 import {DataService} from '../../shared/services/data.service';
 import {MdSnackBar} from "@angular/material";
 import {ResourceService} from "../shared/resource.service";
+import {TableDataComponent} from "./table-data";
 
 @Component({
     selector: 'edit-view',
     templateUrl: 'edit-view.html'
 })
-export class EditViewComponent implements OnInit, OnDestroy, OnChanges {
+export class EditViewComponent implements OnInit, OnChanges {
 
     @Input() resource: string;
     @Input() resourceId: string;
-
     @Input() target: string;
     @Input() targetId: string;
 
-    routeSubscription: any;
 
     constructor(private resourceService: ResourceService,
                 private dataService: DataService,
@@ -31,10 +30,6 @@ export class EditViewComponent implements OnInit, OnDestroy, OnChanges {
         );
     }
 
-    ngOnDestroy() {
-        if (this.routeSubscription) this.routeSubscription.unsubscribe();
-    }
-
     ngOnChanges(changes: SimpleChanges): void {
         this.load(this.resourceId);
     }
@@ -46,18 +41,18 @@ export class EditViewComponent implements OnInit, OnDestroy, OnChanges {
             );
 
         /*this.formViewSchema.fields
-            .filter(field => field.type === FieldType.Reference)
-            .forEach(field => {
+         .filter(field => field.type === FieldType.Reference)
+         .forEach(field => {
 
-                var entityQuery = new EntityQuery(field.referencePath || field.resource)
-                    .select(field.select.value)
-                    .select(field.select.text)
-                    .orderBy(field.select.text);
+         var resourceQuery = new ResourceQuery(field.referencePath || field.resource)
+         .select(field.select.value)
+         .select(field.select.text)
+         .orderBy(field.select.text);
 
-                this.dataService.find(entityQuery).subscribe(
-                    data => this.referencesData[field.resource] = data.list
-                );
-            });*/
+         this.dataService.find(resourceQuery).subscribe(
+         data => this.referencesData[field.resource] = data.list
+         );
+         });*/
     }
 
     // Remove Undefined, Null and Empty Attributes
@@ -80,15 +75,15 @@ export class EditViewComponent implements OnInit, OnDestroy, OnChanges {
 
         //TODO: Refatorar código
         /*if (this.target) {
-            let targetPath: string[] = this.target.split('.');
+         let targetPath: string[] = this.target.split('.');
 
-            if(targetPath.length > 1) {
-                if (!entity[targetPath[0]]) entity[targetPath[0]] = {[targetPath[1]]: this.targetId};
-            }
-            else {
-                entity[targetPath[0]] = [{id: this.targetId}];
-            }
-        }*/
+         if(targetPath.length > 1) {
+         if (!entity[targetPath[0]]) entity[targetPath[0]] = {[targetPath[1]]: this.targetId};
+         }
+         else {
+         entity[targetPath[0]] = [{id: this.targetId}];
+         }
+         }*/
 
         this.dataService.save(this.resource, this.resourceService.resourceRecord).subscribe(
             data => this.resourceService.resourceRecord = data,

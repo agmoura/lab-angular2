@@ -10,7 +10,7 @@ import {DatagridComponent} from "../list/datagrid.component";
     template: `
     <ng-container *ngIf="referenceSchema.type === ReferenceType.ManyToMany">
         <datagrid #datagrid
-                  [source]="referenceSchema.source" 
+                  [resource]="referenceSchema.resource" 
                   [listViewSchema]="referenceSchema.listView"
                   [filter]="filter"
                   (onCreate)="edit()"
@@ -19,9 +19,9 @@ import {DatagridComponent} from "../list/datagrid.component";
         </datagrid>
         
         <md2-dialog #dialog>
-            <md2-dialog-title>Asssociar {{referenceSchema.source.toUpperCase() | translate}}</md2-dialog-title>
+            <md2-dialog-title>Asssociar {{referenceSchema.resource.toUpperCase() | translate}}</md2-dialog-title>
             <datagrid *ngIf="dialog._isOpened" 
-                      [source]="referenceSchema.source" 
+                      [resource]="referenceSchema.resource" 
                       [listViewSchema]="referenceSchema.listView"
                       [(selectedKeys)]="selectedKeys">
             </datagrid>
@@ -33,7 +33,7 @@ import {DatagridComponent} from "../list/datagrid.component";
     </ng-container>
     
     <ng-container *ngIf="referenceSchema.type === ReferenceType.OneToMany">
-        <datagrid [source]="referenceSchema.source" 
+        <datagrid [resource]="referenceSchema.resource" 
                   [listViewSchema]="referenceSchema.listView"
                   [filter]="filter"
                   (onCreate)="edit()"
@@ -44,12 +44,12 @@ import {DatagridComponent} from "../list/datagrid.component";
 })
 export class ReferenceManyComponent implements OnChanges {
     @Input() referenceSchema: ReferenceSchema;
-    @Input() source: string; //TODO: Refatorar código confuso
+    @Input() resource: string;
     @Input() targetId: string;
     @Output() onEdit = new EventEmitter<any>();
 
     ReferenceType: typeof ReferenceType = ReferenceType;
-    sourceId: string;
+    resourceId: string;
     filter: any;
     selectedKeys = [];
 
@@ -70,7 +70,7 @@ export class ReferenceManyComponent implements OnChanges {
     edit(id: string = null) {
         this.onEdit.emit({
             referenceSchema: this.referenceSchema,
-            sourceId: id
+            resourceId: id
         });
     }
 
@@ -81,7 +81,7 @@ export class ReferenceManyComponent implements OnChanges {
             return {id: item};
         });
 
-        this.dataService.patch(this.source, entity).subscribe(
+        this.dataService.patch(this.resource, entity).subscribe(
             data => entity = data,
             error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),
             () => {

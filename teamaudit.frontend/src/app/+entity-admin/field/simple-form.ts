@@ -19,6 +19,6 @@ export class SimpleFormComponent implements AfterContentInit {
     }
 
     public ngAfterContentInit(): void {
-        this.models.forEach((model) => this.form.addControl(model));
+        //this.models.forEach((model) => this.form.addControl(model));
     }
 }

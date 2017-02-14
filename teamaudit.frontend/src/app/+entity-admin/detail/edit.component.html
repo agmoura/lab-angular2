@@ -9,7 +9,7 @@
 <div class="page-content" *ngIf="!childEdit">
     <md-card class="page-card">
         <md-card-title>
-            <span>{{sourceId ? "Atualizar" : "Incluir"}} {{source | translate}}</span>
+            <span>{{sourceId ? "Atualizar" : "Incluir"}} {{resource | translate}}</span>
             <a class="card-title-menu" [md-menu-trigger-for]="cardTitleMenu">
                 <i class="material-icons">more_vert</i>
             </a>
@@ -22,7 +22,7 @@
 
         <md-card-content>
             <form #form="ngForm" (ngSubmit)="save(form.value)">
-                <input type="hidden" name="id" [ngModel]="sourceId">
+                <input type="hidden" name="id" [ngModel]="resourceId">
 
                 <div *ngFor="let field of formViewSchema.fields">
                     <ng-container [ngSwitch]="field.type">
@@ -37,14 +37,14 @@
 
                         <boolean-input  *ngSwitchCase="FieldType.Boolean" [name]="field.source" [label]="field.label" [ngModel]="entity[field.source]"></boolean-input>
 
-                        <reference-input *ngSwitchCase="FieldType.Reference"
+                        <select-input *ngSwitchCase="FieldType.Reference"
                                          [name]="field.select.value"
                                          [label]="field.label"
                                          ngModelGroup="{{field.source}}"
                                          [ngModel]="entity[field.source] && entity[field.source][field.select.value]"
                                          [required]="field.required"
                                          [items]="referencesData[field.source]">
-                        </reference-input>
+                        </select-input>
                     </ng-container>
                 </div>
             </form>
@@ -63,8 +63,8 @@
     <!--<strong>this.entity:</strong> {{entity | json}} <br/>
     <strong>form.value:</strong> {{form.value | json}}-->
 
-    <md-tab-group *ngIf="sourceId && formViewSchema.references">
-        <md-tab *ngFor="let reference of formViewSchema.references" label="{{reference.source.toUpperCase() | translate}}">
+    <md-tab-group *ngIf="resourceId && formViewSchema.references">
+        <md-tab *ngFor="let reference of formViewSchema.references" label="{{reference.resource.toUpperCase() | translate}}">
             <md-card class="page-card">
                 <md-card-title>
                     <a class="card-title-menu" md-ripple [md-menu-trigger-for]="cardTitleMenu">
@@ -77,7 +77,7 @@
                     </md-menu>
                 </md-card-title>
                 <md-card-content>
-                    <reference-many [referenceSchema]="reference" [source]="source" [targetId]="sourceId" (onEdit)="childEdit = $event"></reference-many>
+                    <reference-many [referenceSchema]="reference" [resource]="resource" [targetId]="resourceId" (onEdit)="childEdit = $event"></reference-many>
                 </md-card-content>
             </md-card>
         </md-tab>
@@ -85,10 +85,10 @@
 </div>
 
 <edit *ngIf="childEdit"
-      [source]="childEdit.referenceSchema.source"
-      [sourceId]="childEdit.sourceId"
+      [resource]="childEdit.referenceSchema.resource"
+      [resourceId]="childEdit.resourceId"
       [target]="childEdit.referenceSchema.target"
-      [targetId]="sourceId"
+      [targetId]="resourceId"
       [formViewSchema]="childEdit.referenceSchema.formView">
     <button md-button (click)="childEdit = null">VOLTAR2</button>
 </edit>
