@@ -4,7 +4,7 @@ import {FieldComponent} from "./field";
 @Component({
     selector: 'table-data',
     template: `
-    <table class="table table-condensed table-hover">
+    <table>
         <thead>
             <tr>
                 <th *ngFor="let field of fields">

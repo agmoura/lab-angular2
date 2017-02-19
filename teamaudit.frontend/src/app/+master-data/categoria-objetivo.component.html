@@ -14,11 +14,16 @@
         <text-input label="Nome" [(ngModel)]="record.nome"></text-input>
         <text-input label="Descrição" [(ngModel)]="record.descricao"></text-input>
         <boolean-input label="Interno" [(ngModel)]="record.indicadorInternoSistema"></boolean-input>
-        <reference-input resource="escopo">
+        <reference-many-one resource="escopo">
             <select-input label="Escopo" sourceValue="id" sourceText="nome" [ngModel]="record.escopo?.id" (ngModelChange)="record.escopo.id=$event"></select-input>
-        </reference-input>
+        </reference-many-one>
 
-
+        <reference-one-many resource="objetivo" target="categoriaObjetivo.id" [targetId]="record.id">
+            <table-data>
+                <text-field source="nome" label="Nome"></text-field>
+                <text-field source="descricao" label="Descrição"></text-field>
+            </table-data>
+        </reference-one-many>
     </simple-form>
 
     <!--<tab-group>

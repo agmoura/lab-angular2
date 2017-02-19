@@ -5,10 +5,10 @@ import {ResourceQuery} from "../../shared/model/query";
 import {SelectInputComponent} from "../input/select-input";
 
 @Component({
-    selector: 'reference-input',
+    selector: 'reference-many-one',
     template: '<ng-content></ng-content>'
 })
-export class ReferenceInputComponent implements OnInit {
+export class ReferenceManyToOneComponent implements OnInit {
     @Input() resource: string;
     @ContentChildren(SelectInputComponent) fields: QueryList<SelectInputComponent>;
     resourceQuery: ResourceQuery;

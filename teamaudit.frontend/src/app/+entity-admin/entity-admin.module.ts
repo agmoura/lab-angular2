@@ -11,8 +11,6 @@ import {EditComponent} from "./detail/edit.component";
 import {EntitySchemaService} from "./entity-schema.service";
 import {HandleErrorsComponent} from "../shared/components/handle-errors.component";
 
-//import {DataTableModule} from 'primeng/components/datatable/datatable';
-//import {DxDataGridModule} from 'devextreme-angular';
 
 import {TextInputComponent} from "./input/text-input";
 import {SelectInputComponent} from "./input/select-input";
@@ -29,9 +27,8 @@ import {SimpleFormReactiveComponent} from "./field/simple-form-reactive";
 import {EditViewComponent} from "./field/edit-view";
 import {ListViewComponent} from "./field/list-view";
 import {ResourceService} from "./shared/resource.service";
-import {ReferenceInputComponent} from "./field/reference-input";
-
-//import {GridModule} from "@progress/kendo-angular-grid";
+import {ReferenceManyToOneComponent} from "./field/reference-many-one";
+import {ReferenceOneToManyComponent} from "./field/reference-one-many";
 
 @NgModule({
     imports: [
@@ -42,10 +39,7 @@ import {ReferenceInputComponent} from "./field/reference-input";
         FlexLayoutModule,
         Md2Module,
         TranslateModule,
-        entityAdminRouting,
-        //DataTableModule,
-        //DxDataGridModule,
-        //GridModule,
+        entityAdminRouting
     ],
     declarations: [
         ListComponent,
@@ -59,7 +53,7 @@ import {ReferenceInputComponent} from "./field/reference-input";
         NumberInputComponent,
         DateInputComponent,
         BooleanInputComponent,
-        ReferenceInputComponent,
+
 
         TextFieldComponent,
         BooleanFieldComponent,
@@ -68,7 +62,9 @@ import {ReferenceInputComponent} from "./field/reference-input";
         SimpleFormComponent,
         SimpleFormReactiveComponent,
         EditViewComponent,
-        ListViewComponent
+        ListViewComponent,
+        ReferenceManyToOneComponent,
+        ReferenceOneToManyComponent
     ],
     providers: [
         EntitySchemaService,
@@ -86,7 +82,7 @@ import {ReferenceInputComponent} from "./field/reference-input";
         NumberInputComponent,
         DateInputComponent,
         BooleanInputComponent,
-        ReferenceInputComponent,
+
 
         TextFieldComponent,
         BooleanFieldComponent,
@@ -95,7 +91,9 @@ import {ReferenceInputComponent} from "./field/reference-input";
         SimpleFormComponent,
         SimpleFormReactiveComponent,
         EditViewComponent,
-        ListViewComponent
+        ListViewComponent,
+        ReferenceManyToOneComponent,
+        ReferenceOneToManyComponent
     ],
     entryComponents: [
         TextFieldComponent,
