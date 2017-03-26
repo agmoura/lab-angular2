@@ -9,8 +9,6 @@ import {entityAdminRouting} from "./entity-admin.routes";
 import {ListComponent} from "./list/list.component";
 import {EditComponent} from "./detail/edit.component";
 import {EntitySchemaService} from "./entity-schema.service";
-import {HandleErrorsComponent} from "../shared/components/handle-errors.component";
-
 
 import {TextInputComponent} from "./input/text-input";
 import {SelectInputComponent} from "./input/select-input";

@@ -1,5 +1,6 @@
 <style>
-    /deep/ .form-input {
+    /deep/
+    .form-input {
         padding-bottom: 8px;
         padding-top: 8px;
         width: 100%;
@@ -9,7 +10,7 @@
 <div class="page-content" *ngIf="!childEdit">
     <md-card class="page-card">
         <md-card-title>
-            <span>{{sourceId ? "Atualizar" : "Incluir"}} {{resource | translate}}</span>
+            <span>{{resourceId ? "Atualizar" : "Incluir"}} {{resource | translate}}</span>
             <a class="card-title-menu" [md-menu-trigger-for]="cardTitleMenu">
                 <i class="material-icons">more_vert</i>
             </a>
@@ -21,22 +22,25 @@
         </md-card-title>
 
         <md-card-content>
-            <form #form="ngForm" (ngSubmit)="save(form.value)">
-                <input type="hidden" name="id" [ngModel]="resourceId">
+            <form [formGroup]="mainForm">
+                <input type="hidden" formControlName="id">
 
                 <div *ngFor="let field of formViewSchema.fields">
                     <ng-container [ngSwitch]="field.type">
+                        <text-input *ngSwitchCase="FieldType.Text" [formControlName]="field.source" [label]="field.label"></text-input>
+                        <number-input *ngSwitchCase="FieldType.Number" [formControlName]="field.source" [label]="field.label"></number-input>
+                        <date-input *ngSwitchCase="FieldType.Date" [formControlName]="field.source" [label]="field.label" [format]="DD/MM/YYYY"></date-input>
+                        <boolean-input *ngSwitchCase="FieldType.Boolean" [formControlName]="field.source" [label]="field.label"></boolean-input>
+                        <div *ngSwitchCase="FieldType.Reference" [formGroupName]="field.source">
+                            <select-input [formControlName]="field.select.value" [label]="field.label" [items]="referencesData[field.source]"></select-input>
+                        </div>
 
-                        <input          *ngSwitchCase="FieldType.Hidden" type="hidden" name="{{field.source}}" [ngModel]="entity[field.source]">
-
+                        <!--<select-input *ngSwitchCase="FieldType.Reference" [formControlName]="field.source" [label]="field.label" [items]="referencesData[field.source]"></select-input>-->
+                        <!--<input          *ngSwitchCase="FieldType.Hidden" type="hidden" name="{{field.source}}" [ngModel]="entity[field.source]">
                         <text-input     *ngSwitchCase="FieldType.Text" [name]="field.source" [label]="field.label" [ngModel]="entity[field.source]"></text-input>
-
                         <number-input   *ngSwitchCase="FieldType.Number" [name]="field.source" [label]="field.label" [ngModel]="entity[field.source]"></number-input>
-
                         <date-input     *ngSwitchCase="FieldType.Date" [name]="field.source" [label]="field.label" [ngModel]="entity[field.source]" [format]="DD/MM/YYYY"></date-input>
-
                         <boolean-input  *ngSwitchCase="FieldType.Boolean" [name]="field.source" [label]="field.label" [ngModel]="entity[field.source]"></boolean-input>
-
                         <select-input *ngSwitchCase="FieldType.Reference"
                                          [name]="field.select.value"
                                          [label]="field.label"
@@ -44,15 +48,16 @@
                                          [ngModel]="entity[field.source] && entity[field.source][field.select.value]"
                                          [required]="field.required"
                                          [items]="referencesData[field.source]">
-                        </select-input>
+                        </select-input>-->
                     </ng-container>
                 </div>
             </form>
         </md-card-content>
         <md-card-actions>
             <ng-content></ng-content>
-            <button md-button (click)="goBack()">VOLTAR</button>
-            <button md-button (click)="save(form.value)">SALVAR</button>
+            <button md-button (click)="goBack()">BACK</button>
+            <button md-button (click)="save(mainForm.value)">SAVE</button>
+            <button md-button (click)="delete()">DELETE</button>
         </md-card-actions>
         <!--<md-card-footer>
             <md-progress-bar mode="indeterminate"></md-progress-bar>
@@ -61,7 +66,7 @@
 
     <!--TODO: Remover Informações de Depuração-->
     <!--<strong>this.entity:</strong> {{entity | json}} <br/>
-    <strong>form.value:</strong> {{form.value | json}}-->
+    <strong>form.value:</strong> {{mainForm.value | json}}-->
 
     <md-tab-group *ngIf="resourceId && formViewSchema.references">
         <md-tab *ngFor="let reference of formViewSchema.references" label="{{reference.resource.toUpperCase() | translate}}">

@@ -20,7 +20,7 @@ import {ValueAccessorBase} from "./value-accessor";
     selector: 'text-input',
     template: `
     <md-input-container class="form-input">
-        <input md-input [placeholder]="label | translate" type="text" [(ngModel)]="value" [name]="name" required>
+        <input mdInput [placeholder]="label | translate" type="text" [(ngModel)]="value" [name]="name">
     </md-input-container>
     <!--<p class="text-danger" *ngIf="firstName.errors?.required">You must include a first name.</p>-->
   `,

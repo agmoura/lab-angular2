@@ -37,4 +37,9 @@ public class Escopo extends BaseEntity {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
 }

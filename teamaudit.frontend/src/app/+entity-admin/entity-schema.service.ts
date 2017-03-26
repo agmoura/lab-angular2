@@ -253,6 +253,48 @@ export class EntitySchemaService {
                     }
                 ]
             }
+        },
+
+        auditLog: {
+            listView: {
+                fields: [
+                    {source: 'entityName'},
+                    {source: 'entityId'},
+                    {source: 'operation'},
+                    {source: 'dateCreated', type: FieldType.Date},
+                    {source: 'user'}
+                ]
+            },
+            formView: {
+                fields: [
+                    {source: 'entityName', type: FieldType.Text},
+                    {source: 'entityId', type: FieldType.Text},
+                    {source: 'operation', type: FieldType.Text},
+                    {source: 'dateCreated', type: FieldType.Date},
+                    {source: 'user', type: FieldType.Text}
+                ],
+                references: [
+                    {
+                        resource: 'auditLogItem',
+                        type: ReferenceType.OneToMany,
+                        target: 'auditLog.id',
+                        listView: {
+                            fields: [
+                                {source: 'field'},
+                                {source: 'oldValue'},
+                                {source: 'newValue'}
+                            ]
+                        },
+                        formView: {
+                            fields: [
+                                {source: 'field', type: FieldType.Text},
+                                {source: 'oldValue', type: FieldType.Text},
+                                {source: 'newValue', type: FieldType.Text}
+                            ]
+                        }
+                    }
+                ]
+            }
         }
 
     };

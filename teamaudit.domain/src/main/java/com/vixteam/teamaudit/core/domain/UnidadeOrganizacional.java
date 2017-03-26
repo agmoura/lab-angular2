@@ -67,4 +67,9 @@ public class UnidadeOrganizacional extends BaseEntity {
     public void setVisoes(List<VisaoAuditavel> visoes) {
         this.visoes = visoes;
     }*/
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
 }

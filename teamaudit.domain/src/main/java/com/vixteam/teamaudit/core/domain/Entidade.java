@@ -124,9 +124,6 @@ public class Entidade extends BaseEntity {
         this.planoAnualAtivo = planoAnualAtivo;
     }
 
-
-
-
     @ManyToMany(mappedBy = "entidades")
     private List<CategoriaObjetivo> categoriasObjetivos;
 
@@ -136,6 +133,11 @@ public class Entidade extends BaseEntity {
 
     public void setCategoriasObjetivos(List<CategoriaObjetivo> categoriasObjetivos) {
         this.categoriasObjetivos = categoriasObjetivos;
+    }
+
+    @Override
+    public String toString() {
+        return getNome();
     }
 
 }

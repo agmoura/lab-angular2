@@ -30,6 +30,14 @@ public class BaseEntityController {
     @Autowired
     private UseCaseFacade facade;
 
+    //TODO: Remover código de teste
+    @RequestMapping(value = "{commandPath}/execute", method = RequestMethod.POST)
+    public Object executeAction(@PathVariable String commandPath, String id, String action, @RequestParam Integer number)  {
+
+        return facade.execute(new GetBaseEntityQuery(commandPath, id));
+    }
+
+
     @RequestMapping(value = "{queryPath}", method = RequestMethod.GET)
     public PagedList findEntities(@PathVariable String queryPath, EntityQuery entityQuery) {
         return queryEntities(queryPath, entityQuery);

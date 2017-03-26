@@ -1,3 +1,4 @@
+import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
 import {Component, OnInit, OnDestroy, OnChanges, Input, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from "@angular/common";
@@ -8,6 +9,7 @@ import {FieldType, FormViewSchema} from '../../shared/model/schema';
 import {EntitySchemaService} from '../entity-schema.service';
 import {ResourceQuery} from "../../shared/model/query";
 import {MdSnackBar} from "@angular/material";
+
 
 @Component({
     selector: 'edit',
@@ -21,27 +23,48 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     @Input() targetId: string;
     @Input() formViewSchema: FormViewSchema;
 
-    childEdit: any;
-
+    FieldType: typeof FieldType = FieldType;
     routeSubscription: any;
+    mainForm: FormGroup;
     entity: EntityBase = <EntityBase>{};
     referencesData: any = {};
+    childEdit: any;
 
-    FieldType: typeof FieldType = FieldType;
-
-    constructor(private route: ActivatedRoute,
+    constructor(private builder: FormBuilder,
+                private route: ActivatedRoute,
                 private location: Location,
                 private dataService: DataService,
                 private schemaService: EntitySchemaService,
                 public snackBar: MdSnackBar) {
     }
 
+    createForm(formViewSchema: FormViewSchema) {
+
+        let group: any = {id: new FormControl()};
+
+        formViewSchema.fields.forEach(field => {
+            if(field.type !== FieldType.Reference)
+                group[field.source] = new FormControl();
+            else {
+                group[field.source] = new FormGroup({[field.select.value]: new FormControl()});
+            }
+        });
+
+        return new FormGroup(group);
+    }
+
     ngOnInit() {
+
+        document.querySelector('body').classList.toggle('aside-menu-hidden');
+
         if (!this.resource) {
             this.routeSubscription = this.route.params.subscribe(params => {
                 this.resource = this.route.snapshot.params['entity'];
                 this.resourceId = this.route.snapshot.params['id'];
                 this.formViewSchema = this.schemaService.getSchema(this.resource).formView;
+
+                this.mainForm = this.createForm(this.formViewSchema);
+
                 this.load(this.resourceId);
             });
         }
@@ -57,9 +80,16 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
 
     load(id: string) {
         if (id)
-            this.dataService.get<EntityBase>(this.resource, id).subscribe(
-                data => this.entity = data
-            );
+            this.dataService.get<EntityBase>(this.resource, id).subscribe(data => {
+
+                this.mainForm.patchValue(data);
+
+                /*for (let field in this.mainForm.controls) {
+                    this.mainForm.controls[field].setValue(data[field]);
+                }*/
+
+                this.entity = data;
+            });
 
         this.formViewSchema.fields
             .filter(field => field.type === FieldType.Reference)
@@ -99,7 +129,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
         if (this.target) {
             let targetPath: string[] = this.target.split('.');
 
-            if(targetPath.length > 1) {
+            if (targetPath.length > 1) {
                 if (!entity[targetPath[0]]) entity[targetPath[0]] = {[targetPath[1]]: this.targetId};
             }
             else {
@@ -117,8 +147,28 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
         );
     }
 
+    delete() {
+        this.dataService.delete(this.resource, this.resourceId).subscribe(
+            data => data,
+            error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),
+            () => {
+                this.resourceId = this.entity.id;
+                this.snackBar.open('Operação realizada com sucesso', 'OK', {duration: 2000});
+                this.goBack();
+            }
+        );
+    }
+
     goBack() {
         //this.router.navigate(['entity', this.resource]);
         this.location.back();
     }
+
+    /*execute() {
+        let data2;
+
+        this.dataService.executeAction<EntityBase>(this.resource).subscribe(
+            data => data2 = data
+        );
+    }*/
 }

@@ -18,7 +18,7 @@ import java.util.List;
 public class CategoriaObjetivo extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name="CD_ESCPO", nullable=false)
+    @JoinColumn(name="CD_ESCPO", nullable=true)
     private Escopo escopo;  
 	
     @NotNull
@@ -102,5 +102,10 @@ public class CategoriaObjetivo extends BaseEntity {
 
     public void setEntidades(List<Entidade> entidades) {
         this.entidades = entidades;
+    }
+
+    @Override
+    public String toString() {
+        return getNome();
     }
 }

@@ -4,7 +4,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 body.light {
   section.bs {
-    $theme: md-light-theme($theme-primary, $theme-accent, $theme-warn);
+    $theme: mat-light-theme($theme-primary, $theme-accent, $theme-warn);
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
@@ -360,84 +360,84 @@ body.light {
     // based on https://material.google.com/style/color.html#color-color-schemes
     // change these values to customise colour palettes
     //
-    $brand-color: md-color($primary) !default;
-    $brand-color-dark: md-color($primary, A700) !default;
-    $brand-color-light: md-color($primary, A100) !default;
-    $brand-text-color: md-color($foreground, text) !default;
-    $brand-text-color-dark: md-color($foreground, text) !default;
-    $brand-text-color-light: md-color($foreground, text) !default;
+    $brand-color: mat-color($primary) !default;
+    $brand-color-dark: mat-color($primary, A700) !default;
+    $brand-color-light: mat-color($primary, A100) !default;
+    $brand-text-color: mat-color($foreground, text) !default;
+    $brand-text-color-dark: mat-color($foreground, text) !default;
+    $brand-text-color-light: mat-color($foreground, text) !default;
 
-    $brand-color-accent: md-color($accent) !default;
-    $brand-color-accent-dark: md-color($accent, A400) !default;
-    $brand-color-accent-light: md-color($accent, A100) !default;
-    $brand-text-color-accent: md-color($foreground, text) !default;
-    $brand-text-color-accent-dark: md-color($foreground, text) !default;
-    $brand-text-color-accent-light: md-color($foreground, text) !default;
+    $brand-color-accent: mat-color($accent) !default;
+    $brand-color-accent-dark: mat-color($accent, A400) !default;
+    $brand-color-accent-light: mat-color($accent, A100) !default;
+    $brand-text-color-accent: mat-color($foreground, text) !default;
+    $brand-text-color-accent-dark: mat-color($foreground, text) !default;
+    $brand-text-color-accent-light: mat-color($foreground, text) !default;
 
     // change the following lists to add, edit, or remove colours used throughout material css
     $palettes: (
-      "primary",
-        // "primary" inherits brand colour, so that the naming is in line with Bootstrap 4
-      "secondary",
-        // "secondary" inherits brand accent colour, so that the naming is in line with Bootstrap 4
-      "danger",
-      "info",
-      "success",
-      "warning"
+            "primary",
+              // "primary" inherits brand colour, so that the naming is in line with Bootstrap 4
+            "secondary",
+              // "secondary" inherits brand accent colour, so that the naming is in line with Bootstrap 4
+            "danger",
+            "info",
+            "success",
+            "warning"
     ) !default;
 
     $palettes-color: (
-      $brand-color,
-      $brand-color-accent,
-      $palette-red-500,
-      $palette-blue-500,
-      $palette-green-500,
-      $palette-orange-500
+            $brand-color,
+            $brand-color-accent,
+            $palette-red-500,
+            $palette-blue-500,
+            $palette-green-500,
+            $palette-orange-500
     ) !default;
 
     $palettes-color-dark: (
-      $brand-color-dark,
-      $brand-color-accent-dark,
-      $palette-red-700,
-      $palette-blue-700,
-      $palette-green-700,
-      $palette-orange-700
+            $brand-color-dark,
+            $brand-color-accent-dark,
+            $palette-red-700,
+            $palette-blue-700,
+            $palette-green-700,
+            $palette-orange-700
     ) !default;
 
     $palettes-color-light: (
-      $brand-color-light,
-      $brand-color-accent-light,
-      $palette-red-300,
-      $palette-blue-300,
-      $palette-green-300,
-      $palette-orange-300
+            $brand-color-light,
+            $brand-color-accent-light,
+            $palette-red-300,
+            $palette-blue-300,
+            $palette-green-300,
+            $palette-orange-300
     ) !default;
 
     $palettes-text-color: (
-      $brand-text-color,
-      $brand-text-color-accent,
-      $white-primary,
-      $white-primary,
-      $black-primary,
-      $black-primary
+            $brand-text-color,
+            $brand-text-color-accent,
+            $white-primary,
+            $white-primary,
+            $black-primary,
+            $black-primary
     ) !default;
 
     $palettes-text-color-dark: (
-      $brand-text-color-dark,
-      $brand-text-color-accent-dark,
-      $white-primary,
-      $white-primary,
-      $white-primary,
-      $black-primary
+            $brand-text-color-dark,
+            $brand-text-color-accent-dark,
+            $white-primary,
+            $white-primary,
+            $white-primary,
+            $black-primary
     ) !default;
 
     $palettes-text-color-light: (
-      $brand-text-color-light,
-      $brand-text-color-accent-light,
-      $black-primary,
-      $black-primary,
-      $black-primary,
-      $black-primary
+            $brand-text-color-light,
+            $brand-text-color-accent-light,
+            $black-primary,
+            $black-primary,
+            $black-primary,
+            $black-primary
     ) !default;
     @import "~daemonite-material/assets/sass/variables/elevation-shadow";
     @import "~daemonite-material/assets/sass/variables/grid";
@@ -529,8 +529,8 @@ body.light {
     $jumbotron-color: $body-bg !default;
 
     // link
-    $link-color: md-color($foreground, text) !default;
-    $link-color-active: md-color($foreground, text) !default;
+    $link-color: mat-color($foreground, text) !default;
+    $link-color-active: mat-color($foreground, text) !default;
     $link-decoration: none !default;
     $link-decoration-active: none !default;
 
@@ -1130,15 +1130,15 @@ body.light {
       margin-bottom: 4px;
     }
     .bg-primary {
-      background-color: md-color($primary);
+      background-color: mat-color($primary);
     }
 
     .bg-accent {
-      background-color: md-color($accent);
+      background-color: mat-color($accent);
     }
 
     .bg-warn {
-      background-color: md-color($warn);
+      background-color: mat-color($warn);
     }
   }
 }
@@ -1148,7 +1148,7 @@ body.light {
 //----------------------------------------------------------------------------------------------------------------------
 body.dark {
   section.bs {
-    $theme: md-dark-theme($theme-primary, $theme-accent, $theme-warn);
+    $theme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
@@ -1504,84 +1504,84 @@ body.dark {
     // based on https://material.google.com/style/color.html#color-color-schemes
     // change these values to customise colour palettes
     //
-    $brand-color: md-color($primary) !default;
-    $brand-color-dark: md-color($primary, A700) !default;
-    $brand-color-light: md-color($primary, A100) !default;
-    $brand-text-color: md-color($foreground, text) !default;
-    $brand-text-color-dark: md-color($foreground, text) !default;
-    $brand-text-color-light: md-color($foreground, text) !default;
+    $brand-color: mat-color($primary) !default;
+    $brand-color-dark: mat-color($primary, A700) !default;
+    $brand-color-light: mat-color($primary, A100) !default;
+    $brand-text-color: mat-color($foreground, text) !default;
+    $brand-text-color-dark: mat-color($foreground, text) !default;
+    $brand-text-color-light: mat-color($foreground, text) !default;
 
-    $brand-color-accent: md-color($accent) !default;
-    $brand-color-accent-dark: md-color($accent, A400) !default;
-    $brand-color-accent-light: md-color($accent, A100) !default;
-    $brand-text-color-accent: md-color($foreground, text) !default;
-    $brand-text-color-accent-dark: md-color($foreground, text) !default;
-    $brand-text-color-accent-light: md-color($foreground, text) !default;
+    $brand-color-accent: mat-color($accent) !default;
+    $brand-color-accent-dark: mat-color($accent, A400) !default;
+    $brand-color-accent-light: mat-color($accent, A100) !default;
+    $brand-text-color-accent: mat-color($foreground, text) !default;
+    $brand-text-color-accent-dark: mat-color($foreground, text) !default;
+    $brand-text-color-accent-light: mat-color($foreground, text) !default;
 
     // change the following lists to add, edit, or remove colours used throughout material css
     $palettes: (
-      "primary",
-        // "primary" inherits brand colour, so that the naming is in line with Bootstrap 4
-      "secondary",
-        // "secondary" inherits brand accent colour, so that the naming is in line with Bootstrap 4
-      "danger",
-      "info",
-      "success",
-      "warning"
+            "primary",
+              // "primary" inherits brand colour, so that the naming is in line with Bootstrap 4
+            "secondary",
+              // "secondary" inherits brand accent colour, so that the naming is in line with Bootstrap 4
+            "danger",
+            "info",
+            "success",
+            "warning"
     ) !default;
 
     $palettes-color: (
-      $brand-color,
-      $brand-color-accent,
-      $palette-red-500,
-      $palette-blue-500,
-      $palette-green-500,
-      $palette-orange-500
+            $brand-color,
+            $brand-color-accent,
+            $palette-red-500,
+            $palette-blue-500,
+            $palette-green-500,
+            $palette-orange-500
     ) !default;
 
     $palettes-color-dark: (
-      $brand-color-dark,
-      $brand-color-accent-dark,
-      $palette-red-700,
-      $palette-blue-700,
-      $palette-green-700,
-      $palette-orange-700
+            $brand-color-dark,
+            $brand-color-accent-dark,
+            $palette-red-700,
+            $palette-blue-700,
+            $palette-green-700,
+            $palette-orange-700
     ) !default;
 
     $palettes-color-light: (
-      $brand-color-light,
-      $brand-color-accent-light,
-      $palette-red-300,
-      $palette-blue-300,
-      $palette-green-300,
-      $palette-orange-300
+            $brand-color-light,
+            $brand-color-accent-light,
+            $palette-red-300,
+            $palette-blue-300,
+            $palette-green-300,
+            $palette-orange-300
     ) !default;
 
     $palettes-text-color: (
-      $brand-text-color,
-      $brand-text-color-accent,
-      $white-primary,
-      $white-primary,
-      $black-primary,
-      $black-primary
+            $brand-text-color,
+            $brand-text-color-accent,
+            $white-primary,
+            $white-primary,
+            $black-primary,
+            $black-primary
     ) !default;
 
     $palettes-text-color-dark: (
-      $brand-text-color-dark,
-      $brand-text-color-accent-dark,
-      $white-primary,
-      $white-primary,
-      $white-primary,
-      $black-primary
+            $brand-text-color-dark,
+            $brand-text-color-accent-dark,
+            $white-primary,
+            $white-primary,
+            $white-primary,
+            $black-primary
     ) !default;
 
     $palettes-text-color-light: (
-      $brand-text-color-light,
-      $brand-text-color-accent-light,
-      $black-primary,
-      $black-primary,
-      $black-primary,
-      $black-primary
+            $brand-text-color-light,
+            $brand-text-color-accent-light,
+            $black-primary,
+            $black-primary,
+            $black-primary,
+            $black-primary
     ) !default;
     @import "~daemonite-material/assets/sass/variables/elevation-shadow";
     @import "~daemonite-material/assets/sass/variables/grid";
@@ -1673,8 +1673,8 @@ body.dark {
     $jumbotron-color: $body-bg !default;
 
     // link
-    $link-color: md-color($foreground, text) !default;
-    $link-color-active: md-color($foreground, text) !default;
+    $link-color: mat-color($foreground, text) !default;
+    $link-color-active: mat-color($foreground, text) !default;
     $link-decoration: none !default;
     $link-decoration-active: none !default;
 
@@ -2274,15 +2274,15 @@ body.dark {
       margin-bottom: 4px;
     }
     .bg-primary {
-      background-color: md-color($primary);
+      background-color: mat-color($primary);
     }
 
     .bg-accent {
-      background-color: md-color($accent);
+      background-color: mat-color($accent);
     }
 
     .bg-warn {
-      background-color: md-color($warn);
+      background-color: mat-color($warn);
     }
   }
 }

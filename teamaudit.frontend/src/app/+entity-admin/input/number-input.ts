@@ -6,7 +6,7 @@ import {ValueAccessorBase} from "./value-accessor";
     selector: 'number-input',
     template: `
     <md-input-container class="form-input">
-        <input md-input [placeholder]="label | translate" type="number" step="0.01" [(ngModel)]="value" [name]="name">
+        <input mdInput [placeholder]="label | translate" type="number" step="0.01" [(ngModel)]="value" [name]="name">
     </md-input-container>
     `,
     providers: [{

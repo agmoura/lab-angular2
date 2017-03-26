@@ -1,6 +1,6 @@
 import { TaPage } from './app.po';
 
-describe('ta App', function() {
+describe('ta App', () => {
   let page: TaPage;
 
   beforeEach(() => {

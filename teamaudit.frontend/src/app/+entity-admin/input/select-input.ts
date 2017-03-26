@@ -5,12 +5,12 @@ import {ValueAccessorBase} from "./value-accessor";
 @Component({
     selector: 'select-input',
     template: `
-    <md-select [placeholder]="label | translate" [(ngModel)]="value" [name]="name" [required]="required" class="form-input">
+    <md-select [placeholder]="label | translate" [(ngModel)]="value" [name]="name" class="form-input" #model="ngModel">
+        <md-option (click)="model.reset()"></md-option>
         <md-option *ngFor="let item of items" [value]="item[sourceValue]">
             {{item[sourceText]}}
         </md-option>
     </md-select>
-    <p> Selected value: {{value}} </p>
     `,
     providers: [{provide: NG_VALUE_ACCESSOR, useExisting: SelectInputComponent, multi: true,}]
 })

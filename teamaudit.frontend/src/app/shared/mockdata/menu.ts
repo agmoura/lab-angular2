@@ -44,12 +44,16 @@ export class MenuMock {
                     name: 'categoriaRisco',
                     title: 'Categoria Risco',
                     link: '/entity/categoriaRisco'
-                }
-                ,
+                },
                 {
                     name: 'entidade',
                     title: 'Entidade',
                     link: '/entity/entidade'
+                },
+                {
+                    name: 'auditLog',
+                    title: 'Audit Log',
+                    link: '/entity/auditLog'
                 }
             ]
         },

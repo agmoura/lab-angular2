@@ -1,7 +1,7 @@
 import {Observable} from "rxjs/Observable";
 import {Injectable} from "@angular/core";
 import 'rxjs/Rx';
-import {Http, Headers, Response} from "@angular/http";
+import {Http, Headers, Response, URLSearchParams} from "@angular/http";
 
 import {PagedList, Page} from "../model/paged-list";
 import {EntityBase} from "../model/models";
@@ -35,11 +35,13 @@ export class DataService {
         return this.http.get(url).map(response => new PagedList(response.json()));
     }
 
+
+
     find(resourceQuery: ResourceQuery): Observable<PagedList> {
         let headers = new Headers({'Content-Type': 'application/json'});
         let url: string = this.baseUrl + resourceQuery.entityPath + '/query';
 
-        return this.http.post(url, JSON.stringify(resourceQuery), {headers: headers})
+        return this.http.post(url, resourceQuery, {headers: headers})
             .map(response => new PagedList(response.json()));
     }
 
@@ -72,5 +74,25 @@ export class DataService {
 
     delete(path: string, id: string) {
         return this.http.delete(this.baseUrl + path + "/" + id);
+    }
+
+    //TODO: Remover código de teste
+    executeAction<TEntity extends EntityBase>(path: string): Observable<TEntity> {
+        let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
+        let url = this.baseUrl + path + '/execute';
+
+        /*let data = {
+            id: '1',
+            action: 'save',
+            number: 100
+        };*/
+
+        let data = new URLSearchParams();
+        data.append('id', '1');
+        data.append('action', 'save');
+        data.append('number', '100');
+
+        return <Observable<TEntity>> this.http.post(url, data.toString(), {headers: headers})
+            .map(response => response.json());
     }
 }

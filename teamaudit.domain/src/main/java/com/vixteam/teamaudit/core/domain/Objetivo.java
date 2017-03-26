@@ -112,4 +112,9 @@ public class Objetivo extends BaseEntity {
     public void setCategoriaObjetivoPrimaria(CategoriaObjetivo categoriaObjetivoPrimaria) {
         this.categoriaObjetivoPrimaria = categoriaObjetivoPrimaria;
     }
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
 }

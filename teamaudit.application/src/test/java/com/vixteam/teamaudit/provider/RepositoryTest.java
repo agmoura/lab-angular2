@@ -4,6 +4,7 @@ import com.vixteam.teamaudit.DatabaseLoader;
 import com.vixteam.teamaudit.core.domain.CategoriaObjetivo;
 import com.vixteam.teamaudit.core.domain.Entidade;
 import com.vixteam.teamaudit.core.domain.Escopo;
+import com.vixteam.teamaudit.core.usecase.commons.UseCaseFacade;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,8 +25,8 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+//@DataJpaTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class RepositoryTest {
 
     @PersistenceContext
@@ -35,7 +36,7 @@ public class RepositoryTest {
     public void setup(){
         DatabaseLoader databaseLoader = new DatabaseLoader();
         databaseLoader.loadDatabase(entityManager);
-        entityManager.flush();
+        //entityManager.flush();
     }
 
     public <TEntity> List<TEntity> findAll(Class<TEntity> entityClass) {
@@ -51,6 +52,8 @@ public class RepositoryTest {
         Escopo escopo = (Escopo) findAll(Escopo.class).get(0);
         /*Escopo escopo = new Escopo();
         escopo.setId("0");*/
+
+        escopo.setDescricao("Descrição Alterada");
 
         //CategoriaObjetivo categoriaObjetivo = (CategoriaObjetivo) findAll("categoriaObjetivo").get(13);
         CategoriaObjetivo categoriaObjetivo = new CategoriaObjetivo();
