@@ -35,6 +35,16 @@
   "ENTIDADE.DATAINICIO": "Data Início",
   "ENTIDADE.DATAFIM": "Data Fim",
   "ENTIDADE.CODIGOIMPORTACAO": "Codigo Importação",
-  "ENTIDADE.PLANOSANUAISAUDITORIA": "Planos Anuais Auditoria"
+  "ENTIDADE.PLANOSANUAISAUDITORIA": "Planos Anuais Auditoria",
+
+  "AUDITLOG.ENTITYNAME":"Nome Entidade",
+  "AUDITLOG.ENTITYID":"Código Entidade",
+  "AUDITLOG.OPERATION":"Operação",
+  "AUDITLOG.DATECREATED":"Data",
+  "AUDITLOG.USER":"Usuário",
+  "AUDITLOGITEM.FIELD":"Campo",
+  "AUDITLOGITEM.OLDVALUE":"Valor Anterior",
+  "AUDITLOGITEM.NEWVALUE":"Valor Atual"
+
 }
 

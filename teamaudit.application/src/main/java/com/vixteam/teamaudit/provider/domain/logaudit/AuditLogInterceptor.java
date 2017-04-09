@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /* REFERENCES:
 https://developer.jboss.org/wiki/AuditLogging
@@ -23,9 +22,6 @@ http://nsinfra.blogspot.com.br/2013/10/audit-logging-using-hibernate.html
 
 @Component
 public class AuditLogInterceptor extends EmptyInterceptor {
-
-    @Autowired
-    private EntityManagerFactory entityManagerFactory;
 
     @Autowired
     private EntityManager entityManager;
@@ -57,23 +53,19 @@ public class AuditLogInterceptor extends EmptyInterceptor {
     @Override
     public void postFlush(Iterator iterator) throws CallbackException {
         try {
-            SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
-            SessionBuilder builder = sessionFactory.withOptions();
-            Session session = builder.interceptor(INSTANCE).openSession();
+            for (AuditLog auditLog : auditLogs)
+                entityManager.persist(auditLog);
 
-            try {
-                for (AuditLog auditLog : auditLogs) session.save(auditLog);
-                session.flush();
-            } finally {
-                session.close();
-            }
         } finally {
-            auditLogs.clear();
+            if (!auditLogs.isEmpty()) {
+                auditLogs.clear();
+                entityManager.flush();
+            }
         }
     }
 
     private void addAuditLog(Object entity, Serializable id, OperationEnum operation, Object[] currentState, Object[] previousState, String[] propertyNames) {
-        if(entity instanceof AuditLog) return;
+        if (entity instanceof AuditLog || entity instanceof AuditLogItem) return;
 
         AuditLog auditLog = new AuditLog();
         auditLog.setEntityName(entity.getClass().getName());
@@ -89,8 +81,9 @@ public class AuditLogInterceptor extends EmptyInterceptor {
 
         List<AuditLogItem> items = new ArrayList<>();
 
-        if(currentState != null) {
+        if (currentState != null) {
             for (int i = 0; i < currentState.length; i++) {
+
                 Object previous = previousState == null ? null : previousState[i];
                 Object current = currentState[i];
 
@@ -109,15 +102,14 @@ public class AuditLogInterceptor extends EmptyInterceptor {
     }
 
     private String getValue(Object value) {
-        if(value == null) return null;
+        if (value == null) return null;
 
-        if(value instanceof IEntity && !entityManager.contains(value)) {
+        if (value instanceof IEntity && !entityManager.contains(value)) {
             value = entityManager.find(value.getClass(), ((IEntity) value).getId());
         }
 
         String stringValue = value.toString();
-        if(stringValue.length() > 255) return stringValue.substring(0, 255);
+        if (stringValue.length() > 255) return stringValue.substring(0, 255);
         return stringValue;
     }
-
 }

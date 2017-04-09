@@ -55,16 +55,14 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
 
     ngOnInit() {
 
-        document.querySelector('body').classList.toggle('aside-menu-hidden');
+        //document.querySelector('body').classList.toggle('aside-menu-hidden');
 
         if (!this.resource) {
             this.routeSubscription = this.route.params.subscribe(params => {
                 this.resource = this.route.snapshot.params['entity'];
                 this.resourceId = this.route.snapshot.params['id'];
                 this.formViewSchema = this.schemaService.getSchema(this.resource).formView;
-
                 this.mainForm = this.createForm(this.formViewSchema);
-
                 this.load(this.resourceId);
             });
         }
@@ -75,6 +73,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
+        this.mainForm = this.createForm(this.formViewSchema);
         this.load(this.resourceId);
     }
 

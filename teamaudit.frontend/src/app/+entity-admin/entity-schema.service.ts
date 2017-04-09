@@ -263,7 +263,8 @@ export class EntitySchemaService {
                     {source: 'operation'},
                     {source: 'dateCreated', type: FieldType.Date},
                     {source: 'user'}
-                ]
+                ],
+                orders: ['dateCreated desc']
             },
             formView: {
                 fields: [

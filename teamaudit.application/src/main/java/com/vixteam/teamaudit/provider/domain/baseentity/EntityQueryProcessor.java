@@ -60,7 +60,7 @@ class EntityQueryProcessor<TSource, TTarget> {
 
         return query;
     }
-    
+
     private Expression<?> getPath(String textPath, boolean createJoin) {
         String[] names = textPath.split(Pattern.quote("."));
         Expression<?> path = root;
@@ -69,12 +69,12 @@ class EntityQueryProcessor<TSource, TTarget> {
 
         for (String name : names) {
 
-        	boolean complexExpression = false;
-			path = fieldNameToExpression(path, name);
-			complexExpression = (path instanceof Expression<?>);
+            boolean complexExpression = false;
+            path = fieldNameToExpression(path, name);
+            complexExpression = (path instanceof Expression<?>);
 
-            if (!complexExpression && createJoin && ((Path<?>)path).getModel() instanceof SingularAttributeImpl) {
-                SingularAttributeImpl model = (SingularAttributeImpl) ((Path<?>)path).getModel();
+            if (!complexExpression && createJoin && ((Path<?>) path).getModel() instanceof SingularAttributeImpl) {
+                SingularAttributeImpl model = (SingularAttributeImpl) ((Path<?>) path).getModel();
                 if (model.isAssociation() && model.isOptional()) {
                     join = getUniqueJoins(name, join);
                 }
@@ -93,9 +93,9 @@ class EntityQueryProcessor<TSource, TTarget> {
         return join;
     }
 
-    
+
     private Expression<?>[] getPaths(List<String> projections, boolean createJoin) {
-    	Expression<?>[] paths = new Expression<?>[projections.size()];
+        Expression<?>[] paths = new Expression<?>[projections.size()];
         int index = 0;
 
         for (String projection : projections) {
@@ -109,13 +109,14 @@ class EntityQueryProcessor<TSource, TTarget> {
         List<Order> orders = new ArrayList<>();
 
         for (String sort : sorts) {
-            sort = sort.toLowerCase();
-            boolean isDescending = sort.endsWith(" desc");
-            sort = isDescending ? sort.replace(" desc", "") : sort.replace(" asc", "");
-            String[] names = sort.split(Pattern.quote("."));
+
+            String[] tokens = sort.split(Pattern.quote(" "));
+            boolean isDescending = tokens.length > 1 && tokens[1].equalsIgnoreCase("desc");
+            String[] names = tokens[0].split(Pattern.quote("."));
+
             Expression<?> path = root;
-            for (String name : names){
-            	path = fieldNameToExpression(path,name);
+            for (String name : names) {
+                path = fieldNameToExpression(path, name);
             }
             orders.add(isDescending ? builder.desc(path) : builder.asc(path));
         }
@@ -149,27 +150,18 @@ class EntityQueryProcessor<TSource, TTarget> {
     }
 
     private Predicate getPredicate(Map.Entry<String, Object> entry) {
-        Predicate predicate;
+        Predicate predicate = null;
         Expression path = getPath(entry.getKey(), false);
         Map.Entry<String, Object> operator = ((HashMap<String, Object>) entry.getValue()).entrySet().iterator().next();
+        Object value = operator.getValue();
 
-        if ("like".equals(operator.getKey())) {
-            predicate = builder.like(path.as(String.class), "%" + operator.getValue() + "%");
-
-        } else if ("eq".equals(operator.getKey())) {
-            if (operator.getValue() == null)
-                predicate = builder.isNull(path);
-            else
-                predicate = builder.equal(path, operator.getValue());
-        } else if ("ne".equals(operator.getKey())) {
-            if (operator.getValue() == null)
-                predicate = builder.isNotNull(path);
-            else
-                predicate = builder.notEqual(path, operator.getValue());
-        } else if ("contains".equals(operator.getKey())) {
-            predicate = isMember(path, entry, operator);
-        } else
-            throw new UnsupportedOperationException();
+        switch (operator.getKey()) {
+            case "like":  predicate = path != null ? builder.like(path.as(String.class), "%" + value + "%") : predicate; break;
+            case "eq": predicate = value == null ? builder.isNull(path) : builder.equal(path, value); break;
+            case "ne": predicate = value == null ? builder.isNotNull(path) : builder.notEqual(path, value); break;
+            case "contains":  predicate = isMember(path, entry, operator); break;
+            default: throw new UnsupportedOperationException();
+        }
 
         return predicate;
     }
@@ -211,36 +203,36 @@ class EntityQueryProcessor<TSource, TTarget> {
     any	some	    the result of applying the specified predicate is true for at least one of the entities resulting from the left hand property expression.
     all	every	    the result of applying the specified predicate is true for all of the entities resulting from the left hand property expression.*/
 
-    private Expression<?> fieldNameToExpression(Expression<?> path,String name){
-    	Field f = null;
-		try {
-			if (!name.equals("id"))
-				f = path.getJavaType().getDeclaredField(name);
-		} catch (Exception e) {
-			
-		}
-    	if (f!=null && f.isAnnotationPresent(Transient.class) && f.isAnnotationPresent(CalculatedPath.class)){
-    		CalculatedPath calculatedPathAnnotation = (CalculatedPath) f.getAnnotation(CalculatedPath.class);
-			List<Expression<?>> calculatedPaths = new ArrayList<Expression<?>>();
-			for(String newPath:calculatedPathAnnotation.value()){
-				calculatedPaths.add((Expression<?>)getPath(newPath, true));
-			}
-			switch (calculatedPathAnnotation.type()) {
-				case CONCAT:
-					path = concat(calculatedPathAnnotation.concatString(), calculatedPaths);
-					break;
-				case SUM:
-					path = sum(calculatedPaths);
-					break;
-				case PROD:
-					path = prod(calculatedPaths);
-					break;
-			}
-				
-		} else {
-    		path = ((Path<?>)path).get(name);
-		}
-    	return path;
+    private Expression<?> fieldNameToExpression(Expression<?> path, String name) {
+        Field f = null;
+        try {
+            if (!name.equals("id"))
+                f = path.getJavaType().getDeclaredField(name);
+        } catch (Exception e) {
+
+        }
+        if (f != null && f.isAnnotationPresent(Transient.class) && f.isAnnotationPresent(CalculatedPath.class)) {
+            CalculatedPath calculatedPathAnnotation = (CalculatedPath) f.getAnnotation(CalculatedPath.class);
+            List<Expression<?>> calculatedPaths = new ArrayList<Expression<?>>();
+            for (String newPath : calculatedPathAnnotation.value()) {
+                calculatedPaths.add((Expression<?>) getPath(newPath, true));
+            }
+            switch (calculatedPathAnnotation.type()) {
+                case CONCAT:
+                    path = concat(calculatedPathAnnotation.concatString(), calculatedPaths);
+                    break;
+                case SUM:
+                    path = sum(calculatedPaths);
+                    break;
+                case PROD:
+                    path = prod(calculatedPaths);
+                    break;
+            }
+
+        } else {
+            path = ((Path<?>) path).get(name);
+        }
+        return path;
     }
 
     private Expression<String> concat(String delimiter, List<Expression<?>> calculatedPaths) {
@@ -253,7 +245,7 @@ class EntityQueryProcessor<TSource, TTarget> {
             } else if (first) {
                 result = builder.concat(expression, delimiter);
             } else {
-                result = builder.concat(result,expression);
+                result = builder.concat(result, expression);
                 if (!last) {
                     result = builder.concat(result, delimiter);
                 }
@@ -261,7 +253,7 @@ class EntityQueryProcessor<TSource, TTarget> {
         }
         return result;
     }
-    
+
     private Expression<Number> sum(List<Expression<?>> calculatedPaths) {
         Expression<Number> result = null;
         for (int i = 0; i < calculatedPaths.size(); i++) {
@@ -272,11 +264,11 @@ class EntityQueryProcessor<TSource, TTarget> {
             } else if (first) {
                 result = builder.sum(expression, result);
             } else {
-                result = builder.sum(result,expression);
+                result = builder.sum(result, expression);
             }
         }
         return result;
-    }    
+    }
 
     private Expression<Number> prod(List<Expression<?>> calculatedPaths) {
         Expression<Number> result = null;
@@ -288,15 +280,15 @@ class EntityQueryProcessor<TSource, TTarget> {
             } else if (first) {
                 result = builder.prod(expression, result);
             } else {
-                result = builder.prod(result,expression);
+                result = builder.prod(result, expression);
             }
         }
         return result;
-    }    
+    }
 
     private Expression<?> literal(String expression) {
         return builder.literal(expression);
-    }    
-    
-    
+    }
+
+
 }
