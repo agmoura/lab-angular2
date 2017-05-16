@@ -1,23 +1,18 @@
-package com.vixteam.teamaudit.core.usecase.baseentity;
+package com.vixteam.teamaudit.core.usecase.commons;
 
-import com.vixteam.teamaudit.core.usecase.commons.Page;
-import com.vixteam.teamaudit.core.usecase.commons.PagedList;
-import com.vixteam.teamaudit.core.usecase.commons.PagedQuery;
+import com.vixteam.teamaudit.core.domain.commons.IEntity;
 import com.vixteam.teamaudit.core.domain.baseentity.IEntityRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
 
-public class EntityQuery extends PagedQuery<PagedList> {
+public class EntityQuery {
     private Page page;
     private List<String> projections;
     private HashMap<String, Object> predicates;
     private List<String> sorts;
     private String entityPath;
-
-    @Autowired
-    private IEntityRepository repository;
 
     public EntityQuery() {
     }
@@ -54,16 +49,11 @@ public class EntityQuery extends PagedQuery<PagedList> {
         this.sorts = sorts;
     }
 
-    public String getEntityPath() {
+   /* public String getEntityPath() {
         return this.entityPath;
     }
 
     public void setEntityPath(String entityPath) {
         this.entityPath = entityPath;
-    }
-
-    @Override
-    protected PagedList execute() throws Exception {
-        return repository.find(this);
-    }
+    }*/
 }

@@ -1,6 +1,6 @@
 package com.vixteam.teamaudit.provider.domain.baseentity;
 
-import com.vixteam.teamaudit.core.usecase.baseentity.EntityQuery;
+import com.vixteam.teamaudit.core.usecase.commons.EntityQuery;
 import com.vixteam.teamaudit.core.usecase.commons.Page;
 import com.vixteam.teamaudit.core.usecase.commons.PagedList;
 import com.vixteam.teamaudit.core.domain.commons.IEntity;
@@ -17,36 +17,19 @@ import javax.persistence.criteria.Root;
 import java.io.Serializable;
 
 @Repository
-public class EntityRepository implements IEntityRepository {
+public class EntityRepository<TEntity extends IEntity> implements IEntityRepository<TEntity> {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public static String getEntityName(String entityPath) {
-        return "com.vixteam.teamaudit.core.domain." + entityPath.substring(0, 1).toUpperCase() + entityPath.substring(1);
-    }
-
-    private Class getEntityClass(String entityPath) {
-        try {
-            return Class.forName(getEntityName(entityPath));
-        }
-
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
     @Override
-    public PagedList find(EntityQuery entityQuery) {
+    public PagedList<Object[]> query(Class<TEntity> entityClass, EntityQuery entityQuery) {
 
         // Build Base Criteria Query
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        Class entityClass = getEntityClass(entityQuery.getEntityPath());
-        EntityQueryProcessor processor = new EntityQueryProcessor(entityQuery, entityClass, builder);
-        CriteriaQuery<?> criteriaQuery = processor.buildCriteriaQuery();
-        TypedQuery<?> query = entityManager.createQuery(criteriaQuery);
+        EntityQueryProcessor<TEntity, Object[]> processor = new EntityQueryProcessor<>(entityQuery, entityClass, builder);
+        CriteriaQuery<Object[]> criteriaQuery = processor.buildCriteriaQuery();
+        TypedQuery<Object[]> query = entityManager.createQuery(criteriaQuery);
 
         // Build and Execute Count Criteria Query
         Page page = entityQuery.getPage();
@@ -63,16 +46,16 @@ public class EntityRepository implements IEntityRepository {
         }
 
         // Execute Base Criteria Query
-        return new PagedList(query.getResultList(), page);
+        return new PagedList<>(query.getResultList(), page);
     }
 
     @Override
-    public Object get(String entityPath, Serializable id) throws ClassNotFoundException {
-        return entityManager.find(Class.forName(getEntityName(entityPath)), id);
+    public TEntity get(Class<TEntity> entityClass, Serializable id) {
+        return entityManager.find(entityClass, id);
     }
 
     @Override
-    public <TEntity extends IEntity> TEntity save(TEntity entity) {
+    public TEntity save(TEntity entity) {
         if (entity.getId() != null)
             entity = entityManager.merge(entity);
         else
@@ -82,8 +65,8 @@ public class EntityRepository implements IEntityRepository {
     }
 
     @Override
-    public void delete(String entityPath, Serializable id) throws ClassNotFoundException {
-        Object entity = get(entityPath, id);
+    public void delete(Class<TEntity> entityClass, Serializable id) {
+        Object entity = this.get(entityClass, id);
         entityManager.remove(entity);
     }
 }

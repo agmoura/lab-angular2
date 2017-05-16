@@ -10,8 +10,8 @@
         <class>com.vixteam.teamaudit.core.domain.baseentity.BaseEntity</class>
         <class>com.vixteam.teamaudit.core.domain.UnidadeOrganizacional</class>
         <class>com.vixteam.teamaudit.core.domain.Escopo</class>
-        <class>com.vixteam.teamaudit.core.domain.CategoriaObjetivo</class>
-        <class>com.vixteam.teamaudit.core.domain.Objetivo</class>
+        <class>com.vixteam.teamaudit.core.domain.objetivo.CategoriaObjetivo</class>
+        <class>com.vixteam.teamaudit.core.domain.objetivo.Objetivo</class>
         <class>com.vixteam.teamaudit.core.domain.ClassificacaoRisco</class>
         <class>com.vixteam.teamaudit.core.domain.CategoriaRisco</class>
         <class>com.vixteam.teamaudit.core.domain.enums.SimNaoEnumConverter</class>

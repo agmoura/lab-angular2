@@ -2,6 +2,7 @@
 package com.vixteam.teamaudit.core.domain;
 
 import com.vixteam.teamaudit.core.domain.baseentity.BaseEntity;
+import com.vixteam.teamaudit.core.domain.objetivo.CategoriaObjetivo;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

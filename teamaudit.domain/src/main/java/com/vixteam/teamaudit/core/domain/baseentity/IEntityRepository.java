@@ -1,18 +1,18 @@
 package com.vixteam.teamaudit.core.domain.baseentity;
 
-import com.vixteam.teamaudit.core.usecase.baseentity.EntityQuery;
+import com.vixteam.teamaudit.core.usecase.commons.EntityQuery;
 import com.vixteam.teamaudit.core.usecase.commons.PagedList;
 import com.vixteam.teamaudit.core.domain.commons.IEntity;
 
 import java.io.Serializable;
 
-public interface IEntityRepository {
-    PagedList find(EntityQuery entityQuery);
+public interface IEntityRepository<TEntity extends IEntity> {
 
-    Object get(String entityPath, Serializable id) throws ClassNotFoundException;
+    PagedList<Object[]> query(Class<TEntity> entityClass, EntityQuery entityQuery);
 
-    <TEntity extends IEntity> TEntity save(TEntity entity);
+    TEntity get(Class<TEntity> entityClass, Serializable id);
 
-    void delete(String entityPath, Serializable id) throws ClassNotFoundException;
+    TEntity save(TEntity entity);
 
+    void delete(Class<TEntity> entityClass, Serializable id);
 }

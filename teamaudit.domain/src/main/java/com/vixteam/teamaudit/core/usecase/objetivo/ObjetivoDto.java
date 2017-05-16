@@ -1,46 +1,33 @@
-package com.vixteam.teamaudit.core.domain;
+package com.vixteam.teamaudit.core.usecase.objetivo;
 
-import com.vixteam.teamaudit.core.domain.baseentity.BaseEntity;
+import com.vixteam.teamaudit.core.domain.UnidadeOrganizacional;
+import com.vixteam.teamaudit.core.domain.objetivo.CategoriaObjetivo;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.util.List;
+public class ObjetivoDto {
 
-@Entity
-@Table (name="OBJEM")
-@AttributeOverride(name="id", column=@Column(name = "CD_OBJEM", columnDefinition = "CHAR(32)"))
-public class Objetivo extends BaseEntity {
+    private String id;
 
-    @NotNull
-    @Size(max = 60)
-    @Column(name="NM_OBJEM", length=60, nullable=false)
     private String nome;
 
-    @NotNull
-    @Size(max = 255)
-    @Column(name="DS_OBJEM", length=255, nullable=false)
     private String descricao;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name="CD_UOAUD", nullable=false)
-    private UnidadeOrganizacional unidadeOrganizacional;
+    private UnidadeOrganizacional unidadeOrganizacional; //TODO: Criar DTO
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name="CD_CATOB", nullable=false)
-    private CategoriaObjetivo categoriaObjetivo;
+    private CategoriaObjetivoDto categoriaObjetivo;
 
-
-    @Size(max = 255)
-    @Column(name="DS_OBJEM_META", length=255)
     private String descricaoMeta;
 
-    @Column(name="VL_OBJEM_META", precision = 17, scale = 2)
     private Double valorMeta;
 
-    @Column(name="PC_OBJEM_META", precision = 7, scale = 2)
     private Double percentualMeta;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -66,11 +53,11 @@ public class Objetivo extends BaseEntity {
         this.unidadeOrganizacional = unidadeOrganizacional;
     }
 
-    public CategoriaObjetivo getCategoriaObjetivo() {
+    public CategoriaObjetivoDto getCategoriaObjetivo() {
         return categoriaObjetivo;
     }
 
-    public void setCategoriaObjetivo(CategoriaObjetivo categoriaObjetivo) {
+    public void setCategoriaObjetivo(CategoriaObjetivoDto categoriaObjetivo) {
         this.categoriaObjetivo = categoriaObjetivo;
     }
 
@@ -97,12 +84,6 @@ public class Objetivo extends BaseEntity {
     public void setPercentualMeta(Double percentualMeta) {
         this.percentualMeta = percentualMeta;
     }
-
-
-
-
-    @ManyToOne
-    @JoinColumn(name="CD_CATOB_PRIMARIA")
     private CategoriaObjetivo categoriaObjetivoPrimaria;
 
     public CategoriaObjetivo getCategoriaObjetivoPrimaria() {

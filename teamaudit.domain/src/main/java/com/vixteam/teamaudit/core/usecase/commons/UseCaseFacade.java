@@ -2,13 +2,12 @@ package com.vixteam.teamaudit.core.usecase.commons;
 
 
 import java.util.Set;
+import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 
 import com.vixteam.teamaudit.core.domain.commons.InvalidDomainException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  * Fachada para execucao das especificacoes de caso de uso, {@link UseCase}. Deve fazer a validação
@@ -21,14 +20,13 @@ import org.springframework.stereotype.Component;
  * {@link UnexpectedUseCaseException}.
  * <p>
  */
-@Component
 public class UseCaseFacade {
 
     private static final ValidatorFactory VALIDATOR_FACTORY = Validation.buildDefaultValidatorFactory();
-    private final UseCaseManager manager;
+    private final IUseCaseManager manager;
 
-    @Autowired
-    public UseCaseFacade(UseCaseManager manager) {
+    @Inject
+    public UseCaseFacade(IUseCaseManager manager) {
         this.manager = manager;
     }
 

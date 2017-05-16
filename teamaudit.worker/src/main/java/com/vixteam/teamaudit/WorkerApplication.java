@@ -1,6 +1,8 @@
 package com.vixteam.teamaudit;
 
-import com.vixteam.teamaudit.core.usecase.baseentity.EntityQuery;
+import com.vixteam.teamaudit.core.domain.Escopo;
+import com.vixteam.teamaudit.core.usecase.baseentity.QueryEntities;
+import com.vixteam.teamaudit.core.usecase.commons.EntityQuery;
 import com.vixteam.teamaudit.core.usecase.commons.Page;
 import com.vixteam.teamaudit.core.usecase.commons.PagedList;
 import com.vixteam.teamaudit.core.usecase.commons.UseCaseFacade;
@@ -8,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
-
-import java.io.Console;
 
 @Component
 public class WorkerApplication {
@@ -26,10 +26,9 @@ public class WorkerApplication {
     void run() {
 
         EntityQuery entityQuery = new EntityQuery();
-        entityQuery.setEntityPath("escopo");
         entityQuery.setPage(new Page());
 
-        PagedList pagedList = facade.execute(entityQuery);
+        PagedList<Object[]> pagedList = facade.execute(new QueryEntities<>(Escopo.class, entityQuery));
 
         int count = pagedList.getList().size();
 

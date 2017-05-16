@@ -12,9 +12,7 @@ public abstract class BaseEntity implements IEntity<String> {
     @Id
     protected String id;
 
-    public BaseEntity() {
-
-    }
+    public BaseEntity() {  }
 
     public BaseEntity(String id) {
         setId(id);

@@ -1,26 +1,20 @@
 package com.vixteam.teamaudit.provider;
 
 import com.vixteam.teamaudit.DatabaseLoader;
-import com.vixteam.teamaudit.core.domain.CategoriaObjetivo;
+import com.vixteam.teamaudit.core.domain.objetivo.CategoriaObjetivo;
 import com.vixteam.teamaudit.core.domain.Entidade;
 import com.vixteam.teamaudit.core.domain.Escopo;
-import com.vixteam.teamaudit.core.usecase.commons.UseCaseFacade;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 

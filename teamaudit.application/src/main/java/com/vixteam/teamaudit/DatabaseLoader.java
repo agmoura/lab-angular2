@@ -1,13 +1,13 @@
 package com.vixteam.teamaudit;
 
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.vixteam.teamaudit.core.domain.*;
+import com.vixteam.teamaudit.core.domain.objetivo.CategoriaObjetivo;
+import com.vixteam.teamaudit.core.domain.objetivo.Objetivo;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;

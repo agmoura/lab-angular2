@@ -3,23 +3,23 @@ package com.vixteam.teamaudit.core.usecase.commons;
 import java.io.Serializable;
 import java.util.List;
 
-public class PagedList implements Serializable {
-    private List list;
+public class PagedList<T> implements Serializable {
+    private List<T> list;
     private Page page;
 
     public PagedList(){
     }
 
-    public PagedList(List list, Page page){
+    public PagedList(List<T> list, Page page){
         setList(list);
         setPage(page);
     }
 
-    public List getList() {
+    public List<T> getList() {
         return list;
     }
 
-    public void setList(List list) {
+    public void setList(List<T> list) {
         this.list = list;
     }
 

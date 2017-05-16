@@ -3,16 +3,14 @@ package com.vixteam.teamaudit.provider.domain.baseentity;
 import com.vixteam.teamaudit.consumer.commons.ApplicationException;
 import com.vixteam.teamaudit.core.domain.commons.CalculatedPath;
 import com.vixteam.teamaudit.core.domain.commons.IEntity;
-import com.vixteam.teamaudit.core.usecase.baseentity.EntityQuery;
-import org.hibernate.jpa.criteria.path.PluralAttributePath;
-import org.hibernate.jpa.internal.metamodel.SingularAttributeImpl;
+import com.vixteam.teamaudit.core.usecase.commons.EntityQuery;
+import org.hibernate.metamodel.internal.SingularAttributeImpl;
+import org.hibernate.query.criteria.internal.path.PluralAttributePath;
 
 import javax.persistence.Transient;
 import javax.persistence.criteria.*;
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.*;
 import java.util.regex.Pattern;
 

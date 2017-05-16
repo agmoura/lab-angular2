@@ -6,6 +6,8 @@ import javax.transaction.Transactional;
 
 import com.vixteam.teamaudit.core.domain.*;
 import com.vixteam.teamaudit.core.domain.enums.SimNaoEnum;
+import com.vixteam.teamaudit.core.domain.objetivo.CategoriaObjetivo;
+import com.vixteam.teamaudit.core.domain.objetivo.Objetivo;
 import com.vixteam.teamaudit.repositories.IEntityRepository;
 
 public class DatabaseLoader {

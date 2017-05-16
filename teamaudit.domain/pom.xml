@@ -11,7 +11,7 @@
         <version>1.0.0</version>
     </parent>
 
-	<dependencies>
+    <dependencies>
         <!-- INFRASTRUCTURE LAYER -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
@@ -31,13 +31,51 @@
             <version>2.8.0</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-jdk8</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+
+        <!-- HACK: IntelliJ IDEA Annotation Processor Support. See https://youtrack.jetbrains.com/issue/IDEA-150621 -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${org.mapstruct.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--<dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${org.springframework-version}</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency>-->
     </dependencies>
-	
+
+    <!--<build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${org.mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>-->
+
 </project>

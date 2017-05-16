@@ -1,14 +1,14 @@
-package com.vixteam.teamaudit.core.domain;
+package com.vixteam.teamaudit.core.domain.objetivo;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.vixteam.teamaudit.core.domain.Entidade;
+import com.vixteam.teamaudit.core.domain.Escopo;
 import com.vixteam.teamaudit.core.domain.baseentity.BaseEntity;
 import com.vixteam.teamaudit.core.domain.enums.BooleanConverter;
-import com.vixteam.teamaudit.core.domain.enums.SimNaoEnum;
-import com.vixteam.teamaudit.core.domain.enums.SimNaoEnumConverter;
+
 import java.util.List;
 
 
@@ -17,9 +17,16 @@ import java.util.List;
 @AttributeOverride(name="id", column=@Column(name = "CD_CATOB", columnDefinition = "CHAR(32)"))
 public class CategoriaObjetivo extends BaseEntity {
 
+    public CategoriaObjetivo() {
+    }
+
+    public CategoriaObjetivo(String id) {
+        super(id);
+    }
+
     @ManyToOne
     @JoinColumn(name="CD_ESCPO", nullable=true)
-    private Escopo escopo;  
+    private Escopo escopo;
 	
     @NotNull
     @Size(max = 100)

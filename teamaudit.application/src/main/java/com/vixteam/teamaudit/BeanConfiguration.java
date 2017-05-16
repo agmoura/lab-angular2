@@ -3,6 +3,8 @@ package com.vixteam.teamaudit;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import com.vixteam.teamaudit.core.usecase.commons.IUseCaseManager;
+import com.vixteam.teamaudit.core.usecase.commons.UseCaseFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -13,7 +15,7 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 public class BeanConfiguration {
 
-    @Bean
+    /*@Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
@@ -27,9 +29,9 @@ public class BeanConfiguration {
         config.addAllowedMethod("POST");
         config.addAllowedMethod("DELETE");
         config.addAllowedMethod("PATCH");
-        source.registerCorsConfiguration("/**", config);
+        source.registerCorsConfiguration("*//**", config);
         return new CorsFilter(source);
-    }
+    }*/
 
     @Bean
     public ObjectMapper objectMapperBuilder(Jackson2ObjectMapperBuilder builder) {
@@ -40,5 +42,10 @@ public class BeanConfiguration {
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
         objectMapper.registerModule(hibernateModule);
         return objectMapper;
+    }
+
+    @Bean
+    public UseCaseFacade useCaseFacade(IUseCaseManager useCaseManager) {
+        return new UseCaseFacade(useCaseManager);
     }
 }
