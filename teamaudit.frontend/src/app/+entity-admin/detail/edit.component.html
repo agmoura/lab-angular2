@@ -25,7 +25,10 @@
             <form [formGroup]="mainForm">
                 <input type="hidden" formControlName="id">
 
-                <div *ngFor="let field of formViewSchema.fields">
+                <ng-container *ngFor="let field of formViewSchema.fields">
+
+                    <ng-container [dynamicField]="field.component" [name]="field.source" [label]="field.label"></ng-container>
+
                     <ng-container [ngSwitch]="field.type">
                         <text-input *ngSwitchCase="FieldType.Text" [formControlName]="field.source" [label]="field.label"></text-input>
                         <number-input *ngSwitchCase="FieldType.Number" [formControlName]="field.source" [label]="field.label"></number-input>

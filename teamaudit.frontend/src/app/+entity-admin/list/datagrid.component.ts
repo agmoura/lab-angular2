@@ -111,7 +111,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
             .selectList(this.listViewSchema.fields.map(field => field.source))
             .select('id')
             .where(this.filter)
-            .pageItem(this.page)
+            // .pageItem(this.page)
             .orderByList(this.listViewSchema.orders);
 
         // dxDataGrid

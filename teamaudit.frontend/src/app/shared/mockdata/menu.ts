@@ -23,17 +23,17 @@ export class MenuMock {
                 {
                     name: 'escopo',
                     title: 'Escopo',
-                    link: '/entity/escopo'
+                    link: '/entity/escopos'
                 },
                 {
                     name: 'categoriaObjetivo',
                     title: 'Categoria Objetivo',
-                    link: '/entity/categoriaObjetivo'
+                    link: '/entity/categoriaObjetivos'
                 },
                 {
                     name: 'objetivo',
                     title: 'Objetivo',
-                    link: '/entity/objetivo'
+                    link: '/entity/objetivos'
                 },
                 {
                     name: 'classificacaoRisco',

@@ -10,8 +10,8 @@ import {ResourceQuery} from "../model/query";
 @Injectable()
 export class DataService {
 
-    baseUrl: string = 'http://localhost:8080/teamaudit/api/';
-    //baseUrl:string = 'api/';
+    //baseUrl: string = 'http://localhost:8080/teamaudit/api/';
+    baseUrl: string = 'api/';
 
     constructor(private http: Http) {
     }
@@ -34,7 +34,6 @@ export class DataService {
 
         return this.http.get(url).map(response => new PagedList(response.json()));
     }
-
 
 
     find(resourceQuery: ResourceQuery): Observable<PagedList> {
@@ -82,10 +81,10 @@ export class DataService {
         let url = this.baseUrl + path + '/execute';
 
         /*let data = {
-            id: '1',
-            action: 'save',
-            number: 100
-        };*/
+         id: '1',
+         action: 'save',
+         number: 100
+         };*/
 
         let data = new URLSearchParams();
         data.append('id', '1');

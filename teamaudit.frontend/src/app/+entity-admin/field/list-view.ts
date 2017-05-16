@@ -41,7 +41,7 @@ export class ListViewComponent implements OnInit, OnDestroy, AfterContentInit {
     ngOnInit() {
         this.page = new Page();
         this.page.size = 0;
-        this.resourceQuery = new ResourceQuery(this.resourceService.resource).pageItem(this.page);
+        this.resourceQuery = new ResourceQuery(this.resourceService.resource);
         this.resourceService.load.subscribe(() => this.load());
         this.load();
     }

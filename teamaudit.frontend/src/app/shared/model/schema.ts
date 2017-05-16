@@ -1,3 +1,4 @@
+import {Type} from "@angular/core";
 export enum FieldType {
     Hidden, Text, RichText, Number, Boolean, Date, Reference, ReferenceMany
 }
@@ -67,6 +68,7 @@ export interface ListFieldSchema extends FieldSchema {
 
 export interface FormFieldSchema extends FieldSchema {
     type: FieldType;      // Field Type
+    component?: Type<any>;
 
     referencePath?: string; // TODO REMOPVER - nome correto do tipo do objeto para considerar ao inves do path
     dependsOn?: string;     // TODO REMOVER - Nao é mais usado?

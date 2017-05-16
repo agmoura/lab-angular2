@@ -5,7 +5,7 @@ import {ResourceSchema, ResourceSchemaMap, FieldType, ReferenceType} from "../sh
 export class EntitySchemaService {
 
     private resourceSchemaMap: ResourceSchemaMap = {
-        escopo: {
+        escopos: {
             listView: {
                 fields: [
                     {source: 'nome'},
@@ -20,7 +20,7 @@ export class EntitySchemaService {
                 ]
             }
         },
-        categoriaObjetivo: {
+        categoriaObjetivos: {
             listView: {
                 fields: [
                     {source: 'escopo.descricao'},
@@ -39,7 +39,7 @@ export class EntitySchemaService {
                 ],
                 references: [
                     {
-                        resource: 'objetivo',
+                        resource: 'objetivos',
                         type: ReferenceType.OneToMany,
                         target: 'categoriaObjetivo.id',
                         listView: {
@@ -64,7 +64,7 @@ export class EntitySchemaService {
                         }
                     },
                     {
-                        resource: 'objetivo',
+                        resource: 'objetivos',
                         type: ReferenceType.OneToMany,
                         target: 'categoriaObjetivoPrimaria.id',
                         listView: {
@@ -89,7 +89,7 @@ export class EntitySchemaService {
                         }
                     },
                     {
-                        resource: 'entidade',
+                        resource: 'entidades',
                         type: ReferenceType.ManyToMany,
                         target: 'categoriasObjetivos',
                         targetInverse: 'entidades',
@@ -127,7 +127,7 @@ export class EntitySchemaService {
                             ],
                             references: [
                                 {
-                                    resource: 'categoriaObjetivo',
+                                    resource: 'categoriaObjetivos',
                                     type: ReferenceType.ManyToMany,
                                     target: 'entidades',
                                     listView: {
@@ -154,7 +154,7 @@ export class EntitySchemaService {
                 ]
             }
         },
-        objetivo: {
+        objetivos: {
             listView: {
                 fields: [
                     {source: 'categoriaObjetivo.escopo.nome', hidden: true},
@@ -177,7 +177,7 @@ export class EntitySchemaService {
             }
         },
 
-        entidade: {
+        entidades: {
             listView: {
                 fields: [
                     {source: 'nome'},
