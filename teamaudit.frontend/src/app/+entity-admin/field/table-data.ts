@@ -1,5 +1,5 @@
 import {Component, Input, ContentChildren, QueryList, OnInit, ViewContainerRef, ComponentFactoryResolver, Directive, Type, Output, EventEmitter} from '@angular/core';
-import {FieldComponent} from "./field";
+import {FieldComponent} from "../model/field";
 
 @Component({
     selector: 'table-data',

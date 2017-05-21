@@ -5,7 +5,7 @@ import {Location} from "@angular/common";
 
 import {EntityBase} from '../../shared/model/models';
 import {DataService} from '../../shared/services/data.service';
-import {FieldType, FormViewSchema} from '../../shared/model/schema';
+import {FieldType, FormViewSchema} from '../model/schema';
 import {EntitySchemaService} from '../entity-schema.service';
 import {ResourceQuery} from "../../shared/model/query";
 import {MdSnackBar} from "@angular/material";

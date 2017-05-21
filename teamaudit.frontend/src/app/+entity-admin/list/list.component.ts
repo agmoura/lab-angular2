@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {EntitySchemaService} from "../entity-schema.service";
-import {ListViewSchema} from "../../shared/model/schema";
+import {ListViewSchema} from "../model/schema";
 
 @Component({
     selector: 'list',

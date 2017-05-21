@@ -1,42 +1,17 @@
-import {
-    Component,
-    Optional,
-    Inject,
-    Input,
-    ViewChild,
-} from '@angular/core';
-
-import {
-    NgModel,
-    NG_VALUE_ACCESSOR,
-    NG_VALIDATORS,
-    NG_ASYNC_VALIDATORS,
-} from '@angular/forms';
-
-//import {ElementBase, animations} from '../form';
-import {ValueAccessorBase} from "./value-accessor";
+import {Component} from '@angular/core';
+import {FieldComponent} from "../model/field";
 
 @Component({
     selector: 'text-input',
     template: `
-    <md-input-container class="form-input">
-        <input mdInput [placeholder]="label | translate" type="text" [(ngModel)]="value" [name]="name">
-    </md-input-container>
-    <!--<p class="text-danger" *ngIf="firstName.errors?.required">You must include a first name.</p>-->
-  `,
-    providers: [{provide: NG_VALUE_ACCESSOR, useExisting: TextInputComponent, multi: true}]
+        <md-input-container [formGroup]="group" class="form-input">
+            <input mdInput [formControlName]="schema.source" [placeholder]="schema.label | translate" [required]="schema.required" type="text">
+        </md-input-container>
+        <!--<p class="text-danger" *ngIf="firstName.errors?.required">You must include a first name.</p>-->
+    `,
 })
-export class TextInputComponent extends ValueAccessorBase<string> {
-    @Input() public name: string;
-    @Input() public label: string;
-
-    @ViewChild(NgModel) model: NgModel;
-
-    public identifier = `text-input-${identifier++}`;
-
+export class TextInputComponent extends FieldComponent {
     constructor() {
         super();
     }
 }
-
-let identifier = 0;

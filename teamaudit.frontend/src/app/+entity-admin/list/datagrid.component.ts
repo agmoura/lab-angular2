@@ -5,7 +5,7 @@ import DevExpress from 'devextreme/bundles/dx.all';
 import 'devextreme/ui/data_grid.js';
 import 'devextreme/ui/button.js';
 
-import {ResourceSchema, ListViewSchema, FieldType} from "../../shared/model/schema";
+import {ResourceSchema, ListViewSchema, FieldType} from "../model/schema";
 import {DataService} from "../../shared/services/data.service";
 import {Page} from "../../shared/model/paged-list";
 import {ResourceQuery} from "../../shared/model/query";

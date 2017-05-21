@@ -25,11 +25,11 @@
             <form [formGroup]="mainForm">
                 <input type="hidden" formControlName="id">
 
-                <ng-container *ngFor="let field of formViewSchema.fields">
+                <div *ngFor="let field of formViewSchema.fields">
 
-                    <ng-container [dynamicField]="field.component" [name]="field.source" [label]="field.label"></ng-container>
+                    <ng-container [dynamicField]="field" [group]="mainForm"></ng-container>
 
-                    <ng-container [ngSwitch]="field.type">
+                    <!--<ng-container [ngSwitch]="field.type">
                         <text-input *ngSwitchCase="FieldType.Text" [formControlName]="field.source" [label]="field.label"></text-input>
                         <number-input *ngSwitchCase="FieldType.Number" [formControlName]="field.source" [label]="field.label"></number-input>
                         <date-input *ngSwitchCase="FieldType.Date" [formControlName]="field.source" [label]="field.label" [format]="DD/MM/YYYY"></date-input>
@@ -38,8 +38,8 @@
                             <select-input [formControlName]="field.select.value" [label]="field.label" [items]="referencesData[field.source]"></select-input>
                         </div>
 
-                        <!--<select-input *ngSwitchCase="FieldType.Reference" [formControlName]="field.source" [label]="field.label" [items]="referencesData[field.source]"></select-input>-->
-                        <!--<input          *ngSwitchCase="FieldType.Hidden" type="hidden" name="{{field.source}}" [ngModel]="entity[field.source]">
+                        &lt;!&ndash;<select-input *ngSwitchCase="FieldType.Reference" [formControlName]="field.source" [label]="field.label" [items]="referencesData[field.source]"></select-input>&ndash;&gt;
+                        &lt;!&ndash;<input          *ngSwitchCase="FieldType.Hidden" type="hidden" name="{{field.source}}" [ngModel]="entity[field.source]">
                         <text-input     *ngSwitchCase="FieldType.Text" [name]="field.source" [label]="field.label" [ngModel]="entity[field.source]"></text-input>
                         <number-input   *ngSwitchCase="FieldType.Number" [name]="field.source" [label]="field.label" [ngModel]="entity[field.source]"></number-input>
                         <date-input     *ngSwitchCase="FieldType.Date" [name]="field.source" [label]="field.label" [ngModel]="entity[field.source]" [format]="DD/MM/YYYY"></date-input>
@@ -51,8 +51,8 @@
                                          [ngModel]="entity[field.source] && entity[field.source][field.select.value]"
                                          [required]="field.required"
                                          [items]="referencesData[field.source]">
-                        </select-input>-->
-                    </ng-container>
+                        </select-input>&ndash;&gt;
+                    </ng-container>-->
                 </div>
             </form>
         </md-card-content>

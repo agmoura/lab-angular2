@@ -15,6 +15,8 @@ export class ObjetivoEditComponent implements OnInit {
     unidades:UnidadeOrganizacional[] = [];
     errors:any;
 
+    detalhes = {};
+
     constructor(private route:ActivatedRoute, private router:Router, private dataService:DataService) { }
 
     ngOnInit() {

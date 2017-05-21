@@ -1,5 +1,5 @@
-import {Component, Input, forwardRef} from '@angular/core';
-import {FieldComponent} from "./field";
+import {Component, Input} from '@angular/core';
+import {FieldComponent} from "../model/field";
 
 @Component({
     selector: 'boolean-field',

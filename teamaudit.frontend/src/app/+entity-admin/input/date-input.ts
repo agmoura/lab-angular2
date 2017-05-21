@@ -1,35 +1,14 @@
-import {
-    Component,
-    Optional,
-    Inject,
-    Input,
-    ViewChild,
-} from '@angular/core';
-
-import {
-    NgModel,
-    NG_VALUE_ACCESSOR,
-    NG_VALIDATORS,
-    NG_ASYNC_VALIDATORS,
-} from '@angular/forms';
-
-import {ValueAccessorBase} from "./value-accessor";
+import {Component, Input} from '@angular/core';
+import {FieldComponent} from "../model/field";
 
 @Component({
-    selector: 'date-input',
+    selector: 'text-input',
     template: `
-    <md2-datepicker type="date" [name]="name" placeholder="{{label | translate}}" format="{{format}}" [(ngModel)]="value" class="form-input"></md2-datepicker>
-    `,
-    providers: [{provide: NG_VALUE_ACCESSOR, useExisting: DateInputComponent, multi: true}],
+        <md2-datepicker [formGroup]="group" [formControlName]="schema.source" placeholder="{{schema.label | translate}}" format="{{format}}" type="date" class="form-input"></md2-datepicker>
+    `
 })
-export class DateInputComponent extends ValueAccessorBase<string> {
-    @Input() public name: string;
-    @Input() public label: string;
+export class DateInputComponent extends FieldComponent {
     @Input() public format: string;
-
-    @ViewChild(NgModel) model: NgModel;
-
-    public identifier = `date-input-${identifier++}`;
 
     constructor() {
         super();

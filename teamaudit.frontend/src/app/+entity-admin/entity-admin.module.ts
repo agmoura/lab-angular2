@@ -27,6 +27,7 @@ import {ListViewComponent} from "./field/list-view";
 import {ResourceService} from "./shared/resource.service";
 import {ReferenceManyToOneComponent} from "./field/reference-many-one";
 import {ReferenceOneToManyComponent} from "./field/reference-one-many";
+import {DynamicFieldDirective} from "./field/dynamic-field.directive";
 
 @NgModule({
     imports: [
@@ -46,15 +47,15 @@ import {ReferenceOneToManyComponent} from "./field/reference-one-many";
 
         ReferenceManyComponent,
 
+        DynamicFieldDirective,
         SelectInputComponent,
         TextInputComponent,
         NumberInputComponent,
         DateInputComponent,
         BooleanInputComponent,
-
-
         TextFieldComponent,
         BooleanFieldComponent,
+
         TableDataComponent,
         TableFieldDirective,
         SimpleFormComponent,
@@ -75,17 +76,17 @@ import {ReferenceOneToManyComponent} from "./field/reference-one-many";
 
         ReferenceManyComponent,
 
+        DynamicFieldDirective,
         SelectInputComponent,
         TextInputComponent,
         NumberInputComponent,
         DateInputComponent,
         BooleanInputComponent,
-
-
         TextFieldComponent,
         BooleanFieldComponent,
-        TableDataComponent,
 
+        TableDataComponent,
+        TableFieldDirective,
         SimpleFormComponent,
         SimpleFormReactiveComponent,
         EditViewComponent,
@@ -95,7 +96,12 @@ import {ReferenceOneToManyComponent} from "./field/reference-one-many";
     ],
     entryComponents: [
         TextFieldComponent,
-        BooleanFieldComponent
+        BooleanFieldComponent,
+        SelectInputComponent,
+        TextInputComponent,
+        NumberInputComponent,
+        DateInputComponent,
+        BooleanInputComponent
     ]
 })
 export class EntityAdminModule {

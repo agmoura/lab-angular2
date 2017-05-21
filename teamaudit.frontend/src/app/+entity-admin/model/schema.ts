@@ -1,4 +1,3 @@
-import {Type} from "@angular/core";
 export enum FieldType {
     Hidden, Text, RichText, Number, Boolean, Date, Reference, ReferenceMany
 }
@@ -53,38 +52,28 @@ export interface ReferenceSchema extends ResourceSchema {
 }
 
 export interface FieldSchema {
-    source: string;       // Field Name
+    source: string;         // Field Name
+    type?: FieldType;       // Field Type
 
-    index?: number;       // Field Index - Read Only
-    label?: string;       // Field Label Key - Default: UpperCase(Resource + '.' + Source)
-
-    isEnum?: boolean;   // Indica se os valores selecionaveis deste campo são enums. Default: false
+    label?: string;         // Field Label Key - Default: UpperCase(Resource + '.' + Source)
+    required?: boolean;     // Indica que este campo é obrigatorio
+    hidden?: boolean;
+    isEnum?: boolean;       // Indica se os valores selecionaveis deste campo são enums. Default: false
+    index?: number;         // Field Index - Read Only
 }
 
 export interface ListFieldSchema extends FieldSchema {
-    type?: FieldType;      // Field Type
-    hidden?: boolean;
+
 }
 
 export interface FormFieldSchema extends FieldSchema {
-    type: FieldType;      // Field Type
-    component?: Type<any>;
-
     referencePath?: string; // TODO REMOPVER - nome correto do tipo do objeto para considerar ao inves do path
     dependsOn?: string;     // TODO REMOVER - Nao é mais usado?
     isParent?: boolean;                 // Indica que este campo é o 'Parent' desta entidade
-    required?: boolean;                 // Indica que este campo é obrigatorio
+
     readOnly?: boolean;                 // Indica que o campo é readOnly
     select?: EntitySelectFieldSchema;   // Schema utilizado para definir campos que são definidos a partir de itens selecionaveis
 }
-
-
-
-
-
-
-
-
 
 export interface EntitySelectFieldSchema {
     // O nome da entidade de onde os dados do select virão, geralmente não deve ser informado

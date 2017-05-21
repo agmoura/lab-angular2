@@ -1,0 +1,72 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h3>Editar Objetivo (REACTIVE)</h3>
+        </div>
+    </div>
+    <div class="panel-body">
+        <!--<handle-errors [errors]="errors"></handle-errors>-->
+
+        <form [formGroup]="form" (ngSubmit)="save(form.value)">
+            <input type="hidden" formControlName="id">
+
+            <div class="form-group">
+                <label>Nome:</label>
+                <input type="text" formControlName="nome" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Descrição:</label>
+                <input type="text" formControlName="descricao" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Descrição Meta:</label>
+                <input type="text" formControlName="descricaoMeta" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Valor Meta:</label>
+                <input type="number" formControlName="valorMeta" step="0.01" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Percentual Meta: </label>
+                <input type="number" formControlName="percentualMeta" step="0.01" class="form-control">
+            </div>
+
+            <div formGroupName="categoriaObjetivo" class="form-group">
+                <label>Categoria:</label>
+                <select formControlName="id" class="form-control">
+                    <option value=""> --- Selecione ---</option>
+                    <option *ngFor="let item of categorias" [value]="item.id">
+                        {{item.nome}}
+                    </option>
+                </select>
+            </div>
+
+            <div formGroupName="unidadeOrganizacional" class="form-group">
+                <label>Unidade:</label>
+                <select formControlName="id" class="form-control">
+                    <option value=""> --- Selecione ---</option>
+                    <option *ngFor="let item of unidades" [value]="item.id">
+                        {{item.nome}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <categoria-objetivo-edit-reactive formControlName="categoriaObjetivo2"></categoria-objetivo-edit-reactive>
+            </div>
+
+            <div>
+                <button type="button" (click)="goBack()" class="btn btn-default">Voltar</button>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--TODO: Remover Informações de Depuração -->
+<strong>this.objetivo:</strong> {{objetivo | json}} <br/>
+<strong>form.value:</strong> {{form.value | json}}

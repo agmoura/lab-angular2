@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule, Http} from '@angular/http';
 import {MaterialModule} from "@angular/material";
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -24,6 +24,10 @@ import {EntityAdminModule} from "./+entity-admin/entity-admin.module";
 import {DialogExampleComponent} from "./shared/dialog/dialog-example/dialog-example.component";
 import {DialogThemeComponent} from "./shared/dialog/dialog-theme/dialog-theme.component";
 import {MasterDataModule} from "./+master-data/master-data.module";
+import {ObjetivoDetailComponent} from "./objetivo/objetivo-detail.component";
+import {CategoriaObjetivoEditComponent} from "./objetivo/categoria-objetivo-edit.component";
+import {ObjetivoEditReactiveComponent} from "./objetivo/reactive/objetivo-edit-reactive.component";
+import {CategoriaObjetivoEditReactiveComponent} from "./objetivo/reactive/categoria-objetivo-edit-reactive.component";
 
 @NgModule({
     declarations: [
@@ -33,6 +37,11 @@ import {MasterDataModule} from "./+master-data/master-data.module";
         CategoriaRiscoComponent,
         ObjetivoListComponent,
         ObjetivoEditComponent,
+        ObjetivoDetailComponent,
+        CategoriaObjetivoEditComponent,
+
+        ObjetivoEditReactiveComponent,
+        CategoriaObjetivoEditReactiveComponent,
 
         DialogExampleComponent,
         DialogThemeComponent
@@ -41,6 +50,7 @@ import {MasterDataModule} from "./+master-data/master-data.module";
         BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
+        ReactiveFormsModule,
         HttpModule,
 
         MaterialModule.forRoot(),

@@ -1,6 +1,5 @@
 import {Component, Input, SimpleChanges, OnChanges, EventEmitter, Output} from '@angular/core';
-import {Router} from "@angular/router";
-import {ReferenceSchema, ReferenceType} from "../../shared/model/schema";
+import {ReferenceSchema, ReferenceType} from "../model/schema";
 import {DataService} from "../../shared/services/data.service";
 import {MdSnackBar} from "@angular/material";
 import {DatagridComponent} from "../list/datagrid.component";

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ResourceSchema, ResourceSchemaMap, FieldType, ReferenceType} from "../shared/model/schema";
+import {ResourceSchema, ResourceSchemaMap, FieldType, ReferenceType} from "./model/schema";
 
 @Injectable()
 export class EntitySchemaService {

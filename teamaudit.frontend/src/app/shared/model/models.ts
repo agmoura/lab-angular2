@@ -8,7 +8,8 @@ export interface Escopo extends EntityBase {
     descricao: string;
 }
 
-export interface CategoriaObjetivo extends EntityBase {
+export class CategoriaObjetivo {
+    id: string;
     nome: string;
     descricao: string;
     indicadorInternoSistema: string;

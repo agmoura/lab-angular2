@@ -22,7 +22,7 @@
 
             <div class="form-group">
                 <label>Descrição Meta:</label>
-                <input type="text" name="descricaoMeta" [ngModel]="objetivo.descricaoMeta" class="form-control">
+                <input type="text" name="descricaoMeta" [ngModel]="objetivo.descricaoMeta" class="form-control" #inpu2="ngModel">
             </div>
 
             <div class="form-group">
@@ -35,15 +35,15 @@
                 <input type="number" step="0.01" name="percentualMeta" [ngModel]="objetivo.percentualMeta" class="form-control">
             </div>
 
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label>Categoria:</label>
                 <select ngModelGroup="categoriaObjetivo" name="id" ngModel="{{objetivo.categoriaObjetivo?.id}}" class="form-control" required>
-                    <option value=""> --- Selecione ---</option>
+                    <option value=""> -&#45;&#45; Selecione -&#45;&#45;</option>
                     <option *ngFor="let item of categorias" [value]="item.id">
                         {{item.nome}}
                     </option>
                 </select>
-            </div>
+            </div>-->
 
             <div class="form-group">
                 <label>Unidade:</label>
@@ -53,6 +53,27 @@
                         {{item.nome}}
                     </option>
                 </select>
+            </div>
+
+            <div class="form-group" ngModelGroup="detalhes1" >
+                <span>CATEGORIA1</span>
+                <div class="form-group">
+                    <label>Nome do Detalhe:</label>
+                    <input type="text" name="descricao" [ngModel]="objetivo?.categoriaObjetivo?.nome" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>Descrição do Detalhe:</label>
+                    <input type="text" name="descricaoMeta" [ngModel]="objetivo?.categoriaObjetivo?.descricao" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <objetivo-detail name="categoriaObjetivo2" [ngModel]="objetivo.categoriaObjetivo"></objetivo-detail>
+            </div>
+
+            <div class="form-group">
+                <categoria-objetivo-edit name="categoriaObjetivo3" [form]="form" [model]="objetivo.categoriaObjetivo"></categoria-objetivo-edit>
             </div>
 
             <div>

@@ -1,27 +1,14 @@
-import {Component, Input} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {ValueAccessorBase} from "./value-accessor";
+import {Component} from '@angular/core';
+import {FieldComponent} from "../model/field";
 
 @Component({
-    selector: 'boolean-input',
+    selector: 'text-input',
     template: `
-    <md-slide-toggle [(ngModel)]="value" [name]="name">{{label | translate}}</md-slide-toggle>
+        <md-slide-toggle [formGroup]="group" [formControlName]="schema.source">{{schema.label | translate}}</md-slide-toggle>
     `,
-    providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: BooleanInputComponent,
-        multi: true,
-    }],
 })
-export class BooleanInputComponent extends ValueAccessorBase<string> {
-    @Input() public name: string;
-    @Input() public label: string;
-
-    public identifier = `boolean-input-${identifier++}`;
-
+export class BooleanInputComponent extends FieldComponent {
     constructor() {
         super();
     }
 }
-
-let identifier = 0;

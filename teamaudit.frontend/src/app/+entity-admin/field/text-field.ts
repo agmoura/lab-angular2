@@ -1,5 +1,5 @@
 import {Component, Input, forwardRef} from '@angular/core';
-import {FieldComponent} from "./field";
+import {FieldComponent} from "../model/field";
 
 @Component({
     selector: 'text-field',
