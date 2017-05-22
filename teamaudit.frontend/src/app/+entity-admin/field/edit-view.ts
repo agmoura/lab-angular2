@@ -1,7 +1,6 @@
 import {Component, OnInit, OnDestroy, OnChanges, Input, SimpleChanges} from '@angular/core';
 import {EntityBase} from '../../shared/model/models';
 import {DataService} from '../../shared/services/data.service';
-import {MdSnackBar} from "@angular/material";
 import {ResourceService} from "../shared/resource.service";
 import {TableDataComponent} from "./table-data";
 
@@ -17,9 +16,7 @@ export class EditViewComponent implements OnInit, OnChanges {
     @Input() targetId: string;
 
 
-    constructor(private resourceService: ResourceService,
-                private dataService: DataService,
-                public snackBar: MdSnackBar) {
+    constructor(private resourceService: ResourceService, private dataService: DataService) {
     }
 
     ngOnInit() {
@@ -87,10 +84,10 @@ export class EditViewComponent implements OnInit, OnChanges {
 
         this.dataService.save(this.resource, this.resourceService.resourceRecord).subscribe(
             data => this.resourceService.resourceRecord = data,
-            error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),
+            /*error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),*/
             () => {
                 this.resourceId = this.resourceService.resourceRecord.id;
-                this.snackBar.open('Operação realizada com sucesso', 'OK', {duration: 2000})
+                /*this.snackBar.open('Operação realizada com sucesso', 'OK', {duration: 2000})*/
             }
         );
     }

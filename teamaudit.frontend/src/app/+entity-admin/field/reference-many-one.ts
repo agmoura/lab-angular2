@@ -1,8 +1,8 @@
 import {Component, OnInit, Input, ContentChildren, QueryList} from '@angular/core';
 import {DataService} from "../../shared/services/data.service";
-import {MdSnackBar} from "@angular/material";
 import {ResourceQuery} from "../../shared/model/query";
 import {SelectInputComponent} from "../input/select-input";
+import {NotificationService} from "../shared/notification.service";
 
 @Component({
     selector: 'reference-many-one',
@@ -13,7 +13,7 @@ export class ReferenceManyToOneComponent implements OnInit {
     @ContentChildren(SelectInputComponent) fields: QueryList<SelectInputComponent>;
     resourceQuery: ResourceQuery;
 
-    constructor(private dataService: DataService, public snackBar: MdSnackBar) {
+    constructor(private dataService: DataService) {
 
     }
 
@@ -29,7 +29,7 @@ export class ReferenceManyToOneComponent implements OnInit {
                 data => {
                     this.fields.forEach(field => field.items = data.list);
                 },
-                error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK')
+                error => NotificationService.showError('Ocorreu um erro: ' + JSON.stringify(error.json().errors))
             );
     }
 }

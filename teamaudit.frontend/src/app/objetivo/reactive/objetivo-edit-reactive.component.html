@@ -11,48 +11,62 @@
             <input type="hidden" formControlName="id">
 
             <div class="form-group">
-                <label>Nome:</label>
-                <input type="text" formControlName="nome" class="form-control">
+                <label class="col-md-2 control-label">Nome:</label>
+                <div class="col-md-10">
+                    <input type="text" formControlName="nome" class=" form-control">
+                </div>
             </div>
 
             <div class="form-group">
-                <label>Descrição:</label>
-                <input type="text" formControlName="descricao" class="form-control">
+                <label class="col-md-2 control-label">Descrição:</label>
+                <div class="col-md-10">
+                    <input type="text" formControlName="descricao" class="form-control">
+                </div>
             </div>
 
             <div class="form-group">
-                <label>Descrição Meta:</label>
-                <input type="text" formControlName="descricaoMeta" class="form-control">
+                <label class="col-md-2 control-label">Descrição Meta:</label>
+                <div class="col-md-10">
+                    <input type="text" formControlName="descricaoMeta" class="form-control">
+                </div>
             </div>
 
             <div class="form-group">
-                <label>Valor Meta:</label>
-                <input type="number" formControlName="valorMeta" step="0.01" class="form-control">
+                <label class="col-md-2 control-label">Valor Meta:</label>
+                <div class="col-md-10">
+                    <input type="number" formControlName="valorMeta" step="0.01" class="form-control">
+                </div>
             </div>
 
             <div class="form-group">
-                <label>Percentual Meta: </label>
-                <input type="number" formControlName="percentualMeta" step="0.01" class="form-control">
+                <label class="col-md-2 control-label">Percentual Meta: </label>
+                <div class="col-md-10">
+                    <input type="number" formControlName="percentualMeta" step="0.01" class="form-control">
+                </div>
             </div>
 
             <div formGroupName="categoriaObjetivo" class="form-group">
-                <label>Categoria:</label>
-                <select formControlName="id" class="form-control">
-                    <option value=""> --- Selecione ---</option>
-                    <option *ngFor="let item of categorias" [value]="item.id">
-                        {{item.nome}}
-                    </option>
-                </select>
+                <label class="col-md-2 control-label">Categoria:</label>
+                <div class="col-md-10">
+                    <select formControlName="id" class="form-control">
+                        <option value=""> --- Selecione ---</option>
+                        <option *ngFor="let item of categorias" [value]="item.id">
+                            {{item.nome}}
+                        </option>
+                    </select>
+                </div>
             </div>
 
             <div formGroupName="unidadeOrganizacional" class="form-group">
-                <label>Unidade:</label>
-                <select formControlName="id" class="form-control">
-                    <option value=""> --- Selecione ---</option>
-                    <option *ngFor="let item of unidades" [value]="item.id">
-                        {{item.nome}}
-                    </option>
-                </select>
+                <label class="col-md-2 control-label">Unidade:</label>
+                <div class="col-md-10">
+                    <select formControlName="id" class="form-control">
+                        <option value=""> --- Selecione ---</option>
+                        <option *ngFor="let item of unidades" [value]="item.id">
+                            {{item.nome}}
+                        </option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-group">

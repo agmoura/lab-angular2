@@ -1,31 +1,16 @@
-<style>
-    /deep/
-    .form-input {
-        padding-bottom: 8px;
-        padding-top: 8px;
-        width: 100%;
-    }
-</style>
+<div class="col-md-12" *ngIf="!childEdit">
+    <div class="card card-light">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="zmdi zmdi-edit"></i>{{resourceId ? "Atualizar" : "Incluir"}} {{resource | translate}}
+            </h3>
+        </div>
 
-<div class="page-content" *ngIf="!childEdit">
-    <md-card class="page-card">
-        <md-card-title>
-            <span>{{resourceId ? "Atualizar" : "Incluir"}} {{resource | translate}}</span>
-            <a class="card-title-menu" [md-menu-trigger-for]="cardTitleMenu">
-                <i class="material-icons">more_vert</i>
-            </a>
-            <md-menu #cardTitleMenu="mdMenu">
-                <button md-menu-item>Ação 1</button>
-                <button md-menu-item>Ação 2</button>
-                <button md-menu-item>Ação 3</button>
-            </md-menu>
-        </md-card-title>
-
-        <md-card-content>
-            <form [formGroup]="mainForm">
+        <div class="card-block">
+            <form [formGroup]="mainForm" class="form-horizontal">
                 <input type="hidden" formControlName="id">
 
-                <div *ngFor="let field of formViewSchema.fields">
+                <ng-container *ngFor="let field of formViewSchema.fields">
 
                     <ng-container [dynamicField]="field" [group]="mainForm"></ng-container>
 
@@ -53,25 +38,23 @@
                                          [items]="referencesData[field.source]">
                         </select-input>&ndash;&gt;
                     </ng-container>-->
+                </ng-container>
+                <div class="form-group">
+                    <div class="col-md-10 col-md-offset-2">
+                        <ng-content></ng-content>
+                        <button class="btn btn-raised btn-primary" (click)="save(mainForm.value)">SAVE</button>
+                        <button class="btn btn-raised btn-default" (click)="goBack()">BACK</button>
+                        <button class="btn btn-raised btn-danger" (click)="delete()">DELETE</button>
+                    </div>
                 </div>
             </form>
-        </md-card-content>
-        <md-card-actions>
-            <ng-content></ng-content>
-            <button md-button (click)="goBack()">BACK</button>
-            <button md-button (click)="save(mainForm.value)">SAVE</button>
-            <button md-button (click)="delete()">DELETE</button>
-        </md-card-actions>
-        <!--<md-card-footer>
-            <md-progress-bar mode="indeterminate"></md-progress-bar>
-        </md-card-footer>-->
-    </md-card>
+        </div>
 
-    <!--TODO: Remover Informações de Depuração-->
-    <!--<strong>this.entity:</strong> {{entity | json}} <br/>
-    <strong>form.value:</strong> {{mainForm.value | json}}-->
 
-    <md-tab-group *ngIf="resourceId && formViewSchema.references">
+    </div>
+
+
+    <!--<md-tab-group *ngIf="resourceId && formViewSchema.references">
         <md-tab *ngFor="let reference of formViewSchema.references" label="{{reference.resource.toUpperCase() | translate}}">
             <md-card class="page-card">
                 <md-card-title>
@@ -89,7 +72,11 @@
                 </md-card-content>
             </md-card>
         </md-tab>
-    </md-tab-group>
+    </md-tab-group>-->
+
+    <!--TODO: Remover Informações de Depuração-->
+    <!--<strong>this.entity:</strong> {{entity | json}} <br/>
+    <strong>form.value:</strong> {{mainForm.value | json}}-->
 </div>
 
 <edit *ngIf="childEdit"

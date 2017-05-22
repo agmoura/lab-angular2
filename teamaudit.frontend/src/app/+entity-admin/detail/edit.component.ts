@@ -8,8 +8,7 @@ import {DataService} from '../../shared/services/data.service';
 import {FieldType, FormViewSchema} from '../model/schema';
 import {EntitySchemaService} from '../entity-schema.service';
 import {ResourceQuery} from "../../shared/model/query";
-import {MdSnackBar} from "@angular/material";
-
+import {NotificationService} from "../shared/notification.service";
 
 @Component({
     selector: 'edit',
@@ -34,8 +33,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
                 private route: ActivatedRoute,
                 private location: Location,
                 private dataService: DataService,
-                private schemaService: EntitySchemaService,
-                public snackBar: MdSnackBar) {
+                private schemaService: EntitySchemaService) {
     }
 
     createForm(formViewSchema: FormViewSchema) {
@@ -138,10 +136,10 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
 
         this.dataService.save(this.resource, entity).subscribe(
             data => this.entity = data,
-            error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),
+            error => NotificationService.showError('Ocorreu um erro: ' + JSON.stringify(error.json().errors)),
             () => {
                 this.resourceId = this.entity.id;
-                this.snackBar.open('Operação realizada com sucesso', 'OK', {duration: 2000})
+                NotificationService.showSuccess('Operação realizada com sucesso');
             }
         );
     }
@@ -149,10 +147,10 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     delete() {
         this.dataService.delete(this.resource, this.resourceId).subscribe(
             data => data,
-            error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),
+            error => NotificationService.showError('Ocorreu um erro: ' + JSON.stringify(error.json().errors)),
             () => {
                 this.resourceId = this.entity.id;
-                this.snackBar.open('Operação realizada com sucesso', 'OK', {duration: 2000});
+                NotificationService.showSuccess('Operação realizada com sucesso');
                 this.goBack();
             }
         );

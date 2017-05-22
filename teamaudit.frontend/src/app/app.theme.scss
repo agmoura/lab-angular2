@@ -1,7 +1,0 @@
-@import '~@angular/material/core/theming/all-theme';
-
-@include mat-core();
-
-$theme-primary: mat-palette($mat-cyan);
-$theme-accent: mat-palette($mat-amber, A200, A100, A400);
-$theme-warn: mat-palette($mat-red);

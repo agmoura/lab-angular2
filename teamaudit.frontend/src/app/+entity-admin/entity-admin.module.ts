@@ -1,9 +1,6 @@
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule}   from '@angular/common';
-import {MaterialModule} from "@angular/material";
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {Md2Module} from 'md2/module';
 import {TranslateModule} from 'ng2-translate';
 import {entityAdminRouting} from "./entity-admin.routes";
 import {ListComponent} from "./list/list.component";
@@ -34,9 +31,6 @@ import {DynamicFieldDirective} from "./field/dynamic-field.directive";
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        MaterialModule,
-        FlexLayoutModule,
-        Md2Module,
         TranslateModule,
         entityAdminRouting
     ],

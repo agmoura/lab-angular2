@@ -1,31 +1,24 @@
 import {Component, OnInit, OnDestroy, ContentChildren, QueryList, AfterContentInit} from '@angular/core';
 import {ResourceService} from "../shared/resource.service";
 import {DataService} from "../../shared/services/data.service";
-import {MdSnackBar} from "@angular/material";
 import {Page} from "../../shared/model/paged-list";
 import {ResourceQuery} from "../../shared/model/query";
 import {TableDataComponent} from "./table-data";
+import {NotificationService} from "../shared/notification.service";
 
 @Component({
     selector: 'list-view',
     template: `
-    <div class="page-content">
-        <md-card class="page-card">
-            <md-card-title>
-                <span>Manter {{resourceService.resource | translate}}</span>
-                <a class="" (click)="onCreate()"><i class="material-icons">add</i></a>
-                <a class="card-title-menu" [md-menu-trigger-for]="cardTitleMenu"><i class="material-icons">more_vert</i></a>
-                <md-menu #cardTitleMenu="mdMenu">
-                    <button md-menu-item>Action 1</button>
-                    <button md-menu-item>Action 2</button>
-                    <button md-menu-item>Action 3</button>
-                </md-menu>
-            </md-card-title>
-            <md-card-content>
-                <ng-content></ng-content>
-            </md-card-content>
-        </md-card>
-    </div>
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="zmdi zmdi-filter-list"></i>Manter {{resource | translate}}</h3>
+                </div>
+                <div class="card-block">
+                    <ng-content></ng-content>
+                </div>
+            </div>
+        </div>
     `
 })
 export class ListViewComponent implements OnInit, OnDestroy, AfterContentInit {
@@ -34,7 +27,7 @@ export class ListViewComponent implements OnInit, OnDestroy, AfterContentInit {
     resourceQuery: ResourceQuery;
     page: Page;
 
-    constructor(private resourceService: ResourceService, private dataService: DataService, public snackBar: MdSnackBar) {
+    constructor(private resourceService: ResourceService, private dataService: DataService) {
 
     }
 
@@ -62,7 +55,7 @@ export class ListViewComponent implements OnInit, OnDestroy, AfterContentInit {
                     this.children.forEach(child => child.data = data.list);
                     this.resourceQuery.pageItem(this.page = new Page(data.page));
                 },
-                error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK')
+                error => NotificationService.showError('Ocorreu um erro: ' + JSON.stringify(error.json().errors))
             );
     }
 

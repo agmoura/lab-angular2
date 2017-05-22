@@ -1,10 +1,10 @@
 import {Component, OnInit, OnDestroy, ContentChildren, QueryList, AfterContentInit, Input, SkipSelf, OnChanges, SimpleChanges} from '@angular/core';
 import {ResourceService} from "../shared/resource.service";
 import {DataService} from "../../shared/services/data.service";
-import {MdSnackBar} from "@angular/material";
 import {Page} from "../../shared/model/paged-list";
 import {ResourceQuery} from "../../shared/model/query";
 import {TableDataComponent} from "./table-data";
+import {NotificationService} from "../shared/notification.service";
 
 @Component({
     selector: 'reference-one-many',
@@ -24,8 +24,7 @@ export class ReferenceOneToManyComponent implements OnInit, OnDestroy, OnChanges
 
     constructor(private resourceService: ResourceService,
                 @SkipSelf() private parentResourceService: ResourceService,
-                private dataService: DataService,
-                public snackBar: MdSnackBar) {
+                private dataService: DataService) {
 
     }
 
@@ -67,7 +66,7 @@ export class ReferenceOneToManyComponent implements OnInit, OnDestroy, OnChanges
                     this.children.forEach(child => child.data = data.list);
                     this.resourceQuery.pageItem(this.page = new Page(data.page));
                 },
-                error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK')
+                error => NotificationService.showError('Ocorreu um erro: ' + JSON.stringify(error.json().errors))
             );
     }
 
