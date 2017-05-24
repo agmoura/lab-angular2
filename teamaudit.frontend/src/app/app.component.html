@@ -375,44 +375,25 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" class="dropdown-toggle animated fadeIn animation-delay-5" data-toggle="dropdown" data-hover="dropdown" data-name="page">Pages
-                            <i class="zmdi zmdi-chevron-down"></i>
+                    <li class="dropdown" routerLinkActive="active">
+                        <a href="javascript:void(0)" class="dropdown-toggle animated fadeIn animation-delay-5" data-toggle="dropdown" data-hover="dropdown" data-name="page">
+                            Cadastros <i class="zmdi zmdi-chevron-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-left animated-2x animated fadeIn">
-                            <li class="dropdown-submenu">
-                                <a href="javascript:void(0)" class="has_children">About us &amp; Team</a>
+                            <li class="dropdown-submenu" routerLinkActive="active">
+                                <a href="javascript:void(0)" class="has_children">Objetivo</a>
                                 <ul class="dropdown-menu dropdown-menu-left">
-                                    <li>
-                                        <a href="page-about.html">About us Option 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="page-about2.html">About us Option 2</a>
-                                    </li>
-                                    <li>
-                                        <a href="page-about3.html">About us Option 3</a>
-                                    </li>
-                                    <li>
-                                        <a href="page-about4.html">About us Option 4</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="page-team.html">Our Team Option 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="page-team2.html">Our Team Option 2</a>
-                                    </li>
+                                    <li routerLinkActive="active"><a routerLink="/entity/escopos">Escopos</a></li>
+                                    <li routerLinkActive="active"><a routerLink="/entity/categoriaObjetivos">Categoria de Objetivos</a></li>
+                                    <li routerLinkActive="active"><a routerLink="/entity/objetivos">Objetivos</a></li>
+
                                 </ul>
                             </li>
-                            <li class="dropdown-submenu">
-                                <a href="javascript:void(0)" class="has_children">Form</a>
+                            <li class="dropdown-submenu" routerLinkActive="active">
+                                <a href="javascript:void(0)" class="has_children">Entidade</a>
                                 <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="page-contact.html">Contact Option 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="page-contact2.html">Contact Option 2</a>
-                                    </li>
+                                    <li routerLinkActive="active"><a routerLink="/entity/entidades">Entidades</a></li>
+                                    <li routerLinkActive="active"><a routerLink="/objetivo">Objetivos (OLD)</a></li>
                                     <li class="divider"></li>
                                     <li>
                                         <a href="page-login_register.html">Login &amp; Register</a>
@@ -670,6 +651,8 @@
         <!-- container -->
     </nav>
     <!-- END NAVIGATION -->
+
+    <div class="material-background"></div>
 
     <!-- START PAGE CONTENT -->
     <div class="container">
