@@ -1,70 +1,16 @@
-<style>
-    /deep/ .form-input {
-        padding-bottom: 8px;
-        padding-top: 8px;
-        width: 100%;
-    }
-</style>
-
-<div class="page-content" *ngIf="resourceId">
-    <md-card class="page-card">
-        <md-card-title>
-            <span>{{resourceId ? "Atualizar" : "Incluir"}} {{resource | translate}}</span>
-            <a class="card-title-menu" [md-menu-trigger-for]="cardTitleMenu">
-                <i class="material-icons">more_vert</i>
-            </a>
-            <md-menu #cardTitleMenu="mdMenu">
-                <button md-menu-item>Ação 1</button>
-                <button md-menu-item>Ação 2</button>
-                <button md-menu-item>Ação 3</button>
-            </md-menu>
-        </md-card-title>
-        <md-card-content>
-           <ng-content></ng-content>
-        </md-card-content>
-        <md-card-actions>
+<div class="col-md-12" *ngIf="resourceId">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="zmdi zmdi-edit"></i>{{resourceId ? "Atualizar" : "Incluir"}} {{resource | translate}}
+            </h3>
+        </div>
+        <div class="card-block">
+            <ng-content></ng-content>
+        </div>
+        <div class="card-footer">
             <button md-button (click)="goBack()">CANCEL</button>
             <button md-button (click)="save()">SAVE</button>
-        </md-card-actions>
-        <!--<md-card-footer>
-            <md-progress-bar mode="indeterminate"></md-progress-bar>
-        </md-card-footer>-->
-    </md-card>
-
-    <!--<md-tab-group *ngIf="sourceId && formViewSchema.references">
-        <md-tab *ngFor="let reference of formViewSchema.references" label="{{reference.source.toUpperCase() | translate}}">
-            <md-card class="page-card">
-                <md-card-title>
-                    <a class="card-title-menu" md-ripple [md-menu-trigger-for]="cardTitleMenu">
-                        <i class="material-icons">more_vert</i>
-                    </a>
-                    <md-menu #cardTitleMenu="mdMenu">
-                        <button md-menu-item>Ação 1</button>
-                        <button md-menu-item>Ação 2</button>
-                        <button md-menu-item>Ação 3</button>
-                    </md-menu>
-                </md-card-title>
-                <md-card-content>
-                    <reference-many [referenceSchema]="reference" [source]="source" [targetId]="sourceId" (onEdit)="childEdit = $event"></reference-many>
-                </md-card-content>
-            </md-card>
-        </md-tab>
-    </md-tab-group>-->
+        </div>
+    </div>
 </div>
-
-<!--
-<edit *ngIf="childEdit"
-      [source]="childEdit.referenceSchema.source"
-      [sourceId]="childEdit.sourceId"
-      [target]="childEdit.referenceSchema.target"
-      [targetId]="sourceId"
-      [formViewSchema]="childEdit.referenceSchema.formView">
-    <button md-button (click)="childEdit = null">VOLTAR2</button>
-</edit>
--->
-
-
-
-
-
-

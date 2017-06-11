@@ -1,20 +1,25 @@
 import {Component, Input} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {ValueAccessorBase} from "./value-accessor";
+import {FieldComponent} from "../model/field";
 
 @Component({
     selector: 'select-input',
     template: `
-    <md-select [placeholder]="label | translate" [(ngModel)]="value" [name]="name" class="form-input" #model="ngModel">
-        <md-option (click)="model.reset()"></md-option>
-        <md-option *ngFor="let item of items" [value]="item[sourceValue]">
-            {{item[sourceText]}}
-        </md-option>
-    </md-select>
+        <div class="form-group" [formGroup]="group">
+            <label for="select-input-000" class="col-md-2 control-label">{{schema.label | translate}}</label>
+            <div class="col-md-10">
+                <select id="select-input-000" class="form-control selectpicker" data-dropup-auto="false" [formControlName]="schema.select.value" >
+                    <option value="">--- SELECT ---</option>
+                    <option *ngFor="let item of items" [value]="item[sourceValue]">
+                        {{item[sourceText]}}
+                    </option>
+                </select>
+            </div>
+        </div>
     `,
-    providers: [{provide: NG_VALUE_ACCESSOR, useExisting: SelectInputComponent, multi: true,}]
 })
-export class SelectInputComponent extends ValueAccessorBase<string> {
+export class SelectInputComponent extends FieldComponent  {
     @Input() public name: string;
     @Input() public label: string;
 

@@ -1,8 +1,8 @@
 import {Component, Input, SimpleChanges, OnChanges, EventEmitter, Output} from '@angular/core';
 import {ReferenceSchema, ReferenceType} from "../model/schema";
 import {DataService} from "../../shared/services/data.service";
-import {MdSnackBar} from "@angular/material";
 import {DatagridComponent} from "../list/datagrid.component";
+import {NotificationService} from "../shared/notification.service";
 
 @Component({
     selector: 'reference-many',
@@ -14,10 +14,10 @@ import {DatagridComponent} from "../list/datagrid.component";
                   [filter]="filter"
                   (onCreate)="edit()"
                   (onEdit)="edit($event)"
-                  (onLink)="selectedKeys = $event; dialog.open()">
+                  (onLink)="selectedKeys = $event;">
         </datagrid>
         
-        <md2-dialog #dialog>
+        <!--<md2-dialog #dialog>
             <md2-dialog-title>Asssociar {{referenceSchema.resource.toUpperCase() | translate}}</md2-dialog-title>
             <datagrid *ngIf="dialog._isOpened" 
                       [resource]="referenceSchema.resource" 
@@ -28,7 +28,7 @@ import {DatagridComponent} from "../list/datagrid.component";
                 <button md-button (click)="dialog.close()">CANCELAR</button>
                 <button md-button (click)="link(datagrid); dialog.close()">ASSOCIAR</button>
             </md2-dialog-footer>
-        </md2-dialog>
+        </md2-dialog>-->
     </ng-container>
     
     <ng-container *ngIf="referenceSchema.type === ReferenceType.OneToMany">
@@ -52,7 +52,7 @@ export class ReferenceManyComponent implements OnChanges {
     filter: any;
     selectedKeys = [];
 
-    constructor(private dataService: DataService, public snackBar: MdSnackBar) {
+    constructor(private dataService: DataService) {
 
     }
 
@@ -82,10 +82,10 @@ export class ReferenceManyComponent implements OnChanges {
 
         this.dataService.patch(this.resource, entity).subscribe(
             data => entity = data,
-            error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),
+            error => NotificationService.showError('Ocorreu um erro: ' + JSON.stringify(error.json().errors)),
             () => {
                 dataGrid.load();
-                this.snackBar.open('Operação realizada com sucesso', 'OK', {duration: 2000});
+                NotificationService.showSuccess('Operação realizada com sucesso');
             }
         );
     }

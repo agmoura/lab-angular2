@@ -1,22 +1,89 @@
-<div class="page-content">
-    <md-card class="page-card">
-        <md-card-title>
-            <span>Manter {{resource | translate}}</span>
-            <a class="card-title-menu" md-ripple [md-menu-trigger-for]="cardTitleMenu">
-                <i class="material-icons">more_vert</i>
-            </a>
-            <md-menu #cardTitleMenu="mdMenu">
-                <button md-menu-item>Ação 1</button>
-                <button md-menu-item>Ação 2</button>
-                <button md-menu-item>Ação 3</button>
-            </md-menu>
-        </md-card-title>
-        <md-card-content>
+
+<!--<div class="col-md-3 hidden-sm hidden-xs">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="zmdi zmdi-filter-list"></i>Filter List</h3>
+        </div>
+        <div class="card-block no-pb">
+            <form class="form-horizontal">
+                <h4 class="no-m color-primary">Categories</h4>
+                <div class="form-group mt-1">
+                    <div class="radio no-mb">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios0" value="option0" checked="" class="filter active" data-filter="all"><span class="circle"></span><span class="check"></span> All </label>
+                    </div>
+                    <div class="radio no-mb">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" class="filter" data-filter=".category-1"><span class="circle"></span><span class="check"></span> Category One </label>
+                    </div>
+                    <div class="radio no-mb">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" class="filter" data-filter=".category-2"><span class="circle"></span><span class="check"></span> Category Two </label>
+                    </div>
+                    <div class="radio no-mb">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" class="filter" data-filter=".category-3"><span class="circle"></span><span class="check"></span> Category Three </label>
+                    </div>
+                    <div class="radio no-mb">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4" class="filter" data-filter=".category-4"><span class="circle"></span><span class="check"></span> Category Four </label>
+                    </div>
+                    <div class="radio no-mb">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios5" value="option5" class="filter" data-filter=".category-5"><span class="circle"></span><span class="check"></span> Category Five </label>
+                    </div>
+                    <div class="radio no-mb">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios6" value="option6" class="filter" data-filter=".category-6"><span class="circle"></span><span class="check"></span> Category Six </label>
+                    </div>
+                </div>
+            </form>
+            <h4 class="mt-2 color-primary no-mb">Columns</h4>
+        </div>
+        <ul class="nav nav-tabs nav-tabs-transparent indicator-primary nav-tabs-full nav-tabs-4" role="tablist">
+            <li>
+                <a id="Cols1" class="withoutripple" href="#home7" aria-controls="home7" role="tab" data-toggle="tab">1</a>
+            </li>
+            <li>
+                <a id="Cols2" class="withoutripple" href="#profile7" aria-controls="profile7" role="tab" data-toggle="tab">2
+                </a>
+            </li>
+            <li class="active">
+                <a id="Cols3" class="withoutripple" href="#messages7" aria-controls="messages7" role="tab" data-toggle="tab">3</a>
+            </li>
+            <li>
+                <a id="Cols4" class="withoutripple" href="#settings7" aria-controls="settings7" role="tab" data-toggle="tab">4</a>
+            </li>
+            <span id="i2" class="ms-tabs-indicator" style="left: 153.625px; width: 76.8125px;"></span></ul>
+        <div class="card-block">
+            <form class="form-horizontal">
+                <div class="form-group no-mt">
+                    <div class="col-md-12">
+                        <h4 class="no-m color-primary mb-2">Descriptions</h4>
+                        <div class="togglebutton">
+                            <label>
+                                <input id="port-show" type="checkbox"><span class="toggle"></span> Show description </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>-->
+
+<div class="col-md-12">
+    <div class="card card-light">
+        <div class="card-header">
+            <h3 class="card-title"><i class="zmdi zmdi-filter-list"></i>Manter {{resource | translate}}</h3>
+        </div>
+
+        <div class="card-block">
             <datagrid [resource]="resource"
                       [listViewSchema]="listViewSchema"
                       (onCreate)="onCreate()"
                       (onEdit)="onEdit($event)">
             </datagrid>
-        </md-card-content>
-    </md-card>
+        </div>
+    </div>
 </div>

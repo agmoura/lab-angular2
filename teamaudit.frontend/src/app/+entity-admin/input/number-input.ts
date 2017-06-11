@@ -4,9 +4,12 @@ import {FieldComponent} from "../model/field";
 @Component({
     selector: 'number-input',
     template: `
-        <md-input-container [formGroup]="group" class="form-input">
-            <input mdInput [formControlName]="schema.source" [placeholder]="schema.label | translate" [required]="schema.required" type="number" step="0.01">
-        </md-input-container>
+        <div class="form-group" [formGroup]="group">
+            <label for="number-input-000" class="col-md-2 control-label">{{schema.label | translate}}</label>
+            <div class="col-md-10">
+                <input type="number" step="0.01" class="form-control" id="number-input-000" [formControlName]="schema.source" [placeholder]="schema.label | translate" [required]="schema.required" >
+            </div>
+        </div>
     `,
 })
 export class NumberInputComponent extends FieldComponent {

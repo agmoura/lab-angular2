@@ -9,7 +9,7 @@ import {ResourceSchema, ListViewSchema, FieldType} from "../model/schema";
 import {DataService} from "../../shared/services/data.service";
 import {Page} from "../../shared/model/paged-list";
 import {ResourceQuery} from "../../shared/model/query";
-import {MdSnackBar} from "@angular/material";
+import {NotificationService} from "../shared/notification.service";
 
 @Component({
     selector: 'datagrid',
@@ -35,8 +35,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
     gridColumns: any[];
 
     constructor(private dataService: DataService,
-                private translateService: TranslateService,
-                public snackBar: MdSnackBar) {
+                private translateService: TranslateService) {
 
     }
 
@@ -177,7 +176,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
                         selectedRowKeys: this.selectedKeys
                     });  // dxDataGrid
                 },
-                error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK')
+                error => alert(error)
             );
     }
 
@@ -185,7 +184,7 @@ export class DatagridComponent implements OnInit, OnDestroy, OnChanges {
         if (confirm('Tem certeza que deseja exluir esse registro ?')) {
             this.dataService.delete(this.resource, this.getId(entity)).subscribe(
                 data => this.load(),
-                error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK')
+                error => NotificationService.showError('Ocorreu um erro: ' + JSON.stringify(error.json().errors))
             );
         }
     }

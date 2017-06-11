@@ -3,15 +3,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule, Http} from '@angular/http';
-import {MaterialModule} from "@angular/material";
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {Md2Module} from 'md2/module';
 import {TranslateStaticLoader, TranslateLoader, TranslateModule} from 'ng2-translate';
 
 import {AppComponent} from './app.component';
 import {rootRoutesModule} from './app.routes';
-
-import {AppService} from "./app.service";
 import {DataService} from "./shared/services/data.service";
 import {EntitySchemaService} from "./+entity-admin/entity-schema.service";
 import {HomeComponent} from "./home/home.component";
@@ -21,13 +16,15 @@ import {CategoriaRiscoComponent} from "./categoria-risco/categoria-risco.compone
 import {About} from "./about/about";
 import {EntityAdminModule} from "./+entity-admin/entity-admin.module";
 
-import {DialogExampleComponent} from "./shared/dialog/dialog-example/dialog-example.component";
-import {DialogThemeComponent} from "./shared/dialog/dialog-theme/dialog-theme.component";
 import {MasterDataModule} from "./+master-data/master-data.module";
 import {ObjetivoDetailComponent} from "./objetivo/objetivo-detail.component";
 import {CategoriaObjetivoEditComponent} from "./objetivo/categoria-objetivo-edit.component";
 import {ObjetivoEditReactiveComponent} from "./objetivo/reactive/objetivo-edit-reactive.component";
 import {CategoriaObjetivoEditReactiveComponent} from "./objetivo/reactive/categoria-objetivo-edit-reactive.component";
+
+export function createTranslateLoader(http: Http) {
+    return new TranslateStaticLoader(http, './assets/i18n', '.json');
+}
 
 @NgModule({
     declarations: [
@@ -41,10 +38,8 @@ import {CategoriaObjetivoEditReactiveComponent} from "./objetivo/reactive/catego
         CategoriaObjetivoEditComponent,
 
         ObjetivoEditReactiveComponent,
-        CategoriaObjetivoEditReactiveComponent,
+        CategoriaObjetivoEditReactiveComponent
 
-        DialogExampleComponent,
-        DialogThemeComponent
     ],
     imports: [
         BrowserModule,
@@ -52,10 +47,6 @@ import {CategoriaObjetivoEditReactiveComponent} from "./objetivo/reactive/catego
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
-
-        MaterialModule.forRoot(),
-        FlexLayoutModule.forRoot(),
-        Md2Module.forRoot(),
         TranslateModule.forRoot({provide: TranslateLoader, useFactory: (createTranslateLoader), deps: [Http]}),
 
         rootRoutesModule,
@@ -63,15 +54,10 @@ import {CategoriaObjetivoEditReactiveComponent} from "./objetivo/reactive/catego
         MasterDataModule
     ],
     providers: [
-        AppService,
         DataService,
         EntitySchemaService
     ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
-}
-
-export function createTranslateLoader(http: Http) {
-    return new TranslateStaticLoader(http, './assets/i18n', '.json');
 }
