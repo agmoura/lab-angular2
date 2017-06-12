@@ -44,11 +44,6 @@ export interface ReferenceSchema extends ResourceSchema {
     type: ReferenceType;
     target: string;
     targetInverse?: string;
-
-    /*targetId: {path: string};
-    referencePath?: string;
-    relationPath?: {path: string};
-    childSelectListView?: ListViewSchema;*/
 }
 
 export interface FieldSchema {
@@ -56,7 +51,7 @@ export interface FieldSchema {
     type?: FieldType;       // Field Type
 
     label?: string;         // Field Label Key - Default: UpperCase(Resource + '.' + Source)
-    required?: boolean;     // Indica que este campo é obrigatorio
+    required?: boolean;
     hidden?: boolean;
     isEnum?: boolean;       // Indica se os valores selecionaveis deste campo são enums. Default: false
     index?: number;         // Field Index - Read Only
@@ -67,25 +62,15 @@ export interface ListFieldSchema extends FieldSchema {
 }
 
 export interface FormFieldSchema extends FieldSchema {
-    referencePath?: string; // TODO REMOPVER - nome correto do tipo do objeto para considerar ao inves do path
-    dependsOn?: string;     // TODO REMOVER - Nao é mais usado?
-    isParent?: boolean;                 // Indica que este campo é o 'Parent' desta entidade
-
-    readOnly?: boolean;                 // Indica que o campo é readOnly
-    select?: EntitySelectFieldSchema;   // Schema utilizado para definir campos que são definidos a partir de itens selecionaveis
+    referencePath?: string;
+    readOnly?: boolean;
+    select?: EntitySelectFieldSchema;
 }
 
 export interface EntitySelectFieldSchema {
-    // O nome da entidade de onde os dados do select virão, geralmente não deve ser informado
-    // pois é usado o nome do Path do field onde este schema é definido, use-o apenas
-    // quando o nome no Path não refletir realmente o nome da entidade no banco de dados
-    entityName?: string;
-
-    // O nome do campo que contém o valor deste campo selecionavel, não informar quando estiver trabalhando
-    // com enums, pois o valor será o nome da constante do enum que deve vir na propriedade enumConstantName!
     value: string;
+    text: string;
 
-    text: string;           // O nome do campo que contém o Label deste campo selecionavel
     loadFrom?: string;      // Indica uma URL específica de onde virão os dados selecionaveis para o campo
     filter?: any;           // Indica um filtro específico de acordo com um campo
 }

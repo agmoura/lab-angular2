@@ -22,17 +22,17 @@ export class MenuMock {
                 },
                 {
                     name: 'escopo',
-                    title: 'Escopo',
+                    title: 'Escopos',
                     link: '/entity/escopos'
                 },
                 {
                     name: 'categoriaObjetivo',
-                    title: 'Categoria Objetivo',
+                    title: 'Categoria Objetivos',
                     link: '/entity/categoriaObjetivos'
                 },
                 {
                     name: 'objetivo',
-                    title: 'Objetivo',
+                    title: 'Objetivos',
                     link: '/entity/objetivos'
                 },
                 {
@@ -47,8 +47,8 @@ export class MenuMock {
                 },
                 {
                     name: 'entidade',
-                    title: 'Entidade',
-                    link: '/entity/entidade'
+                    title: 'Entidades',
+                    link: '/entity/entidades'
                 },
                 {
                     name: 'auditLog',

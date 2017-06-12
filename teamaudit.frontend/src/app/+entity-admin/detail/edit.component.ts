@@ -81,6 +81,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
         if (id)
             this.dataService.get<EntityBase>(this.resource, id).subscribe(data => {
 
+                this.cleanEntity(data);
                 this.mainForm.patchValue(data);
 
                 /*for (let field in this.mainForm.controls) {
@@ -90,7 +91,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
                 this.entity = data;
             });
 
-        this.formViewSchema.fields
+        /*this.formViewSchema.fields
             .filter(field => field.type === FieldType.Reference)
             .forEach(field => {
 
@@ -102,7 +103,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
                 this.dataService.find(resourceQuery).subscribe(
                     data => this.referencesData[field.source] = data.list
                 );
-            });
+            });*/
     }
 
     // Remove Undefined, Null and Empty Attributes

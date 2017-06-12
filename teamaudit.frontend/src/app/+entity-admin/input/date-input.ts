@@ -2,9 +2,11 @@ import {Component, Input} from '@angular/core';
 import {FieldComponent} from "../model/field";
 
 @Component({
-    selector: 'text-input',
+    selector: 'date-input',
     template: `
-        <md2-datepicker [formGroup]="group" [formControlName]="schema.source" placeholder="{{schema.label | translate}}" format="{{format}}" type="date" class="form-input"></md2-datepicker>
+        <div [formGroup]="group" class="form-input">
+            <md2-datepicker [formControlName]="schema.source" placeholder="{{schema.label | translate}}" format="{{format}}" type="date" class="form-input"></md2-datepicker>
+        </div>
     `
 })
 export class DateInputComponent extends FieldComponent {

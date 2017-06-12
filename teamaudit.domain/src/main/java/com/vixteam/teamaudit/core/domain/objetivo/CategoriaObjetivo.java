@@ -24,6 +24,7 @@ public class CategoriaObjetivo extends BaseEntity {
         super(id);
     }
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name="CD_ESCPO", nullable=true)
     private Escopo escopo;

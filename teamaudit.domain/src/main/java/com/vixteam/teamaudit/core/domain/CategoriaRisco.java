@@ -16,6 +16,7 @@ import javax.validation.constraints.Size;
 @AttributeOverride(name="id", column=@Column(name = "CD_CATRI", columnDefinition = "CHAR(32)"))
 public class CategoriaRisco extends BaseEntity {
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "CD_ESCPO", columnDefinition = "CHAR(32)")
     private Escopo escopo;

@@ -2,9 +2,11 @@ import {Component} from '@angular/core';
 import {FieldComponent} from "../model/field";
 
 @Component({
-    selector: 'text-input',
+    selector: 'boolean-input',
     template: `
-        <md-slide-toggle [formGroup]="group" [formControlName]="schema.source">{{schema.label | translate}}</md-slide-toggle>
+        <div [formGroup]="group" class="form-input">
+            <md-slide-toggle [formControlName]="schema.source">{{schema.label | translate}}</md-slide-toggle>
+        </div>
     `,
 })
 export class BooleanInputComponent extends FieldComponent {

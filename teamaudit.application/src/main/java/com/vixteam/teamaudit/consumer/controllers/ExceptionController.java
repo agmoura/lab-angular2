@@ -1,5 +1,6 @@
 package com.vixteam.teamaudit.consumer.controllers;
 
+import com.vixteam.teamaudit.consumer.commons.ApplicationException;
 import com.vixteam.teamaudit.consumer.viewmodel.ErrorItem;
 import com.vixteam.teamaudit.consumer.commons.ValidationException;
 import org.springframework.http.HttpStatus;
@@ -45,5 +46,11 @@ public class ExceptionController {
         }
 
         return ResponseEntity.badRequest().body(Collections.singletonMap("errors", errors));
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler
+    public ResponseEntity handle(Exception ex) {
+        return ResponseEntity.badRequest().body(Collections.singletonMap("errors", ex.getMessage()));
     }
 }
