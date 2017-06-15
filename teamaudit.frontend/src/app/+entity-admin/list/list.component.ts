@@ -13,14 +13,14 @@ export class ListComponent implements OnInit, OnDestroy {
     resource: string;
     listViewSchema: ListViewSchema;
 
-    constructor(private route: ActivatedRoute, private router: Router, private schemaService: EntitySchemaService) {
+    constructor(private route: ActivatedRoute, private router: Router) {
 
     }
 
     ngOnInit() {
-        this.routeSubscription = this.route.params.subscribe(params => {
-            this.resource = params['entity'];
-            this.listViewSchema = this.schemaService.getSchema(this.resource).listView;
+        this.routeSubscription = this.route.data.subscribe(item => {
+            this.resource = item['schema'].resource;
+            this.listViewSchema = item['schema'].listView;
         });
     }
 
@@ -29,10 +29,10 @@ export class ListComponent implements OnInit, OnDestroy {
     }
 
     onCreate() {
-        this.router.navigate(['entity', this.resource, 'edit']);
+        this.router.navigate(['edit'], {relativeTo: this.route});
     }
 
     onEdit(id: string) {
-        this.router.navigate(['entity', this.resource, 'edit', id]);
+        this.router.navigate(['edit', id], {relativeTo: this.route});
     }
 }

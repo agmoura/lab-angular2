@@ -27,15 +27,38 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     routeSubscription: any;
     mainForm: FormGroup;
     entity: EntityBase = <EntityBase>{};
-    referencesData: any = {};
     childEdit: any;
 
-    constructor(private builder: FormBuilder,
-                private route: ActivatedRoute,
+    constructor(private route: ActivatedRoute,
                 private location: Location,
                 private dataService: DataService,
-                private schemaService: EntitySchemaService,
                 public snackBar: MdSnackBar) {
+    }
+
+    ngOnInit() {
+
+        //document.querySelector('body').classList.toggle('aside-menu-hidden');
+
+        if (!this.resource) {
+            this.routeSubscription = this.route.data.subscribe(item => {
+
+                this.resource = item['schema'].resource;
+                this.resourceId = this.route.snapshot.params['id'];
+                this.formViewSchema = item['schema'].formView;
+
+                this.mainForm = this.createForm(this.formViewSchema);
+                this.load(this.resourceId);
+            });
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.routeSubscription) this.routeSubscription.unsubscribe();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        this.mainForm = this.createForm(this.formViewSchema);
+        this.load(this.resourceId);
     }
 
     createForm(formViewSchema: FormViewSchema) {
@@ -53,57 +76,14 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
         return new FormGroup(group);
     }
 
-    ngOnInit() {
-
-        //document.querySelector('body').classList.toggle('aside-menu-hidden');
-
-        if (!this.resource) {
-            this.routeSubscription = this.route.params.subscribe(params => {
-                this.resource = this.route.snapshot.params['entity'];
-                this.resourceId = this.route.snapshot.params['id'];
-                this.formViewSchema = this.schemaService.getSchema(this.resource).formView;
-                this.mainForm = this.createForm(this.formViewSchema);
-                this.load(this.resourceId);
-            });
-        }
-    }
-
-    ngOnDestroy() {
-        if (this.routeSubscription) this.routeSubscription.unsubscribe();
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        this.mainForm = this.createForm(this.formViewSchema);
-        this.load(this.resourceId);
-    }
-
     load(id: string) {
         if (id)
             this.dataService.get<EntityBase>(this.resource, id).subscribe(data => {
 
                 this.cleanEntity(data);
                 this.mainForm.patchValue(data);
-
-                /*for (let field in this.mainForm.controls) {
-                    this.mainForm.controls[field].setValue(data[field]);
-                }*/
-
                 this.entity = data;
             });
-
-        /*this.formViewSchema.fields
-            .filter(field => field.type === FieldType.Reference)
-            .forEach(field => {
-
-                var resourceQuery = new ResourceQuery(field.referencePath || field.source)
-                    .select(field.select.value)
-                    .select(field.select.text)
-                    .orderBy(field.select.text);
-
-                this.dataService.find(resourceQuery).subscribe(
-                    data => this.referencesData[field.source] = data.list
-                );
-            });*/
     }
 
     // Remove Undefined, Null and Empty Attributes

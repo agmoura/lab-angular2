@@ -27,8 +27,8 @@ export class MenuMock {
                 },
                 {
                     name: 'categoriaObjetivo',
-                    title: 'Categoria Objetivos',
-                    link: '/entity/categoriaObjetivos'
+                    title: 'Categoria Objetivos 2',
+                    link: '/riskmanagement/categoriaObjetivos'
                 },
                 {
                     name: 'objetivo',

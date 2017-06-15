@@ -11,6 +11,7 @@ export interface ResourceSchemaMap {
 }
 
 export interface ResourceSchema {
+    resource?: string;
     listView: ListViewSchema;
     formView: FormViewSchema;
     treeView?: TreeViewSchema;
