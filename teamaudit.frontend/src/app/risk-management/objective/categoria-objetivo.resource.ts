@@ -1,11 +1,24 @@
-import {ResourceSchemaBase, FieldType, ReferenceType} from "../../+entity-admin";
+import {Routes} from "@angular/router";
+import {ResourceSchemaBase, FieldType, ReferenceType, ListComponent, EditComponent} from "../../+entity-admin";
 import {objetivoResource} from "./objetivo.resource";
 
-export function loadCategoriaObjetivoResource() {
-    return new ResourceSchemaBase('categoriaObjetivos', categoriaObjetivoResource);
+export const categoriaObjetivoRoutes: Routes = [
+    {path: 'categoriaObjetivos', component: ListComponent, data: {schema: getCategoriaObjetivoResource}},
+    {path: 'categoriaObjetivos/edit', component: EditComponent, resolve: {schema: getCategoriaObjetivoResource}},
+    {path: 'categoriaObjetivos/edit/:id', component: EditComponent, resolve: {schema: getCategoriaObjetivoResource}}
+];
+
+export const categoriaObjetivoProvider = {provide: getCategoriaObjetivoResource, useValue: getCategoriaObjetivoResource};
+
+export function getCategoriaObjetivoResource() {
+    return categoriaObjetivoResource;
 }
 
-export const categoriaObjetivoResource = {
+/*export function getCategoriaObjetivoResource(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): ResourceSchema {
+    return categoriaObjetivoResource;
+}*/
+
+export const categoriaObjetivoResource = new ResourceSchemaBase('categoriaObjetivos', {
     listView: {
         fields: [
             {source: 'escopo.descricao'},
@@ -100,4 +113,4 @@ export const categoriaObjetivoResource = {
             }
         ]
     }
-};
+});

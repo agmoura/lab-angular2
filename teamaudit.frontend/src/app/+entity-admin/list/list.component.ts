@@ -1,7 +1,6 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {EntitySchemaService} from "../entity-schema.service";
-import {ListViewSchema} from "../model/schema";
+import {ResourceSchema, ListViewSchema} from "../model/schema";
 
 @Component({
     selector: 'list',
@@ -18,9 +17,10 @@ export class ListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.routeSubscription = this.route.data.subscribe(item => {
-            this.resource = item['schema'].resource;
-            this.listViewSchema = item['schema'].listView;
+        this.routeSubscription = this.route.data.subscribe(data => {
+            const schema: ResourceSchema = data['schema']();
+            this.resource = schema.resource;
+            this.listViewSchema = schema.listView;
         });
     }
 
