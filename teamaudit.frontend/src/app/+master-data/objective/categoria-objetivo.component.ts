@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ResourceService} from "../+entity-admin/shared/resource.service";
+import {ResourceService} from "../../+entity-admin";
 
 @Component({
     selector: 'categoria-objetivo',

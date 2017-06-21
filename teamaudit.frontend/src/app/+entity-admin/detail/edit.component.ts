@@ -1,15 +1,12 @@
-import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
+import {FormGroup, FormControl} from "@angular/forms";
 import {Component, OnInit, OnDestroy, OnChanges, Input, SimpleChanges} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from "@angular/common";
 
 import {EntityBase} from '../../shared/model/models';
 import {DataService} from '../../shared/services/data.service';
-import {FieldType, FormViewSchema} from '../model/schema';
-import {EntitySchemaService} from '../entity-schema.service';
-import {ResourceQuery} from "../../shared/model/query";
+import {FieldType, FormViewSchema, ResourceSchema} from '../model/schema';
 import {MdSnackBar} from "@angular/material";
-
 
 @Component({
     selector: 'edit',
@@ -30,6 +27,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     childEdit: any;
 
     constructor(private route: ActivatedRoute,
+                public router: Router,
                 private location: Location,
                 private dataService: DataService,
                 public snackBar: MdSnackBar) {
@@ -40,11 +38,13 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
         //document.querySelector('body').classList.toggle('aside-menu-hidden');
 
         if (!this.resource) {
-            this.routeSubscription = this.route.data.subscribe(item => {
+            this.routeSubscription = this.route.data.subscribe(data => {
+                let schema: ResourceSchema = data['schema'];
+                if (schema instanceof Function) schema = schema();
 
-                this.resource = item['schema'].resource;
+                this.formViewSchema = schema.formView;
+                this.resource = schema.resource;
                 this.resourceId = this.route.snapshot.params['id'];
-                this.formViewSchema = item['schema'].formView;
 
                 this.mainForm = this.createForm(this.formViewSchema);
                 this.load(this.resourceId);
@@ -66,7 +66,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
         let group: any = {id: new FormControl()};
 
         formViewSchema.fields.forEach(field => {
-            if(field.type !== FieldType.Reference)
+            if (field.type !== FieldType.Reference)
                 group[field.source] = new FormControl();
             else {
                 group[field.source] = new FormGroup({[field.select.value]: new FormControl()});
@@ -145,10 +145,10 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     /*execute() {
-        let data2;
+     let data2;
 
-        this.dataService.executeAction<EntityBase>(this.resource).subscribe(
-            data => data2 = data
-        );
-    }*/
+     this.dataService.executeAction<EntityBase>(this.resource).subscribe(
+     data => data2 = data
+     );
+     }*/
 }

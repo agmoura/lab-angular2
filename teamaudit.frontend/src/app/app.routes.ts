@@ -8,6 +8,7 @@ const rootRoutes: Routes = [
     {path: '', redirectTo:'home', pathMatch:'full'},
     {path: 'home', component: HomeComponent},
     {path: 'categoria-risco', component: CategoriaRiscoComponent},
+    {path: 'masterdata', loadChildren: "./+master-data/master-data.module#MasterDataModule"},
     {path: 'riskmanagement', loadChildren: "./risk-management/risk-management.module#RiskManagementModule"},
     ...objetivoRoutes
 ];

@@ -22,8 +22,8 @@ export class MenuMock {
                 },
                 {
                     name: 'escopo',
-                    title: 'Escopos',
-                    link: '/entity/escopos'
+                    title: 'Escopos 2',
+                    link: '/riskmanagement/escopos'
                 },
                 {
                     name: 'categoriaObjetivo',
@@ -32,10 +32,10 @@ export class MenuMock {
                 },
                 {
                     name: 'objetivo',
-                    title: 'Objetivos',
-                    link: '/entity/objetivos'
+                    title: 'Objetivos 2',
+                    link: '/riskmanagement/objetivos'
                 },
-                {
+                /*{
                     name: 'classificacaoRisco',
                     title: 'Classificacao Risco',
                     link: '/entity/classificacaoRisco'
@@ -44,11 +44,11 @@ export class MenuMock {
                     name: 'categoriaRisco',
                     title: 'Categoria Risco',
                     link: '/entity/categoriaRisco'
-                },
+                },*/
                 {
                     name: 'entidade',
-                    title: 'Entidades',
-                    link: '/entity/entidades'
+                    title: 'Entidades 2',
+                    link: '/masterdata/entidades'
                 },
                 {
                     name: 'auditLog',

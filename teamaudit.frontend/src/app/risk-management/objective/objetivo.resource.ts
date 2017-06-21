@@ -1,4 +1,16 @@
-import {ResourceSchemaBase, FieldType} from "../../+entity-admin";
+import {Routes} from "@angular/router";
+import {ResourceSchemaBase, FieldType, ListComponent, EditComponent} from "../../+entity-admin";
+import {RouteAction} from "../../+entity-admin/model/action-schema";
+
+export const objetivoRoutes: Routes = [
+    {path: 'objetivos', component: ListComponent, data: {schema: getObjetivoResource}},
+    {path: 'objetivos/edit', component: EditComponent, data: {schema: getObjetivoResource}},
+    {path: 'objetivos/edit/:id', component: EditComponent, data: {schema: getObjetivoResource}}
+];
+
+export function getObjetivoResource() {
+    return objetivoResource;
+}
 
 export const objetivoResource = new ResourceSchemaBase('objetivos', {
     listView: {
@@ -19,6 +31,10 @@ export const objetivoResource = new ResourceSchemaBase('objetivos', {
             {source: 'percentualMeta', type: FieldType.Number},
             {source: 'categoriaObjetivo', type: FieldType.Reference, select: {value: 'id', text: 'nome'}},
             {source: 'unidadeOrganizacional', type: FieldType.Reference, select: {value: 'id', text: 'nome'}}
+        ],
+        actions: [
+
+            new RouteAction<any>('Categoria', '', '/riskmanagement/categoriaObjetivos')
         ]
     }
 });

@@ -4,7 +4,6 @@ import {Router} from '@angular/router';
 import {MenuMock} from './shared/mockdata/menu';
 import {SearchMock} from './shared/mockdata/search';
 import {MdDialog} from '@angular/material';
-import {DialogThemeComponent} from './shared/dialog/dialog-theme/dialog-theme.component';
 import {TranslateService} from 'ng2-translate';
 
 @Component({
@@ -25,7 +24,7 @@ export class AppComponent implements OnInit {
     showTopnavSearch: boolean;
     activeSubMenuName: string;
 
-    constructor(private appService: AppService,
+    constructor(public appService: AppService,
                 private dialog: MdDialog,
                 private translate: TranslateService,
                 private router: Router) {
@@ -128,9 +127,4 @@ export class AppComponent implements OnInit {
             }
         }
     }
-
-    openThemeDialog() {
-        let dialogRef = this.dialog.open(DialogThemeComponent);
-    }
-
 }

@@ -21,9 +21,6 @@ import {CategoriaRiscoComponent} from "./categoria-risco/categoria-risco.compone
 import {About} from "./about/about";
 import {EntityAdminModule} from "./+entity-admin/entity-admin.module";
 
-import {DialogExampleComponent} from "./shared/dialog/dialog-example/dialog-example.component";
-import {DialogThemeComponent} from "./shared/dialog/dialog-theme/dialog-theme.component";
-import {MasterDataModule} from "./+master-data/master-data.module";
 import {ObjetivoDetailComponent} from "./objetivo/objetivo-detail.component";
 import {CategoriaObjetivoEditComponent} from "./objetivo/categoria-objetivo-edit.component";
 import {ObjetivoEditReactiveComponent} from "./objetivo/reactive/objetivo-edit-reactive.component";
@@ -42,9 +39,6 @@ import {CategoriaObjetivoEditReactiveComponent} from "./objetivo/reactive/catego
 
         ObjetivoEditReactiveComponent,
         CategoriaObjetivoEditReactiveComponent,
-
-        DialogExampleComponent,
-        DialogThemeComponent
     ],
     imports: [
         BrowserModule,
@@ -60,7 +54,7 @@ import {CategoriaObjetivoEditReactiveComponent} from "./objetivo/reactive/catego
 
         rootRoutesModule,
         EntityAdminModule,
-        MasterDataModule
+        // MasterDataModule
     ],
     providers: [
         AppService,

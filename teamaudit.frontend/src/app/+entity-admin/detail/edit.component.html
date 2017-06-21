@@ -18,6 +18,11 @@
                 <button md-menu-item>Ação 1</button>
                 <button md-menu-item>Ação 2</button>
                 <button md-menu-item>Ação 3</button>
+                <ng-container md-menu-item *ngFor="let action of formViewSchema.actions">
+                    <button md-menu-item (click)="action.execute({entity: entity, router: router})">
+                        {{action.label | translate}}
+                    </button>
+                </ng-container>
             </md-menu>
         </md-card-title>
 

@@ -1,3 +1,5 @@
+import {ActionSchema} from "./action-schema";
+
 export enum FieldType {
     Hidden, Text, RichText, Number, Boolean, Date, Reference, ReferenceMany
 }
@@ -21,16 +23,13 @@ export interface ListViewSchema {
     fields: ListFieldSchema[];
     orders?: string[];
     filter?: any;
-    select?: boolean;
-
-    actions?: ActionSchema[];
-    insert?: boolean;
-    link?: boolean;
+    actions?: ActionSchema<any>[];
 }
 
 export interface FormViewSchema {
     fields: FormFieldSchema[];
     references?: ReferenceSchema[];
+    actions?: ActionSchema<any>[];
 }
 
 //TODO: Refatorar
@@ -85,17 +84,6 @@ export interface TreeNodeSchema {
     actionsVisible?: boolean;       // Indica se as ações de incluir, editar e excluir estarão fisiveis na arvore, default: true
     sorts?: string[]; // TODO TROCAR PAR ORDERS              // Paths usados para ordenar os resultados da arvore
 }
-
-export interface ActionSchema {
-    label: string;
-    icon: string;
-    actionPath?: string;
-    actionTsFunction?: string;
-    getSucessRedirectCommandsFunction?: Function;
-    successMessage?: string;
-    parameterSelectedEntities?: boolean;
-}
-
 
 /*export class TextInput implements FormFieldSchema {
  public type?: FieldType = FieldType.Text;

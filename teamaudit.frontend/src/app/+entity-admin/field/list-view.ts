@@ -34,7 +34,7 @@ export class ListViewComponent implements OnInit, OnDestroy, AfterContentInit {
     resourceQuery: ResourceQuery;
     page: Page;
 
-    constructor(private resourceService: ResourceService, private dataService: DataService, public snackBar: MdSnackBar) {
+    constructor(public resourceService: ResourceService, private dataService: DataService, public snackBar: MdSnackBar) {
 
     }
 

@@ -18,9 +18,11 @@ export class ListComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.routeSubscription = this.route.data.subscribe(data => {
-            const schema: ResourceSchema = data['schema']();
-            this.resource = schema.resource;
+            let schema: ResourceSchema = data['schema'];
+            if (schema instanceof Function) schema = schema();
+
             this.listViewSchema = schema.listView;
+            this.resource = schema.resource;
         });
     }
 

@@ -1,9 +1,13 @@
 import {NgModule} from "@angular/core";
 import {Routes, RouterModule} from '@angular/router';
+import {escopoRoutes} from "./objective/escopo.resource";
 import {categoriaObjetivoRoutes, categoriaObjetivoProvider} from "./objective/categoria-objetivo.resource";
+import {objetivoRoutes} from "./objective/objetivo.resource";
 
 const routes: Routes = [
-    ...categoriaObjetivoRoutes
+    ...escopoRoutes,
+    ...categoriaObjetivoRoutes,
+    ...objetivoRoutes
 ];
 
 @NgModule({

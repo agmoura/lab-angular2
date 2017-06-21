@@ -1,7 +1,10 @@
 import {Routes} from "@angular/router";
 import {ResourceSchemaBase, FieldType, ReferenceType, ListComponent, EditComponent} from "../../+entity-admin";
 import {objetivoResource} from "./objetivo.resource";
+import {entidadeResource} from "../../+master-data";
 
+
+// HACK: Passar função 'getCategoriaObjetivoResource', ao invés de 'categoriaObjetivoResource', no campo 'data' para permitir verificação estática do modo AOT
 export const categoriaObjetivoRoutes: Routes = [
     {path: 'categoriaObjetivos', component: ListComponent, data: {schema: getCategoriaObjetivoResource}},
     {path: 'categoriaObjetivos/edit', component: EditComponent, resolve: {schema: getCategoriaObjetivoResource}},
@@ -53,17 +56,7 @@ export const categoriaObjetivoResource = new ResourceSchemaBase('categoriaObjeti
                 type: ReferenceType.ManyToMany,
                 target: 'categoriasObjetivos',
                 targetInverse: 'entidades',
-                listView: {
-                    fields: [
-                        {source: 'nome'},
-                        {source: 'descricao'},
-                        /*{source: 'carteiraAtividades.nome'},
-                         {source: 'planoAnualAtivo.nome'},*/
-                        {source: 'dataInicio', type: FieldType.Date},
-                        {source: 'dataFim', type: FieldType.Date},
-                    ],
-                    orders: ['nome']
-                },
+                listView: entidadeResource.listView,
                 formView: {
                     fields: [
                         {source: 'nome', type: FieldType.Text},

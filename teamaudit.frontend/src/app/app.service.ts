@@ -15,6 +15,7 @@ export type InternalStateType = {
     sidenavMode: string,
     sidenavCollapse: boolean,
     pageFullscreen: boolean,
+    pageFooter: false,
     initial: boolean,
 };
 

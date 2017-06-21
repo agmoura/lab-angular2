@@ -11,19 +11,10 @@ import {RiskManagementRoutingModule} from "./risk-management-routing.module";
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        FlexLayoutModule,
-        Md2Module,
-        TranslateModule,
-
         EntityAdminModule,
         RiskManagementRoutingModule
     ],
-    declarations: [
-        // CategoriaObjetivoComponent
-    ],
+    declarations: [ ],
     providers: [ ]
 })
 export class RiskManagementModule {

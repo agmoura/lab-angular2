@@ -1,6 +1,17 @@
-import {ResourceSchemaFactory, FieldType} from "../../+entity-admin";
+import {Routes} from "@angular/router";
+import {ResourceSchemaBase, FieldType, ListComponent, EditComponent} from "../../+entity-admin";
 
-export const escopoResource = ResourceSchemaFactory.create('escopos', {
+export const escopoRoutes: Routes = [
+    {path: 'escopos', component: ListComponent, data: {schema: getEscopoResource}},
+    {path: 'escopos/edit', component: EditComponent, data: {schema: getEscopoResource}},
+    {path: 'escopos/edit/:id', component: EditComponent, data: {schema: getEscopoResource}}
+];
+
+export function getEscopoResource() {
+    return escopoResource;
+}
+
+export const escopoResource = new ResourceSchemaBase('escopos', {
     listView: {
         fields: [
             {source: 'nome'},
