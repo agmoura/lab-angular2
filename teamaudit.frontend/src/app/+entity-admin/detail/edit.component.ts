@@ -1,5 +1,5 @@
 import {FormGroup, FormControl} from "@angular/forms";
-import {Component, OnInit, OnDestroy, OnChanges, Input, SimpleChanges} from '@angular/core';
+import {Component, OnInit, OnDestroy, OnChanges, Input, SimpleChanges, Injector} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from "@angular/common";
 
@@ -7,6 +7,7 @@ import {EntityBase} from '../../shared/model/models';
 import {DataService} from '../../shared/services/data.service';
 import {FieldType, FormViewSchema, ResourceSchema} from '../model/schema';
 import {MdSnackBar} from "@angular/material";
+import {ActionSchema, BaseAction} from "../model/action-schema";
 
 @Component({
     selector: 'edit',
@@ -27,10 +28,10 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     childEdit: any;
 
     constructor(private route: ActivatedRoute,
-                public router: Router,
                 private location: Location,
                 private dataService: DataService,
-                public snackBar: MdSnackBar) {
+                public snackBar: MdSnackBar,
+                private injector: Injector) {
     }
 
     ngOnInit() {
@@ -144,11 +145,8 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
         this.location.back();
     }
 
-    /*execute() {
-     let data2;
+    executeAction(actionSchema: ActionSchema<any>) {
+        BaseAction.execute(actionSchema, {entity: this.mainForm.value}, this.injector);
+    }
 
-     this.dataService.executeAction<EntityBase>(this.resource).subscribe(
-     data => data2 = data
-     );
-     }*/
 }

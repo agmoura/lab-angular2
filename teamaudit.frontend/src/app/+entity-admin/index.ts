@@ -3,7 +3,11 @@ export {ResourceSchemaFactory, ResourceSchemaBase} from "./model/resource-schema
 export {ResourceSchema} from "./model/schema";
 export {FieldType} from "./model/schema";
 export {ReferenceType} from "./model/schema";
+export {BaseAction, RouteAction} from "./model/action-schema";
+
 export {buildRoutes} from "./entity-admin.routes";
 
 export {ListComponent} from "./list/list.component";
 export {EditComponent} from "./detail/edit.component";
+
+

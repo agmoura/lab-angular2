@@ -1,6 +1,10 @@
 import {Routes} from "@angular/router";
-import {ResourceSchemaBase, FieldType, ListComponent, EditComponent} from "../../+entity-admin";
-import {RouteAction} from "../../+entity-admin/model/action-schema";
+import {Injectable} from "@angular/core";
+import {MdSnackBar} from "@angular/material";
+import {Observer} from "rxjs/Observer";
+import {ResourceSchemaBase, BaseAction, RouteAction, FieldType, ListComponent, EditComponent} from "../../+entity-admin";
+import {EntityBase} from "../../shared/model/models";
+import {DataService} from "../../shared/services/data.service";
 
 export const objetivoRoutes: Routes = [
     {path: 'objetivos', component: ListComponent, data: {schema: getObjetivoResource}},
@@ -10,6 +14,33 @@ export const objetivoRoutes: Routes = [
 
 export function getObjetivoResource() {
     return objetivoResource;
+}
+
+
+@Injectable()
+export class DuplicateObjetiveAction extends BaseAction<EntityBase> {
+    public entity: EntityBase;
+
+    constructor(private dataService: DataService, public snackBar: MdSnackBar) {
+        super();
+    }
+
+    // TODO: Immplentar funcionalidade de habilitação condicional da ação
+    protected isEnabled(): boolean {
+        return !!this.entity.id;
+    }
+
+    protected execute(): Observer<EntityBase> {
+        this.entity.id = null;
+        this.entity['nome'] +=  ' (Cópia)';
+        this.dataService.save('objetivos', this.entity).subscribe(
+            data => this.entity = data,
+            error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),
+            () => this.snackBar.open('Cópia realizada com sucesso', 'OK', {duration: 2000})
+        );
+
+        return null;
+    }
 }
 
 export const objetivoResource = new ResourceSchemaBase('objetivos', {
@@ -33,8 +64,9 @@ export const objetivoResource = new ResourceSchemaBase('objetivos', {
             {source: 'unidadeOrganizacional', type: FieldType.Reference, select: {value: 'id', text: 'nome'}}
         ],
         actions: [
-
-            new RouteAction<any>('Categoria', '', '/riskmanagement/categoriaObjetivos')
+            {label: 'Categoria', icon: '', data: {route: '/riskmanagement/categoriaObjetivos'}, action: RouteAction},
+            {label: 'Escopo', icon: '', data: {route: '/riskmanagement/escopos'}, action: RouteAction},
+            {label: 'Copiar Objetivo', icon: '', action: DuplicateObjetiveAction}
         ]
     }
 });

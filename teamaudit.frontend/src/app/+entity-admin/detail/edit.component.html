@@ -18,8 +18,8 @@
                 <button md-menu-item>Ação 1</button>
                 <button md-menu-item>Ação 2</button>
                 <button md-menu-item>Ação 3</button>
-                <ng-container md-menu-item *ngFor="let action of formViewSchema.actions">
-                    <button md-menu-item (click)="action.execute({entity: entity, router: router})">
+                <ng-container *ngFor="let action of formViewSchema.actions">
+                    <button md-menu-item (click)="executeAction(action)">
                         {{action.label | translate}}
                     </button>
                 </ng-container>
