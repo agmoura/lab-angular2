@@ -28,6 +28,7 @@ import {ResourceService} from "./shared/resource.service";
 import {ReferenceManyToOneComponent} from "./field/reference-many-one";
 import {ReferenceOneToManyComponent} from "./field/reference-one-many";
 import {DynamicFieldDirective} from "./field/dynamic-field.directive";
+import {ActionService} from "./model/action-schema";
 
 @NgModule({
     imports: [

@@ -1,10 +1,11 @@
 import {Routes} from "@angular/router";
 import {Injectable} from "@angular/core";
 import {MdSnackBar} from "@angular/material";
-import {Observer} from "rxjs/Observer";
+import {Observable} from "rxjs/Observable";
 import {ResourceSchemaBase, BaseAction, RouteAction, FieldType, ListComponent, EditComponent} from "../../+entity-admin";
 import {EntityBase} from "../../shared/model/models";
 import {DataService} from "../../shared/services/data.service";
+import {FormGroup} from "@angular/forms";
 
 export const objetivoRoutes: Routes = [
     {path: 'objetivos', component: ListComponent, data: {schema: getObjetivoResource}},
@@ -19,27 +20,27 @@ export function getObjetivoResource() {
 
 @Injectable()
 export class DuplicateObjetiveAction extends BaseAction<EntityBase> {
-    public entity: EntityBase;
+    public form: FormGroup;
 
     constructor(private dataService: DataService, public snackBar: MdSnackBar) {
         super();
     }
 
-    // TODO: Immplentar funcionalidade de habilitação condicional da ação
-    protected isEnabled(): boolean {
-        return !!this.entity.id;
+    public isEnabled(): boolean {
+        return !!this.form.value.id;
     }
 
-    protected execute(): Observer<EntityBase> {
-        this.entity.id = null;
-        this.entity['nome'] +=  ' (Cópia)';
-        this.dataService.save('objetivos', this.entity).subscribe(
-            data => this.entity = data,
+    public execute(): Observable<EntityBase> {
+        const entity = this.form.value;
+        entity.id = null;
+        entity.nome +=  ' (Cópia)';
+        this.dataService.save('objetivos', entity).subscribe(
+            data => {},
             error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),
             () => this.snackBar.open('Cópia realizada com sucesso', 'OK', {duration: 2000})
         );
 
-        return null;
+        return Observable.empty();
     }
 }
 

@@ -18,8 +18,8 @@
                 <button md-menu-item>Ação 1</button>
                 <button md-menu-item>Ação 2</button>
                 <button md-menu-item>Ação 3</button>
-                <ng-container *ngFor="let action of formViewSchema.actions">
-                    <button md-menu-item (click)="executeAction(action)">
+                <ng-container *ngFor="let action of actionService.getActions()">
+                    <button md-menu-item (click)="action.execute()" [disabled]="!action.isEnabled()">
                         {{action.label | translate}}
                     </button>
                 </ng-container>

@@ -7,11 +7,12 @@ import {EntityBase} from '../../shared/model/models';
 import {DataService} from '../../shared/services/data.service';
 import {FieldType, FormViewSchema, ResourceSchema} from '../model/schema';
 import {MdSnackBar} from "@angular/material";
-import {ActionSchema, BaseAction} from "../model/action-schema";
+import {ActionSchema, ActionService, BaseAction} from "../model/action-schema";
 
 @Component({
     selector: 'edit',
-    templateUrl: 'edit.component.html'
+    templateUrl: 'edit.component.html',
+    providers: [ActionService]
 })
 export class EditComponent implements OnInit, OnDestroy, OnChanges {
 
@@ -24,14 +25,13 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     FieldType: typeof FieldType = FieldType;
     routeSubscription: any;
     mainForm: FormGroup;
-    entity: EntityBase = <EntityBase>{};
     childEdit: any;
 
     constructor(private route: ActivatedRoute,
                 private location: Location,
                 private dataService: DataService,
                 public snackBar: MdSnackBar,
-                private injector: Injector) {
+                public actionService: ActionService<EntityBase>) {
     }
 
     ngOnInit() {
@@ -49,6 +49,8 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
 
                 this.mainForm = this.createForm(this.formViewSchema);
                 this.load(this.resourceId);
+
+                this.actionService.setup(this.formViewSchema.actions, {form: this.mainForm})
             });
         }
     }
@@ -80,10 +82,8 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     load(id: string) {
         if (id)
             this.dataService.get<EntityBase>(this.resource, id).subscribe(data => {
-
                 this.cleanEntity(data);
                 this.mainForm.patchValue(data);
-                this.entity = data;
             });
     }
 
@@ -119,10 +119,10 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
         }
 
         this.dataService.save(this.resource, entity).subscribe(
-            data => this.entity = data,
+            data => this.mainForm.patchValue(data),
             error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),
             () => {
-                this.resourceId = this.entity.id;
+                this.resourceId = this.mainForm.controls['id'].value;
                 this.snackBar.open('Operação realizada com sucesso', 'OK', {duration: 2000})
             }
         );
@@ -133,7 +133,6 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
             data => data,
             error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),
             () => {
-                this.resourceId = this.entity.id;
                 this.snackBar.open('Operação realizada com sucesso', 'OK', {duration: 2000});
                 this.goBack();
             }
@@ -144,9 +143,4 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
         //this.router.navigate(['entity', this.resource]);
         this.location.back();
     }
-
-    executeAction(actionSchema: ActionSchema<any>) {
-        BaseAction.execute(actionSchema, {entity: this.mainForm.value}, this.injector);
-    }
-
 }
