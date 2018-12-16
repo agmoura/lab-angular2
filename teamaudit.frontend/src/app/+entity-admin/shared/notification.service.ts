@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import notify from 'devextreme/ui/notify';
 
 @Injectable()
 export class NotificationService {
@@ -7,10 +8,10 @@ export class NotificationService {
     }
 
     static showSuccess(message: string) {
-        Snackbar.show({text: message})
+        notify(message, 'success');
     }
 
     static showError(message: string) {
-        Snackbar.show({text: message})
+        notify(message, 'error');
     }
 }

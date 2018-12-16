@@ -11,34 +11,9 @@
                 <input type="hidden" formControlName="id">
 
                 <ng-container *ngFor="let field of formViewSchema.fields">
-
                     <ng-container [dynamicField]="field" [group]="mainForm"></ng-container>
-
-                    <!--<ng-container [ngSwitch]="field.type">
-                        <text-input *ngSwitchCase="FieldType.Text" [formControlName]="field.source" [label]="field.label"></text-input>
-                        <number-input *ngSwitchCase="FieldType.Number" [formControlName]="field.source" [label]="field.label"></number-input>
-                        <date-input *ngSwitchCase="FieldType.Date" [formControlName]="field.source" [label]="field.label" [format]="DD/MM/YYYY"></date-input>
-                        <boolean-input *ngSwitchCase="FieldType.Boolean" [formControlName]="field.source" [label]="field.label"></boolean-input>
-                        <div *ngSwitchCase="FieldType.Reference" [formGroupName]="field.source">
-                            <select-input [formControlName]="field.select.value" [label]="field.label" [items]="referencesData[field.source]"></select-input>
-                        </div>
-
-                        &lt;!&ndash;<select-input *ngSwitchCase="FieldType.Reference" [formControlName]="field.source" [label]="field.label" [items]="referencesData[field.source]"></select-input>&ndash;&gt;
-                        &lt;!&ndash;<input          *ngSwitchCase="FieldType.Hidden" type="hidden" name="{{field.source}}" [ngModel]="entity[field.source]">
-                        <text-input     *ngSwitchCase="FieldType.Text" [name]="field.source" [label]="field.label" [ngModel]="entity[field.source]"></text-input>
-                        <number-input   *ngSwitchCase="FieldType.Number" [name]="field.source" [label]="field.label" [ngModel]="entity[field.source]"></number-input>
-                        <date-input     *ngSwitchCase="FieldType.Date" [name]="field.source" [label]="field.label" [ngModel]="entity[field.source]" [format]="DD/MM/YYYY"></date-input>
-                        <boolean-input  *ngSwitchCase="FieldType.Boolean" [name]="field.source" [label]="field.label" [ngModel]="entity[field.source]"></boolean-input>
-                        <select-input *ngSwitchCase="FieldType.Reference"
-                                         [name]="field.select.value"
-                                         [label]="field.label"
-                                         ngModelGroup="{{field.source}}"
-                                         [ngModel]="entity[field.source] && entity[field.source][field.select.value]"
-                                         [required]="field.required"
-                                         [items]="referencesData[field.source]">
-                        </select-input>&ndash;&gt;
-                    </ng-container>-->
                 </ng-container>
+
                 <div class="form-group">
                     <div class="col-md-10 col-md-offset-2">
                         <ng-content></ng-content>
@@ -49,34 +24,24 @@
                 </div>
             </form>
         </div>
-
-
     </div>
 
 
-    <!--<md-tab-group *ngIf="resourceId && formViewSchema.references">
-        <md-tab *ngFor="let reference of formViewSchema.references" label="{{reference.resource.toUpperCase() | translate}}">
-            <md-card class="page-card">
-                <md-card-title>
-                    <a class="card-title-menu" md-ripple [md-menu-trigger-for]="cardTitleMenu">
-                        <i class="material-icons">more_vert</i>
-                    </a>
-                    <md-menu #cardTitleMenu="mdMenu">
-                        <button md-menu-item>Ação 1</button>
-                        <button md-menu-item>Ação 2</button>
-                        <button md-menu-item>Ação 3</button>
-                    </md-menu>
-                </md-card-title>
-                <md-card-content>
-                    <reference-many [referenceSchema]="reference" [resource]="resource" [targetId]="resourceId" (onEdit)="childEdit = $event"></reference-many>
-                </md-card-content>
-            </md-card>
-        </md-tab>
-    </md-tab-group>-->
+    <div *ngIf="resourceId && formViewSchema.references">
+        <div class="card card-light" *ngFor="let reference of formViewSchema.references" >
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="zmdi zmdi-edit"></i>{{reference.resource.toUpperCase() | translate}}
+                </h3>
+            </div>
+            <div class="card-block">
+                <reference-many [referenceSchema]="reference" [resource]="resource" [targetId]="resourceId" (onEdit)="childEdit = $event"></reference-many>
+            </div>
+        </div>
+    </div>
 
     <!--TODO: Remover Informações de Depuração-->
-    <!--<strong>this.entity:</strong> {{entity | json}} <br/>
-    <strong>form.value:</strong> {{mainForm.value | json}}-->
+    <strong>form.value:</strong> {{mainForm.value | json}}
 </div>
 
 <edit *ngIf="childEdit"

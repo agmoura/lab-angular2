@@ -1,35 +1,44 @@
-import {Component, Input} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from "@angular/forms";
-import {ValueAccessorBase} from "./value-accessor";
+import {HttpClient} from "@angular/common/http";
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FieldComponent} from "../model/field";
 
 @Component({
     selector: 'select-input',
     template: `
         <div class="form-group" [formGroup]="group">
-            <label for="select-input-000" class="col-md-2 control-label">{{schema.label | translate}}</label>
-            <div class="col-md-10">
-                <select id="select-input-000" class="form-control selectpicker" data-dropup-auto="false" [formControlName]="schema.select.value" >
+            <label class="col-md-2 control-label">{{schema.label | translate}}</label>
+            <div class="col-md-10" [formGroupName]="schema.source">
+                <select class="form-control" [formControlName]="'id'" [required]="schema.required">
                     <option value="">--- SELECT ---</option>
-                    <option *ngFor="let item of items" [value]="item[sourceValue]">
-                        {{item[sourceText]}}
+                    <option *ngFor="let item of items" [ngValue]="item[schema.dataSource.valueField]">
+                        {{item[schema.dataSource.textField]}}
                     </option>
                 </select>
             </div>
         </div>
     `,
 })
-export class SelectInputComponent extends FieldComponent  {
-    @Input() public name: string;
-    @Input() public label: string;
-
-    @Input() public sourceValue: any = 0;
-    @Input() public sourceText: any = 1;
-
+export class SelectInputComponent extends FieldComponent implements OnInit, OnChanges {
     @Input() public items = [];
-    @Input() public required: boolean;
 
-    constructor() {
+    constructor(private http: HttpClient) {
         super();
     }
+
+    ngOnInit(): void {
+        this.schema.dataSource.execute(this.http)
+            .subscribe(list => this.items = list);
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.schema && changes.schema.currentValue) {
+            this.schema.dataSource.execute(this.http)
+                .subscribe(list => this.items = list);
+        }
+    }
+
+    /*[compareWith]="compare.bind(this)"
+    public compare(item1: any, item2: any): boolean {
+        return this.schema.dataSource.compare(item1, item2);
+    }*/
 }

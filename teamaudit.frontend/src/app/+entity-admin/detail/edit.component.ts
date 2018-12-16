@@ -25,7 +25,6 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     FieldType: typeof FieldType = FieldType;
     routeSubscription: any;
     mainForm: FormGroup;
-    entity: EntityBase = <EntityBase>{};
     referencesData: any = {};
     childEdit: any;
 
@@ -37,15 +36,15 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     createForm(formViewSchema: FormViewSchema) {
-
         let group: any = {id: new FormControl()};
 
         formViewSchema.fields.forEach(field => {
+            // group[field.source] = new FormControl();
+
             if(field.type !== FieldType.Reference)
                 group[field.source] = new FormControl();
-            else {
-                group[field.source] = new FormGroup({[field.select.value]: new FormControl()});
-            }
+            else
+                group[field.source] = new FormGroup({id: new FormControl()});
         });
 
         return new FormGroup(group);
@@ -77,18 +76,16 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
 
     load(id: string) {
         if (id)
-            this.dataService.get<EntityBase>(this.resource, id).subscribe(data => {
-
+            this.dataService.get<any>(this.resource, id).subscribe(data => {
                 this.mainForm.patchValue(data);
-
                 /*for (let field in this.mainForm.controls) {
                     this.mainForm.controls[field].setValue(data[field]);
                 }*/
 
-                this.entity = data;
+                // this.entity = data;
             });
 
-        this.formViewSchema.fields
+        /*this.formViewSchema.fields
             .filter(field => field.type === FieldType.Reference)
             .forEach(field => {
 
@@ -100,7 +97,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
                 this.dataService.find(resourceQuery).subscribe(
                     data => this.referencesData[field.source] = data.list
                 );
-            });
+            });*/
     }
 
     // Remove Undefined, Null and Empty Attributes
@@ -134,11 +131,11 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
             }
         }
 
-        this.dataService.save(this.resource, entity).subscribe(
-            data => this.entity = data,
+        this.dataService.save<any>(this.resource, entity).subscribe(
+            data =>  this.mainForm.patchValue(data),
             error => NotificationService.showError('Ocorreu um erro: ' + JSON.stringify(error.json().errors)),
             () => {
-                this.resourceId = this.entity.id;
+                this.resourceId = this.mainForm.get('id').value;
                 NotificationService.showSuccess('Operação realizada com sucesso');
             }
         );
@@ -149,8 +146,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
             data => data,
             error => NotificationService.showError('Ocorreu um erro: ' + JSON.stringify(error.json().errors)),
             () => {
-                this.resourceId = this.entity.id;
-                NotificationService.showSuccess('Operação realizada com sucesso');
+                NotificationService.showSuccess('Exclusão realizada com sucesso');
                 this.goBack();
             }
         );

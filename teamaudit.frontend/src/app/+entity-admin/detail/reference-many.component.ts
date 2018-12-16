@@ -1,43 +1,30 @@
 import {Component, Input, SimpleChanges, OnChanges, EventEmitter, Output} from '@angular/core';
 import {ReferenceSchema, ReferenceType} from "../model/schema";
 import {DataService} from "../../shared/services/data.service";
-import {DatagridComponent} from "../list/datagrid.component";
+import {DxDatagridComponent} from "../list/dxdatagrid.component";
 import {NotificationService} from "../shared/notification.service";
 
 @Component({
     selector: 'reference-many',
     template: `
     <ng-container *ngIf="referenceSchema.type === ReferenceType.ManyToMany">
-        <datagrid #datagrid
+        <dxdatagrid #datagrid
                   [resource]="referenceSchema.resource" 
                   [listViewSchema]="referenceSchema.listView"
                   [filter]="filter"
                   (onCreate)="edit()"
                   (onEdit)="edit($event)"
                   (onLink)="selectedKeys = $event;">
-        </datagrid>
-        
-        <!--<md2-dialog #dialog>
-            <md2-dialog-title>Asssociar {{referenceSchema.resource.toUpperCase() | translate}}</md2-dialog-title>
-            <datagrid *ngIf="dialog._isOpened" 
-                      [resource]="referenceSchema.resource" 
-                      [listViewSchema]="referenceSchema.listView"
-                      [(selectedKeys)]="selectedKeys">
-            </datagrid>
-            <md2-dialog-footer>
-                <button md-button (click)="dialog.close()">CANCELAR</button>
-                <button md-button (click)="link(datagrid); dialog.close()">ASSOCIAR</button>
-            </md2-dialog-footer>
-        </md2-dialog>-->
+        </dxdatagrid>
     </ng-container>
     
     <ng-container *ngIf="referenceSchema.type === ReferenceType.OneToMany">
-        <datagrid [resource]="referenceSchema.resource" 
+        <dxdatagrid [resource]="referenceSchema.resource" 
                   [listViewSchema]="referenceSchema.listView"
                   [filter]="filter"
                   (onCreate)="edit()"
                   (onEdit)="edit($event)">
-        </datagrid>
+        </dxdatagrid>
     </ng-container>
    `
 })
@@ -73,7 +60,7 @@ export class ReferenceManyComponent implements OnChanges {
         });
     }
 
-    link(dataGrid: DatagridComponent) {
+    link(dataGrid: DxDatagridComponent) {
         let entity = {id: this.targetId};
 
         entity[this.referenceSchema.targetInverse] = this.selectedKeys.map(item => {

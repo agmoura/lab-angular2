@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {ResourceSchema, ResourceSchemaMap, FieldType, ReferenceType} from "./model/schema";
+import {ReferenceDataSource} from "./shared/data-source";
 
 @Injectable()
 export class EntitySchemaService {
 
-    private resourceSchemaMap: ResourceSchemaMap = {
+    private resourceSchemaMap = <ResourceSchemaMap> {
         escopos: {
             listView: {
                 fields: [
@@ -35,7 +36,11 @@ export class EntitySchemaService {
                     {source: 'nome', type: FieldType.Text},
                     {source: 'descricao', type: FieldType.Text},
                     {source: 'indicadorInternoSistema', type: FieldType.Boolean},
-                    {source: 'escopo', type: FieldType.Reference, select: {value: 'id', text: 'nome'}}
+                    {
+                        source: 'escopo',
+                        type: FieldType.Reference,
+                        dataSource: new ReferenceDataSource('escopos', 'id', 'nome')
+                    }
                 ],
                 references: [
                     {
@@ -58,8 +63,8 @@ export class EntitySchemaService {
                                 {source: 'descricaoMeta', type: FieldType.Text},
                                 {source: 'valorMeta', type: FieldType.Number},
                                 {source: 'percentualMeta', type: FieldType.Number},
-                                {source: 'categoriaObjetivoPrimaria', /*reference:'categoriaObjetivo',*/ type: FieldType.Reference, select: {value: 'id', text: 'nome'}},
-                                {source: 'unidadeOrganizacional', type: FieldType.Reference, select: {value: 'id', text: 'nome'}}
+                                {source: 'categoriaObjetivoPrimaria', type: FieldType.Reference, dataSource: new ReferenceDataSource('categoriaObjetivos')},
+                                {source: 'unidadeOrganizacional', type: FieldType.Reference, dataSource: new ReferenceDataSource('unidadeOrganizacional')}
                             ]
                         }
                     },
@@ -83,8 +88,8 @@ export class EntitySchemaService {
                                 {source: 'descricaoMeta', type: FieldType.Text},
                                 {source: 'valorMeta', type: FieldType.Number},
                                 {source: 'percentualMeta', type: FieldType.Number},
-                                {source: 'categoriaObjetivo', type: FieldType.Reference, select: {value: 'id', text: 'nome'}},
-                                {source: 'unidadeOrganizacional', type: FieldType.Reference, select: {value: 'id', text: 'nome'}}
+                                {source: 'categoriaObjetivo', type: FieldType.Reference, dataSource: new ReferenceDataSource('categoriaObjetivos')},
+                                {source: 'unidadeOrganizacional', type: FieldType.Reference, dataSource: new ReferenceDataSource('unidadeOrganizacional')}
                             ]
                         }
                     },
@@ -144,7 +149,7 @@ export class EntitySchemaService {
                                             {source: 'nome', type: FieldType.Text},
                                             {source: 'descricao', type: FieldType.Text},
                                             {source: 'indicadorInternoSistema', type: FieldType.Boolean},
-                                            {source: 'escopo', type: FieldType.Reference, select: {value: 'id', text: 'nome'}}
+                                            {source: 'escopo', type: FieldType.Reference, dataSource: new ReferenceDataSource('escopos')}
                                         ]
                                     }
                                 }
@@ -171,8 +176,8 @@ export class EntitySchemaService {
                     {source: 'descricaoMeta', type: FieldType.Text},
                     {source: 'valorMeta', type: FieldType.Number},
                     {source: 'percentualMeta', type: FieldType.Number},
-                    {source: 'categoriaObjetivo', type: FieldType.Reference, select: {value: 'id', text: 'nome'}},
-                    {source: 'unidadeOrganizacional', type: FieldType.Reference, select: {value: 'id', text: 'nome'}}
+                    {source: 'categoriaObjetivo', type: FieldType.Reference, dataSource: new ReferenceDataSource('categoriaObjetivos')},
+                    {source: 'unidadeOrganizacional', type: FieldType.Reference, dataSource: new ReferenceDataSource('unidadeOrganizacional')}
                 ]
             }
         },
@@ -254,7 +259,6 @@ export class EntitySchemaService {
                 ]
             }
         },
-
         auditLog: {
             listView: {
                 fields: [

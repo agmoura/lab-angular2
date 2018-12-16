@@ -1,16 +1,17 @@
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule}   from '@angular/common';
-import {TranslateModule} from 'ng2-translate';
+import {HttpClientModule} from "@angular/common/http";
+import {TranslateModule} from "@ngx-translate/core";
+
 import {entityAdminRouting} from "./entity-admin.routes";
 import {ListComponent} from "./list/list.component";
 import {EditComponent} from "./detail/edit.component";
 import {EntitySchemaService} from "./entity-schema.service";
-
 import {TextInputComponent} from "./input/text-input";
 import {SelectInputComponent} from "./input/select-input";
 import {NumberInputComponent} from "./input/number-input";
-import {DatagridComponent} from "./list/datagrid.component";
+// import {DatagridComponent} from "./list/datagrid.component";
 import {DateInputComponent} from "./input/date-input";
 import {ReferenceManyComponent} from "./detail/reference-many.component";
 import {BooleanInputComponent} from "./input/boolean-input";
@@ -24,20 +25,26 @@ import {ListViewComponent} from "./field/list-view";
 import {ResourceService} from "./shared/resource.service";
 import {ReferenceManyToOneComponent} from "./field/reference-many-one";
 import {ReferenceOneToManyComponent} from "./field/reference-one-many";
-import {DynamicFieldDirective} from "./field/dynamic-field.directive";
+import {DynamicFieldDirective} from "./input/dynamic-field.directive";
+import {DxDatagridComponent} from "./list/dxdatagrid.component";
+import {DxDataGridModule} from 'devextreme-angular/ui/data-grid';
+
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
+        HttpClientModule,
         TranslateModule,
-        entityAdminRouting
+        entityAdminRouting,
+        DxDataGridModule
     ],
     declarations: [
         ListComponent,
         EditComponent,
-        DatagridComponent,
+        // DatagridComponent,
+        DxDatagridComponent,
 
         ReferenceManyComponent,
 
@@ -66,7 +73,8 @@ import {DynamicFieldDirective} from "./field/dynamic-field.directive";
     exports: [
         ListComponent,
         EditComponent,
-        DatagridComponent,
+        // DatagridComponent,
+        DxDatagridComponent,
 
         ReferenceManyComponent,
 

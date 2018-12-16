@@ -24,6 +24,7 @@ import {NotificationService} from "../shared/notification.service";
 export class ListViewComponent implements OnInit, OnDestroy, AfterContentInit {
 
     @ContentChildren(TableDataComponent) children: QueryList<TableDataComponent>;
+    resource: string;
     resourceQuery: ResourceQuery;
     page: Page;
 

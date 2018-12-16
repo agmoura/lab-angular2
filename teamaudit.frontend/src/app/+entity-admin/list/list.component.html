@@ -1,4 +1,3 @@
-
 <!--<div class="col-md-3 hidden-sm hidden-xs">
     <div class="card card-primary">
         <div class="card-header">
@@ -79,11 +78,18 @@
         </div>
 
         <div class="card-block">
-            <datagrid [resource]="resource"
-                      [listViewSchema]="listViewSchema"
-                      (onCreate)="onCreate()"
-                      (onEdit)="onEdit($event)">
-            </datagrid>
+            <!--<datagrid
+                [resource]="resource"
+                [listViewSchema]="listViewSchema"
+                (onCreate)="onCreate()"
+                (onEdit)="onEdit($event)">
+            </datagrid>-->
+            <dxdatagrid
+                [resource]="resource"
+                [listViewSchema]="listViewSchema"
+                (onCreate)="onCreate()"
+                (onEdit)="onEdit($event)">
+            </dxdatagrid>
         </div>
     </div>
 </div>

@@ -2,11 +2,11 @@ import {ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, OnI
 import {FormGroup} from "@angular/forms";
 import {FieldType, FormFieldSchema} from "../model/schema";
 import {FieldComponent} from "../model/field";
-import {TextInputComponent} from "../input/text-input";
-import {BooleanInputComponent} from "../input/boolean-input";
-import {NumberInputComponent} from "../input/number-input";
-import {DateInputComponent} from "../input/date-input";
-import {SelectInputComponent} from "../input/select-input";
+import {TextInputComponent} from "./text-input";
+import {BooleanInputComponent} from "./boolean-input";
+import {NumberInputComponent} from "./number-input";
+import {DateInputComponent} from "./date-input";
+import {SelectInputComponent} from "./select-input";
 
 const components: {[type: number]: Type<FieldComponent>} = {
     [FieldType.Text]: TextInputComponent,
