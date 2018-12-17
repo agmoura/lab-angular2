@@ -38,7 +38,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
 
         fields.forEach(field => {
             if(field.type !== FieldType.Group)
-                group[field.source] = new FormControl(field.defaultValue, field.validators);
+                group[field.source] = new FormControl(field.defaultValue && field.defaultValue(field), field.validators);
             else
                 group[field.source] = this.createForm(field.fields);
         });

@@ -21,8 +21,8 @@ export class EntitySchemaService {
                 {
                     source: 'nome',
                     type: FieldType.Text,
-                    defaultValue: 'NOME 1',
-                    validators: [Validators.required, Validators.maxLength(20), Validators.minLength(5)]
+                    defaultValue: field => new Date().toISOString(),
+                    validators: [Validators.required, Validators.maxLength(30), Validators.minLength(5)]
                 },
                 {
                     source: 'descricao',
@@ -33,7 +33,7 @@ export class EntitySchemaService {
                 {
                     source: 'indicadorInternoSistema',
                     type: FieldType.Boolean,
-                    onChange: (value, form) => value ? form.get('nome').disable() : form.get('nome').enable()
+                    onChange: (value, form) => value ? form.controls.nome.disable() : form.controls.nome.enable()
                 },
                 {
                     source: 'escopo', type: FieldType.Group, fields: [{
