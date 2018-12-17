@@ -22,11 +22,11 @@ import {NotificationService} from "../shared/notification.service";
         <dx-data-grid
             [dataSource]="entityList"
             [columns]="gridColumns"
-            [filterRow]="{visible: true, applyFilter: 'auto'}"
+            [filterRow]="{visible: false, applyFilter: 'auto'}"
             [searchPanel]="{visible: true, width: 240}"
-            [headerFilter]="{visible: true}"
+            [headerFilter]="{visible: false}"
 
-            [groupPanel]="{visible: true}"
+            [groupPanel]="{visible: false}"
             [allowColumnReordering]="true"
             [allowColumnResizing]="true"
             [columnHidingEnabled]="true"
@@ -36,12 +36,15 @@ import {NotificationService} from "../shared/notification.service";
 
             [editing]="{mode: 'form', allowUpdating: false, allowDeleting: true, allowAdding: true, useIcons: true}"
             (onRowRemoved)="delete($event.data)"
-            [selection]="{mode: 'multiple'}"
+            [selection]="{mode: 'multiple', showCheckBoxesMode: 'none'}"
 
             [export]="{enabled: true, fileName: resource, allowExportSelectedData: true}"
             [paging]="{pageSize: 10}"
-            [pager]="{visible: true, showPageSizeSelector: true, allowedPageSizes: [5, 10, 20], showInfo: true}">
-
+            [pager]="{visible: true, showPageSizeSelector: true, allowedPageSizes: [5, 10, 20], showInfo: true}"
+            [showColumnLines]="false"
+            [showBorders]="false"
+            [hoverStateEnabled]="true">
+            
             <!--<dxi-column type="buttons">
                 <dxi-button name="delete"></dxi-button>
                 <dxi-button hint="Edit" icon="edit" [onClick]="edit"></dxi-button>

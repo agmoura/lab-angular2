@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <div class="col-md-10 col-md-offset-2">
                         <ng-content></ng-content>
-                        <button class="btn btn-raised btn-primary" (click)="save(mainForm.value)">SAVE</button>
+                        <button class="btn btn-raised btn-primary" (click)="save(mainForm.value)" [disabled]="mainForm.invalid">SAVE</button>
                         <button class="btn btn-raised btn-default" (click)="goBack()">BACK</button>
                         <button class="btn btn-raised btn-danger" (click)="delete()">DELETE</button>
                     </div>
@@ -25,7 +25,6 @@
             </form>
         </div>
     </div>
-
 
     <div *ngIf="resourceId && formViewSchema.references">
         <div class="card card-light" *ngFor="let reference of formViewSchema.references" >
@@ -50,7 +49,7 @@
       [target]="childEdit.referenceSchema.target"
       [targetId]="resourceId"
       [formViewSchema]="childEdit.referenceSchema.formView">
-    <button md-button (click)="childEdit = null">VOLTAR2</button>
+    <button (click)="childEdit = null">VOLTAR2</button>
 </edit>
 
 

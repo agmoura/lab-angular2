@@ -4,7 +4,7 @@ import {FieldComponent} from "../model/field";
 @Component({
     selector: 'text-input',
     template: `
-        <div class="form-group" [formGroup]="group">
+        <div class="form-group" [formGroup]="group" [hidden]="schema.hidden">
             <label for="text-input-000" class="col-md-2 control-label">{{schema.label | translate}}</label>
             <div class="col-md-10">
                 <input type="text" class="form-control" id="text-input-000" [formControlName]="schema.source" [placeholder]="schema.label | translate" [required]="schema.required" >

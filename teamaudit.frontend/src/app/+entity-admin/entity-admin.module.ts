@@ -11,8 +11,8 @@ import {EntitySchemaService} from "./entity-schema.service";
 import {TextInputComponent} from "./input/text-input";
 import {SelectInputComponent} from "./input/select-input";
 import {NumberInputComponent} from "./input/number-input";
-// import {DatagridComponent} from "./list/datagrid.component";
 import {DateInputComponent} from "./input/date-input";
+import {GroupInputComponent} from "./input/group-input";
 import {ReferenceManyComponent} from "./detail/reference-many.component";
 import {BooleanInputComponent} from "./input/boolean-input";
 import {TextFieldComponent} from "./field/text-field";
@@ -29,6 +29,17 @@ import {DynamicFieldDirective} from "./input/dynamic-field.directive";
 import {DxDatagridComponent} from "./list/dxdatagrid.component";
 import {DxDataGridModule} from 'devextreme-angular/ui/data-grid';
 
+
+const InputComponents = [
+    SelectInputComponent,
+    TextInputComponent,
+    NumberInputComponent,
+    DateInputComponent,
+    BooleanInputComponent,
+    TextFieldComponent,
+    BooleanFieldComponent,
+    GroupInputComponent
+]
 
 @NgModule({
     imports: [
@@ -49,13 +60,7 @@ import {DxDataGridModule} from 'devextreme-angular/ui/data-grid';
         ReferenceManyComponent,
 
         DynamicFieldDirective,
-        SelectInputComponent,
-        TextInputComponent,
-        NumberInputComponent,
-        DateInputComponent,
-        BooleanInputComponent,
-        TextFieldComponent,
-        BooleanFieldComponent,
+        ...InputComponents,
 
         TableDataComponent,
         TableFieldDirective,
@@ -77,13 +82,9 @@ import {DxDataGridModule} from 'devextreme-angular/ui/data-grid';
         DxDatagridComponent,
 
         ReferenceManyComponent,
-
         DynamicFieldDirective,
-        SelectInputComponent,
-        TextInputComponent,
-        NumberInputComponent,
-        DateInputComponent,
-        BooleanInputComponent,
+        ...InputComponents,
+
         TextFieldComponent,
         BooleanFieldComponent,
 
@@ -97,13 +98,7 @@ import {DxDataGridModule} from 'devextreme-angular/ui/data-grid';
         ReferenceOneToManyComponent
     ],
     entryComponents: [
-        TextFieldComponent,
-        BooleanFieldComponent,
-        SelectInputComponent,
-        TextInputComponent,
-        NumberInputComponent,
-        DateInputComponent,
-        BooleanInputComponent
+        ...InputComponents
     ]
 })
 export class EntityAdminModule {

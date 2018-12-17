@@ -1,7 +1,8 @@
+import {FormGroup, ValidatorFn, AbstractControlOptions} from "@angular/forms";
 import {DataSourceDefinition} from "../shared/data-source";
 
 export enum FieldType {
-    Hidden, Text, RichText, Number, Boolean, Date, Reference, ReferenceMany
+    Hidden, Text, RichText, Number, Boolean, Date, Reference, ReferenceMany, Group
 }
 
 export enum ReferenceType {
@@ -15,7 +16,6 @@ export interface ResourceSchemaMap {
 export interface ResourceSchema {
     listView: ListViewSchema;
     formView: FormViewSchema;
-    treeView?: TreeViewSchema;
 }
 
 export interface ListViewSchema {
@@ -32,13 +32,6 @@ export interface ListViewSchema {
 export interface FormViewSchema {
     fields: FormFieldSchema[];
     references?: ReferenceSchema[];
-}
-
-//TODO: Refatorar
-export interface TreeViewSchema {
-    loadFrom?: string;
-    recursiveRelationship?: boolean;
-    treeNodes: TreeNodeSchema[];
 }
 
 export interface ReferenceSchema extends ResourceSchema {
@@ -67,7 +60,17 @@ export interface ListFieldSchema extends FieldSchema {
 }
 
 export interface FormFieldSchema extends FieldSchema {
+    defaultValue?: (field: FormFieldSchema) => any,
+    validators?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null;
+
+    // FieldType.Reference and FieldType.ReferenceMany
     dataSource?: DataSourceDefinition<any>;
+
+    // FieldType.Group
+    fields?: FormFieldSchema[];
+
+    // Events
+    onChange?: (value: any, form: FormGroup) => boolean;
 }
 
 export interface TreeNodeSchema {

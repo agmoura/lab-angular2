@@ -7,13 +7,15 @@ import {BooleanInputComponent} from "./boolean-input";
 import {NumberInputComponent} from "./number-input";
 import {DateInputComponent} from "./date-input";
 import {SelectInputComponent} from "./select-input";
+import {GroupInputComponent} from "./group-input";
 
 const components: {[type: number]: Type<FieldComponent>} = {
     [FieldType.Text]: TextInputComponent,
     [FieldType.Boolean]: BooleanInputComponent,
     [FieldType.Number]: NumberInputComponent,
     [FieldType.Date]: DateInputComponent,
-    [FieldType.Reference]: SelectInputComponent
+    [FieldType.Reference]: SelectInputComponent,
+    [FieldType.Group]: GroupInputComponent
 };
 
 // REFERENCE: https://toddmotto.com/angular-dynamic-components-forms
@@ -34,6 +36,10 @@ export class DynamicFieldDirective implements OnInit, OnChanges {
         this.component = this.container.createComponent(factory);
         this.component.instance.schema = this.schema;
         this.component.instance.group = this.group;
+
+        if (this.schema.onChange)
+            this.group.get(this.schema.source).valueChanges
+                .subscribe(value =>  this.schema.onChange(value, this.group));
     }
 
     ngOnChanges() {

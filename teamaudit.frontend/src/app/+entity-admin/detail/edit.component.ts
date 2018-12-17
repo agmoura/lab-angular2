@@ -5,7 +5,7 @@ import {Location} from "@angular/common";
 
 import {EntityBase} from '../../shared/model/models';
 import {DataService} from '../../shared/services/data.service';
-import {FieldType, FormViewSchema} from '../model/schema';
+import {FieldType, FormFieldSchema, FormViewSchema} from '../model/schema';
 import {EntitySchemaService} from '../entity-schema.service';
 import {ResourceQuery} from "../../shared/model/query";
 import {NotificationService} from "../shared/notification.service";
@@ -22,10 +22,8 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     @Input() targetId: string;
     @Input() formViewSchema: FormViewSchema;
 
-    FieldType: typeof FieldType = FieldType;
     routeSubscription: any;
     mainForm: FormGroup;
-    referencesData: any = {};
     childEdit: any;
 
     constructor(private builder: FormBuilder,
@@ -35,16 +33,14 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
                 private schemaService: EntitySchemaService) {
     }
 
-    createForm(formViewSchema: FormViewSchema) {
-        let group: any = {id: new FormControl()};
+    createForm(fields: FormFieldSchema[]) {
+        let group: any = {};
 
-        formViewSchema.fields.forEach(field => {
-            // group[field.source] = new FormControl();
-
-            if(field.type !== FieldType.Reference)
-                group[field.source] = new FormControl();
+        fields.forEach(field => {
+            if(field.type !== FieldType.Group)
+                group[field.source] = new FormControl(field.defaultValue, field.validators);
             else
-                group[field.source] = new FormGroup({id: new FormControl()});
+                group[field.source] = this.createForm(field.fields);
         });
 
         return new FormGroup(group);
@@ -59,7 +55,8 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
                 this.resource = this.route.snapshot.params['entity'];
                 this.resourceId = this.route.snapshot.params['id'];
                 this.formViewSchema = this.schemaService.getSchema(this.resource).formView;
-                this.mainForm = this.createForm(this.formViewSchema);
+                this.mainForm = this.createForm(this.formViewSchema.fields);
+                this.mainForm.addControl('id', new FormControl());
                 this.load(this.resourceId);
             });
         }
@@ -70,7 +67,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        this.mainForm = this.createForm(this.formViewSchema);
+        this.mainForm = this.createForm(this.formViewSchema.fields);
         this.load(this.resourceId);
     }
 

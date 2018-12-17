@@ -5,9 +5,9 @@ import {FieldComponent} from "../model/field";
 @Component({
     selector: 'select-input',
     template: `
-        <div class="form-group" [formGroup]="group">
+        <div class="form-group" [formGroup]="group" [hidden]="schema.hidden">
             <label class="col-md-2 control-label">{{schema.label | translate}}</label>
-            <div class="col-md-10" [formGroupName]="schema.source">
+            <div class="col-md-10">
                 <select class="form-control" [formControlName]="'id'" [required]="schema.required">
                     <option value="">--- SELECT ---</option>
                     <option *ngFor="let item of items" [ngValue]="item[schema.dataSource.valueField]">
