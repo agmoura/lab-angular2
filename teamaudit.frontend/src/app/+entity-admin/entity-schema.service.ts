@@ -235,7 +235,6 @@ export class EntitySchemaService {
                 ]
             }
         },
-
         entidades: {
             listView: {
                 fields: [
