@@ -6,7 +6,7 @@ import {Validators} from "@angular/forms";
 @Injectable()
 export class EntitySchemaService {
 
-    public categoriaObjetivos = <ResourceSchema> {
+    public categoriaObjetivos = new ResourceSchema ({
         listView: {
             fields: [
                 {source: 'escopo.descricao'},
@@ -33,7 +33,9 @@ export class EntitySchemaService {
                 {
                     source: 'indicadorInternoSistema',
                     type: FieldType.Boolean,
-                    onChange: (value, form) => value ? form.controls.nome.disable() : form.controls.nome.enable()
+                    // onChange: (value, form) => value ? form.controls.nome.disable() : form.controls.nome.enable()
+                    // onChange: (value, form) => this.categoriaObjetivos.formView.fields[0].hidden = value
+                    onChange: (value, form, fields) => fields.nome.hidden = value
                 },
                 {
                     source: 'escopo', type: FieldType.Group, fields: [{
@@ -146,9 +148,8 @@ export class EntitySchemaService {
                              },*/
                             {
                                 source: 'planoAnualAtivo',
-                                referencePath: 'planoAnual',
                                 type: FieldType.Reference,
-                                select: {value: 'id', text: 'numero'}
+                                dataSource: new ReferenceDataSource('planoAnual', 'id', 'numero'),
                             },
                             {source: 'dataInicio', type: FieldType.Date},
                             {source: 'dataFim', type: FieldType.Date},
@@ -186,7 +187,7 @@ export class EntitySchemaService {
                 }
             ]
         }
-    };
+    });
 
     private resourceSchemaMap = <ResourceSchemaMap> {
         escopos: {
@@ -260,9 +261,8 @@ export class EntitySchemaService {
                      },*/
                     {
                         source: 'planoAnualAtivo',
-                        referencePath: 'planoAnual',
                         type: FieldType.Reference,
-                        select: {value: 'id', text: 'numero'}
+                        dataSource: new ReferenceDataSource('planoAnual', 'id', 'numero'),
                     },
                     {source: 'dataInicio', type: FieldType.Date},
                     {source: 'dataFim', type: FieldType.Date},
@@ -294,9 +294,8 @@ export class EntitySchemaService {
                                 {source: 'dataFim', type: FieldType.Date},
                                 {
                                     source: 'participacaoAtividade',
-                                    referencePath: 'participacaoAtividade',
                                     type: FieldType.Reference,
-                                    select: {value: 'id', text: 'nome'}
+                                    dataSource: new ReferenceDataSource('participacaoAtividade'),
                                 },
                                 {source: 'atribuicaoEspecialistaEquipeAuditora', type: FieldType.Text}
                             ]

@@ -10,8 +10,13 @@
             <form [formGroup]="mainForm" class="form-horizontal">
                 <input type="hidden" formControlName="id">
 
+                <!--<select>
+                    <option></option>
+                    <option></option>
+                </select>-->
+
                 <ng-container *ngFor="let field of formViewSchema.fields">
-                    <ng-container [dynamicField]="field" [group]="mainForm"></ng-container>
+                    <ng-container [dynamicField]="field" [group]="mainForm" [formSchema]="formViewSchema"></ng-container>
                 </ng-container>
 
                 <div class="form-group">

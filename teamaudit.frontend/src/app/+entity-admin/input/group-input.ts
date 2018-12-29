@@ -6,7 +6,7 @@ import {FieldComponent} from "../model/field";
     template: `
         <ng-container [formGroup]="group">
             <ng-container *ngFor="let field of schema.fields" [formGroupName]="schema.source">
-                <ng-container [dynamicField]="field" [group]="group.get(schema.source)"></ng-container>
+                <ng-container [dynamicField]="field" [group]="group.get(schema.source)" [formSchema]="formSchema"></ng-container>
             </ng-container>
         </ng-container>
     `,

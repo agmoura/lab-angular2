@@ -13,37 +13,80 @@ export interface ResourceSchemaMap {
     [resource: string]: ResourceSchema;
 }
 
-export interface ResourceSchema {
-    listView: ListViewSchema;
-    formView: FormViewSchema;
+export interface FormFieldSchemaMap {
+    [field: string]: FormFieldSchema;
 }
 
-export interface ListViewSchema {
-    fields: ListFieldSchema[];
-    orders?: string[];
-    filter?: any;
-    select?: boolean;
+export class ResourceSchema {
+    readonly listView: ListViewSchema;
+    readonly formView: FormViewSchema;
 
-    actions?: ActionSchema[];
-    insert?: boolean;
-    link?: boolean;
+    public constructor(data?: Partial<ResourceSchema>) {
+        this.listView = new ListViewSchema(data.listView);
+        this.formView = new FormViewSchema(data.formView);
+    }
 }
 
-export interface FormViewSchema {
-    fields: FormFieldSchema[];
-    references?: ReferenceSchema[];
+export class ListViewSchema {
+    readonly fields: ListFieldSchema[];
+    readonly orders?: string[];
+    readonly filter?: any;
+
+    readonly actions?: ActionSchema[];
+    readonly select?: boolean;
+    readonly insert?: boolean;
+    readonly link?: boolean;
+
+    public constructor(data?: Partial<ListViewSchema>) {
+        Object.assign(this, data);
+        /*this.fields = data.fields;
+        this.orders = data.orders;
+        this.filter = data.filter;
+        this.actions = data.actions;
+        this.select = data.select;
+        this.insert = data.insert;
+        this.link = data.link;*/
+    }
 }
 
-export interface ReferenceSchema extends ResourceSchema {
-    resource: string;
-    type: ReferenceType;
-    target: string;
-    targetInverse?: string;
+export class FormViewSchema {
+    readonly fields: FormFieldSchema[];
+    readonly references?: ReferenceSchema[];
 
-    /*targetId: {path: string};
-    referencePath?: string;
-    relationPath?: {path: string};
-    childSelectListView?: ListViewSchema;*/
+    readonly fieldsMap?: FormFieldSchemaMap;
+
+    public constructor(data?: Partial<FormViewSchema>) {
+        this.fields = data.fields;
+        this.references = (data.references || []).map(reference => new ReferenceSchema(reference));
+        this.fieldsMap = FormViewSchema.buildFieldsMap(this.fields);
+    }
+
+    private static buildFieldsMap(fields: FormFieldSchema[]): FormFieldSchemaMap {
+        const fieldsMap = {};
+        fields.forEach(field => {
+            if (field.type === FieldType.Group)
+                fieldsMap[field.source] = this.buildFieldsMap(field.fields);
+            else
+                fieldsMap[field.source] = field
+        });
+
+        return fieldsMap;
+    }
+}
+
+export class ReferenceSchema extends ResourceSchema {
+    readonly resource: string;
+    readonly type: ReferenceType;
+    readonly target: string;
+    readonly targetInverse?: string;
+
+    public constructor(data?: Partial<ReferenceSchema>) {
+        super(data);
+        this.resource = data.resource;
+        this.type = data.type;
+        this.target = data.target;
+        this.targetInverse = data.targetInverse;
+    }
 }
 
 export interface FieldSchema {
@@ -60,6 +103,7 @@ export interface ListFieldSchema extends FieldSchema {
 }
 
 export interface FormFieldSchema extends FieldSchema {
+    readOnly?: boolean;
     defaultValue?: (field: FormFieldSchema) => any,
     validators?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null;
 
@@ -70,7 +114,7 @@ export interface FormFieldSchema extends FieldSchema {
     fields?: FormFieldSchema[];
 
     // Events
-    onChange?: (value: any, form: FormGroup) => boolean;
+    onChange?: (value: any, form: FormGroup, fields: FormFieldSchemaMap) => void;
 }
 
 export interface TreeNodeSchema {
