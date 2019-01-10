@@ -1,14 +1,14 @@
-import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
+import {FormGroup, FormBuilder} from "@angular/forms";
 import {Component, OnInit, OnDestroy, OnChanges, Input, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from "@angular/common";
 
 import {EntityBase} from '../../shared/model/models';
 import {DataService} from '../../shared/services/data.service';
-import {FieldType, FormFieldSchema, FormViewSchema} from '../model/schema';
-import {EntitySchemaService} from '../entity-schema.service';
-import {ResourceQuery} from "../../shared/model/query";
-import {NotificationService} from "../shared/notification.service";
+import {FormViewSchema, ResourceSchema} from '../model/schema';
+import {NotificationService} from "../../shared/services/notification.service";
+import {BaseAction} from '..';
+import {ActionService} from '../model/actions';
 
 @Component({
     selector: 'edit',
@@ -22,18 +22,19 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     @Input() targetId: string;
     @Input() formViewSchema: FormViewSchema;
 
-    routeSubscription: any;
-    mainForm: FormGroup;
-    childEdit: any;
+    public actions: BaseAction<EntityBase>[];
+    public mainForm: FormGroup;
+    public childEdit: any;
+    private routeSubscription: any;
 
     constructor(private builder: FormBuilder,
                 private route: ActivatedRoute,
                 private location: Location,
                 private dataService: DataService,
-                private schemaService: EntitySchemaService) {
+                private actionService: ActionService<EntityBase>) {
     }
 
-    createForm(fields: FormFieldSchema[]) {
+    /*createForm(fields: FormFieldSchema[]) {
         let group: any = {};
 
         fields.forEach(field => {
@@ -44,19 +45,30 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
         });
 
         return new FormGroup(group);
-    }
+    }*/
 
     ngOnInit() {
 
         //document.querySelector('body').classList.toggle('aside-menu-hidden');
 
         if (!this.resource) {
-            this.routeSubscription = this.route.params.subscribe(params => {
+            /*this.routeSubscription = this.route.params.subscribe(params => {
                 this.resource = this.route.snapshot.params['entity'];
                 this.resourceId = this.route.snapshot.params['id'];
                 this.formViewSchema = this.schemaService.getSchema(this.resource).formView;
-                this.mainForm = this.createForm(this.formViewSchema.fields);
-                this.mainForm.addControl('id', new FormControl());
+                this.mainForm = this.formViewSchema.createForm();
+                this.load(this.resourceId);
+            });*/
+
+            this.routeSubscription = this.route.data.subscribe(data => {
+                let schema: ResourceSchema = data.schema;
+                if (schema instanceof Function) schema = schema();
+
+                this.formViewSchema = schema.formView;
+                this.resource = schema.resource;
+                this.resourceId = this.route.snapshot.params['id'];
+                this.mainForm = this.formViewSchema.createForm();
+                this.actions = this.actionService.getActions(this.formViewSchema.actions, {form: this.mainForm});
                 this.load(this.resourceId);
             });
         }
@@ -67,7 +79,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        this.mainForm = this.createForm(this.formViewSchema.fields);
+        this.mainForm = this.formViewSchema.createForm();
         this.load(this.resourceId);
     }
 
@@ -114,7 +126,7 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
 
     save(entity: EntityBase) {
 
-        this.cleanEntity(entity);
+        // this.cleanEntity(entity);
 
         //TODO: Refatorar código
         if (this.target) {
@@ -130,10 +142,10 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
 
         this.dataService.save<any>(this.resource, entity).subscribe(
             data =>  this.mainForm.patchValue(data),
-            error => NotificationService.showError('Ocorreu um erro: ' + JSON.stringify(error.json().errors)),
+            undefined,
             () => {
                 this.resourceId = this.mainForm.get('id').value;
-                NotificationService.showSuccess('Operação realizada com sucesso');
+                NotificationService.success('Operação realizada com sucesso');
             }
         );
     }
@@ -141,9 +153,9 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
     delete() {
         this.dataService.delete(this.resource, this.resourceId).subscribe(
             data => data,
-            error => NotificationService.showError('Ocorreu um erro: ' + JSON.stringify(error.json().errors)),
+            error => NotificationService.error('Ocorreu um erro: ' + JSON.stringify(error.json().errors)),
             () => {
-                NotificationService.showSuccess('Exclusão realizada com sucesso');
+                NotificationService.success('Exclusão realizada com sucesso');
                 this.goBack();
             }
         );

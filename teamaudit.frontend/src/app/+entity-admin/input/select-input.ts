@@ -5,20 +5,17 @@ import {FieldComponent} from "../model/field";
 @Component({
     selector: 'select-input',
     template: `
-        <div class="form-group" [formGroup]="group" [hidden]="schema.hidden">
-            <label class="col-md-2 control-label">{{schema.label | translate}}</label>
-            <div class="col-md-10">
-                <select class="form-control" [formControlName]="'id'" [required]="schema.required">
-                    <option value="">--- SELECT ---</option>
-                    <option *ngFor="let item of items" [ngValue]="item[schema.dataSource.valueField]">
-                        {{item[schema.dataSource.textField]}}
-                    </option>
-                </select>
-            </div>
-        </div>
+        <wrapper-input [formGroup]="group" [schema]="schema">
+            <select class="form-control" [id]="schema.index" [formControlName]="'id'" [required]="schema.required">
+                <option value="">--- SELECT ---</option>
+                <option *ngFor="let item of items" [ngValue]="item[schema.dataSource.valueField]">
+                    {{item[schema.dataSource.textField]}}
+                </option>
+            </select>
+        </wrapper-input>
     `,
 })
-export class SelectInputComponent extends FieldComponent implements OnInit, OnChanges {
+export class SelectInputComponent extends FieldComponent<any> implements OnInit, OnChanges {
     @Input() public items = [];
 
     constructor(private http: HttpClient) {

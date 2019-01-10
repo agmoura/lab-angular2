@@ -7,11 +7,11 @@ export class NotificationService {
     constructor() {
     }
 
-    static showSuccess(message: string) {
+    static success(message: string) {
         notify(message, 'success');
     }
 
-    static showError(message: string) {
+    static error(message: string) {
         notify(message, 'error');
     }
 }

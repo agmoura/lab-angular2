@@ -1,8 +1,6 @@
-import {Observable} from "rxjs/Observable";
 import {Injectable} from "@angular/core";
-import 'rxjs/Rx';
-import {Http, Headers, Response, URLSearchParams} from "@angular/http";
-
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {Observable} from "rxjs";
 import {PagedList, Page} from "../model/paged-list";
 import {EntityBase} from "../model/models";
 import {ResourceQuery} from "../model/query";
@@ -13,10 +11,10 @@ export class DataService {
     //baseUrl: string = 'http://localhost:8080/teamaudit/api/';
     baseUrl: string = 'api/';
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
 
-    findAll(path: string,
+    public findAll(path: string,
             page: Page = null,
             sorts: string[] = null,
             predicates: string[] = null,
@@ -32,51 +30,40 @@ export class DataService {
 
         if (projections) projections.forEach(projection => url += '&projections=' + projection);
 
-        return this.http.get(url).map(response => new PagedList(response.json()));
+        return this.http.get<PagedList>(url);
     }
 
 
-    find(resourceQuery: ResourceQuery): Observable<PagedList> {
-        let headers = new Headers({'Content-Type': 'application/json'});
+    public find(resourceQuery: ResourceQuery): Observable<PagedList> {
         let url: string = this.baseUrl + resourceQuery.entityPath + '/query';
-
-        return this.http.post(url, resourceQuery, {headers: headers})
-            .map(response => new PagedList(response.json()));
+        return this.http.post<PagedList>(url, resourceQuery);
     }
 
-    getByUri<TEntity extends EntityBase>(uri: string): Observable<TEntity> {
-        return <Observable<TEntity>> this.http.get(uri)
-            .map(response => response.json());
+    public getByUri<T extends EntityBase>(uri: string): Observable<T> {
+        return this.http.get<T>(uri);
     }
 
-    get<TEntity extends EntityBase>(path: string, id: string): Observable<TEntity> {
-        return this.getByUri<TEntity>(this.baseUrl + path + '/' + id);
+    public get<T extends EntityBase>(path: string, id: string): Observable<T> {
+        return this.getByUri<T>(this.baseUrl + path + '/' + id);
     }
 
-    save<TEntity extends EntityBase>(path: string, entity: TEntity): Observable<TEntity> {
-        let headers = new Headers({'Content-Type': 'application/json'});
-
+    public save<T extends EntityBase>(path: string, entity: T): Observable<T> {
         if (entity.id)
-            return <Observable<TEntity>> this.http.put(this.baseUrl + path + "/" + entity.id, JSON.stringify(entity), {headers: headers})
-                .map(response => <TEntity> response.json());
+            return this.http.put<T>(this.baseUrl + path + "/" + entity.id, entity);
 
-        return <Observable<TEntity>> this.http.post(this.baseUrl + path, JSON.stringify(entity), {headers: headers})
-            .map(response => response.json());
+        return this.http.post<T>(this.baseUrl + path, entity);
     }
 
-    patch<TEntity extends EntityBase>(path: string, entity: TEntity): Observable<TEntity> {
-        let headers = new Headers({'Content-Type': 'application/json'});
-
-        return <Observable<TEntity>> this.http.patch(this.baseUrl + path + "/" + entity.id, JSON.stringify(entity), {headers: headers})
-            .map(response => <TEntity> response.json());
+    public patch<T extends EntityBase>(path: string, entity: T): Observable<T> {
+        return this.http.patch<T>(this.baseUrl + path + "/" + entity.id, entity);
     }
 
-    delete(path: string, id: string) {
+    public delete(path: string, id: string) {
         return this.http.delete(this.baseUrl + path + "/" + id);
     }
 
     //TODO: Remover código de teste
-    executeAction<TEntity extends EntityBase>(path: string): Observable<TEntity> {
+    public executeAction<T extends EntityBase>(path: string): Observable<T> {
         let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
         let url = this.baseUrl + path + '/execute';
 
@@ -86,12 +73,11 @@ export class DataService {
          number: 100
          };*/
 
-        let data = new URLSearchParams();
+        let data = new HttpParams();
         data.append('id', '1');
         data.append('action', 'save');
         data.append('number', '100');
 
-        return <Observable<TEntity>> this.http.post(url, data.toString(), {headers: headers})
-            .map(response => response.json());
+        return this.http.post<T>(url, null, {params: data});
     }
 }

@@ -6,7 +6,7 @@ import {FieldComponent} from "../model/field";
     template: '<span>{{record[source]}}</span>',
     providers: [{provide: FieldComponent, useExisting: TextFieldComponent}]
 })
-export class TextFieldComponent extends FieldComponent {
+export class TextFieldComponent extends FieldComponent<string> {
     @Input() public source: string;
     @Input() public label: string;
 

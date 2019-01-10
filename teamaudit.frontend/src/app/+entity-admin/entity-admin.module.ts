@@ -7,7 +7,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {entityAdminRouting} from "./entity-admin.routes";
 import {ListComponent} from "./list/list.component";
 import {EditComponent} from "./detail/edit.component";
-import {EntitySchemaService} from "./entity-schema.service";
+import {WrapperInputComponent} from "./input/wrapper-input";
 import {TextInputComponent} from "./input/text-input";
 import {SelectInputComponent} from "./input/select-input";
 import {NumberInputComponent} from "./input/number-input";
@@ -28,6 +28,7 @@ import {ReferenceOneToManyComponent} from "./field/reference-one-many";
 import {DynamicFieldDirective} from "./input/dynamic-field.directive";
 import {DxDatagridComponent} from "./list/dxdatagrid.component";
 import {DxDataGridModule} from 'devextreme-angular/ui/data-grid';
+import {ActionService} from './model/actions';
 
 
 const InputComponents = [
@@ -60,6 +61,7 @@ const InputComponents = [
         ReferenceManyComponent,
 
         DynamicFieldDirective,
+        WrapperInputComponent,
         ...InputComponents,
 
         TableDataComponent,
@@ -72,8 +74,8 @@ const InputComponents = [
         ReferenceOneToManyComponent
     ],
     providers: [
-        EntitySchemaService,
-        ResourceService
+        ResourceService,
+        ActionService,
     ],
     exports: [
         ListComponent,

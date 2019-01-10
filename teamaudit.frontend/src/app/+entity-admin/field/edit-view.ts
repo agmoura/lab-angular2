@@ -84,7 +84,7 @@ export class EditViewComponent implements OnInit, OnChanges {
 
         this.dataService.save(this.resource, this.resourceService.resourceRecord).subscribe(
             data => this.resourceService.resourceRecord = data,
-            /*error => this.snackBar.open('Ocorreu um erro: ' + JSON.stringify(error.json().errors), 'OK'),*/
+            undefined,
             () => {
                 this.resourceId = this.resourceService.resourceRecord.id;
                 /*this.snackBar.open('Operação realizada com sucesso', 'OK', {duration: 2000})*/

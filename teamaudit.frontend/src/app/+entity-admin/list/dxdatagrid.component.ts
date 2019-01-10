@@ -14,7 +14,7 @@ import {ListViewSchema, FieldType} from "../model/schema";
 import {DataService} from "../../shared/services/data.service";
 import {Page} from "../../shared/model/paged-list";
 import {ResourceQuery} from "../../shared/model/query";
-import {NotificationService} from "../shared/notification.service";
+import {NotificationService} from "../../shared/services/notification.service";
 
 @Component({
     selector: 'dxdatagrid',
@@ -153,7 +153,7 @@ export class DxDatagridComponent implements OnInit, OnDestroy, OnChanges {
     public delete(entity: any) {
         this.dataService.delete(this.resource, this.getId(entity)).subscribe(
             data => this.load(),
-            error => NotificationService.showError('Ocorreu um erro: ' + JSON.stringify(error.json().errors))
+            error => NotificationService.error('Ocorreu um erro: ' + JSON.stringify(error.json().errors))
         );
     }
 

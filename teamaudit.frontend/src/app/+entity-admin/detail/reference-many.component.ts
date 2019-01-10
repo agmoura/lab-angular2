@@ -2,7 +2,7 @@ import {Component, Input, SimpleChanges, OnChanges, EventEmitter, Output} from '
 import {ReferenceSchema, ReferenceType} from "../model/schema";
 import {DataService} from "../../shared/services/data.service";
 import {DxDatagridComponent} from "../list/dxdatagrid.component";
-import {NotificationService} from "../shared/notification.service";
+import {NotificationService} from "../../shared/services/notification.service";
 
 @Component({
     selector: 'reference-many',
@@ -69,10 +69,10 @@ export class ReferenceManyComponent implements OnChanges {
 
         this.dataService.patch(this.resource, entity).subscribe(
             data => entity = data,
-            error => NotificationService.showError('Ocorreu um erro: ' + JSON.stringify(error.json().errors)),
+            error => NotificationService.error('Ocorreu um erro: ' + JSON.stringify(error.json().errors)),
             () => {
                 dataGrid.load();
-                NotificationService.showSuccess('Operação realizada com sucesso');
+                NotificationService.success('Operação realizada com sucesso');
             }
         );
     }

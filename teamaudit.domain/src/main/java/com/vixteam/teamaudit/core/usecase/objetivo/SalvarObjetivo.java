@@ -109,7 +109,9 @@ class SalvarObjetivo extends UseCase<ObjetivoDto> {
 
     @Override
     protected ObjetivoDto execute() throws Exception {
-        return mapper.toObjetivoDto(repository.save(mapper.toObjetivo(this)));
+        Objetivo objetivo = mapper.toObjetivo(this);
+        objetivo.setNome(objetivo.getNome() + " (CHANGED)");
+        return mapper.toObjetivoDto(repository.save(objetivo ));
     }
 
 }

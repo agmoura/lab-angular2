@@ -1,17 +1,12 @@
 import {EntityBase} from "../../shared/model/models";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import 'rxjs-compat/add/operator/map';
 import {ResourceQuery} from "../../shared/model/query";
 import {PagedList} from "../../shared/model/paged-list";
+import {IDataSource} from '../model/schema';
 
-export interface DataSourceDefinition<T> {
-    valueField: string | number;
-    textField: string | number;
-    compare(item1: T, item2: T): boolean;
-    execute(http: HttpClient): Observable<T[]>;
-}
-
-export class ReferenceDataSource implements DataSourceDefinition<EntityBase> {
+export class ReferenceDataSource implements IDataSource<EntityBase> {
     public valueField: string | number;
     public textField: string | number;
     private query: ResourceQuery;

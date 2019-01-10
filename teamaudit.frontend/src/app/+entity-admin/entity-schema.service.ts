@@ -6,7 +6,7 @@ import {Validators} from "@angular/forms";
 @Injectable()
 export class EntitySchemaService {
 
-    public categoriaObjetivos = new ResourceSchema ({
+    public categoriaObjetivos = new ResourceSchema ('categoriaObjetivos', {
         listView: {
             fields: [
                 {source: 'escopo.descricao'},
@@ -40,7 +40,6 @@ export class EntitySchemaService {
                 {
                     source: 'escopo', type: FieldType.Group, fields: [{
                         source: 'id',
-                        label: 'CATEGORIAOBJETIVOS.ESCOPO',
                         type: FieldType.Reference,
                         dataSource: new ReferenceDataSource('escopos'),
                         validators: Validators.required
@@ -190,7 +189,7 @@ export class EntitySchemaService {
     });
 
     private resourceSchemaMap = <ResourceSchemaMap> {
-        escopos: {
+        escopos:  new ResourceSchema ('escopos', {
             listView: {
                 fields: [
                     {source: 'nome'},
@@ -204,9 +203,9 @@ export class EntitySchemaService {
                     {source: 'descricao', type: FieldType.Text}
                 ]
             }
-        },
+        }),
         categoriaObjetivos: this.categoriaObjetivos,
-        objetivos: {
+        objetivos: new ResourceSchema ('objetivos', {
             listView: {
                 fields: [
                     {source: 'categoriaObjetivo.escopo.nome', hidden: true},
@@ -224,19 +223,25 @@ export class EntitySchemaService {
                     {source: 'valorMeta', type: FieldType.Number},
                     {source: 'percentualMeta', type: FieldType.Number},
                     {
-                        source: 'categoriaObjetivo',
-                        type: FieldType.Reference,
-                        dataSource: new ReferenceDataSource('categoriaObjetivos')
+                        source: 'categoriaObjetivo', type: FieldType.Group, fields: [{
+                            source: 'id',
+                            type: FieldType.Reference,
+                            dataSource: new ReferenceDataSource('categoriaObjetivos'),
+                            validators: Validators.required
+                        }]
                     },
                     {
-                        source: 'unidadeOrganizacional',
-                        type: FieldType.Reference,
-                        dataSource: new ReferenceDataSource('unidadeOrganizacional')
-                    }
+                        source: 'unidadeOrganizacional', type: FieldType.Group, fields: [{
+                            source: 'id',
+                            type: FieldType.Reference,
+                            dataSource: new ReferenceDataSource('unidadeOrganizacional'),
+                            validators: Validators.required
+                        }]
+                    },
                 ]
             }
-        },
-        entidades: {
+        }),
+        entidades: new ResourceSchema ('entidades', {
             listView: {
                 fields: [
                     {source: 'nome'},
@@ -288,7 +293,7 @@ export class EntitySchemaService {
                                 {
                                     source: 'especialista',
                                     type: FieldType.Reference,
-                                    select: {value: 'id', text: 'nome'}
+                                    dataSource: new ReferenceDataSource('especialista')
                                 },
                                 {source: 'dataInicio', type: FieldType.Date},
                                 {source: 'dataFim', type: FieldType.Date},
@@ -313,14 +318,14 @@ export class EntitySchemaService {
                         },
                         formView: {
                             fields: [
-                                {source: 'estrutura', type: FieldType.Reference, select: {value: 'id', text: 'nome'}}
+                                {source: 'estrutura', type: FieldType.Reference, dataSource: new ReferenceDataSource('estrutura')}
                             ]
                         }
                     }
                 ]
             }
-        },
-        auditLog: {
+        }),
+        /*auditLog: {
             listView: {
                 fields: [
                     {source: 'entityName'},
@@ -361,19 +366,18 @@ export class EntitySchemaService {
                     }
                 ]
             }
-        }
-
+        }*/
     };
 
     constructor() {
         // Atribuir Índice de Todos Campos da Visão de Listagem
-        for (var attribute in this.resourceSchemaMap) {
+        /*for (var attribute in this.resourceSchemaMap) {
             var schema = this.resourceSchemaMap[attribute];
             this.setupSchema(schema, attribute);
-        }
+        }*/
     }
 
-    private setupSchema(schema: ResourceSchema, source: string) {
+    /*private setupSchema(schema: ResourceSchema, source: string) {
         schema.listView.fields.forEach((item, index) => this.setupFieldSchema(source, item, index));
         schema.formView.fields.forEach((item, index) => this.setupFieldSchema(source, item, index));
 
@@ -382,15 +386,14 @@ export class EntitySchemaService {
                 item => this.setupSchema(item, item.resource)
             );
         }
-
     }
 
     private setupFieldSchema(source, item, index) {
-        item.index = index;
+        // item.index = index;
         if (!item.label) item.label = (source + '.' + item.source).toUpperCase();
-    }
+    }*/
 
-    public getSchema(resource: string): ResourceSchema {
+    /*public getSchema(resource: string): ResourceSchema {
         return this.resourceSchemaMap[resource];
-    }
+    }*/
 }

@@ -1,4 +1,12 @@
 {
+  "VALIDATORS": {
+    "REQUIRED": "O campo '{{label}}' é obrigatório",
+    "MAXLENGTH": "O campo '{{label}}' não pode ter mais que {{requiredLength}} caracteres",
+    "MINLENGTH": "O campo '{{label}}' não pode ter menos de {{requiredLength}} caracteres",
+    "MIN": "O valor do campo '{{label}}' deve ser maior que {{min}}",
+    "MAX": "O valor do campo '{{label}}' deve ser menor que {{max}}",
+    "EMAIL": "O campo '{{label}}' não é um e-mail válido"
+  },
   "ESCOPOS": "Escopos",
   "ESCOPOS.SINGULAR": "Escopo",
   "ESCOPOS.PLURAL": "Escopos",
@@ -8,7 +16,7 @@
   "CATEGORIAOBJETIVOS": "Categorias de Objetivos",
   "CATEGORIAOBJETIVOS.SINGULAR": "Categoria de Objetivo",
   "CATEGORIAOBJETIVOS.PLURAL": "Categorias de Objetivos",
-  "CATEGORIAOBJETIVOS.ESCOPO": "Escopo",
+  "CATEGORIAOBJETIVOS.ESCOPO.ID": "Escopo",
   "CATEGORIAOBJETIVOS.ESCOPO.DESCRICAO": "Escopo",
   "CATEGORIAOBJETIVOS.NOME": "Nome",
   "CATEGORIAOBJETIVOS.DESCRICAO": "Descrição",
@@ -19,13 +27,13 @@
   "OBJETIVOS.PLURAL": "Objetivos",
   "OBJETIVOS.NOME": "Nome",
   "OBJETIVOS.DESCRICAO": "Descrição",
-  "OBJETIVOS.UNIDADEORGANIZACIONAL": "Unidade Organizacional",
-  "OBJETIVOS.CATEGORIAOBJETIVO": "Categoria Objetivo",
+  "OBJETIVOS.UNIDADEORGANIZACIONAL.ID": "Unidade Organizacional",
+  "OBJETIVOS.CATEGORIAOBJETIVO.ID": "Categoria Objetivo",
   "OBJETIVOS.CATEGORIAOBJETIVO.NOME": "Categoria Objetivo",
   "OBJETIVOS.DESCRICAOMETA": "Descrição Meta",
   "OBJETIVOS.VALORMETA": "Valor Meta",
   "OBJETIVOS.PERCENTUALMETA": "Percentual Meta",
-  "ENTIDADES":"Entidades",
+  "ENTIDADES": "Entidades",
   "ENTIDADES.SINGULAR": "Entidade",
   "ENTIDADES.PLURAL": "Entidades",
   "ENTIDADES.NOME": "Nome",
@@ -36,15 +44,13 @@
   "ENTIDADES.DATAFIM": "Data Fim",
   "ENTIDADES.CODIGOIMPORTACAO": "Codigo Importação",
   "ENTIDADES.PLANOSANUAISAUDITORIA": "Planos Anuais Auditoria",
-
-  "AUDITLOGS.ENTITYNAME":"Nome Entidade",
-  "AUDITLOGS.ENTITYID":"Código Entidade",
-  "AUDITLOGS.OPERATION":"Operação",
-  "AUDITLOGS.DATECREATED":"Data",
-  "AUDITLOGS.USER":"Usuário",
-  "AUDITLOGITEMS.FIELD":"Campo",
-  "AUDITLOGITEMS.OLDVALUE":"Valor Anterior",
-  "AUDITLOGITEMS.NEWVALUE":"Valor Atual"
-
+  "AUDITLOGS.ENTITYNAME": "Nome Entidade",
+  "AUDITLOGS.ENTITYID": "Código Entidade",
+  "AUDITLOGS.OPERATION": "Operação",
+  "AUDITLOGS.DATECREATED": "Data",
+  "AUDITLOGS.USER": "Usuário",
+  "AUDITLOGITEMS.FIELD": "Campo",
+  "AUDITLOGITEMS.OLDVALUE": "Valor Anterior",
+  "AUDITLOGITEMS.NEWVALUE": "Valor Atual"
 }
 

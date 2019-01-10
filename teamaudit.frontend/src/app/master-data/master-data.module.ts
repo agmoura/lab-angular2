@@ -1,21 +1,16 @@
 import {NgModule} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {CommonModule}   from '@angular/common';
-import {TranslateModule} from "@ngx-translate/core";
-import {masterDataRouting} from "./master-data.routes";
+import {MasterDataRoutingModule} from "./master-data-routing.module";
 import {EntityAdminModule} from "../+entity-admin/entity-admin.module";
-import {CategoriaObjetivoComponent} from "./categoria-objetivo.component";
-
+import {CategoriaObjetivoComponent} from "./objective/categoria-objetivo.component";
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
-        ReactiveFormsModule,
-        TranslateModule,
-
         EntityAdminModule,
-        masterDataRouting
+        MasterDataRoutingModule
     ],
     declarations: [
         CategoriaObjetivoComponent

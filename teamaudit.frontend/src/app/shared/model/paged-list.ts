@@ -4,7 +4,7 @@ export class PagedList {
 
     constructor(public pagedList:any) {
         this.list = pagedList.list;
-        this.page = pagedList.page;
+        this.page = new Page(pagedList.page);
     }
 }
 

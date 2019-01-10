@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ValueAccessorBase} from "../+entity-admin/input/value-accessor";
+import {ValueAccessorBase} from "../+entity-admin/field/value-accessor";
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CategoriaObjetivo} from "../shared/model/models";
 

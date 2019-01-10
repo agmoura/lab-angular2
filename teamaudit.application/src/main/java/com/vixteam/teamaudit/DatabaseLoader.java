@@ -38,7 +38,7 @@ public class DatabaseLoader implements ApplicationListener<ContextRefreshedEvent
     
     public void loadDatabase(EntityManager entityManager){
         int unidadeCount = 2;
-        int escopoCount = 5;
+        int escopoCount = 25;
         int categoriaCount = 15;
         int objetivoCount = 1000;
         int classificacaoRiscoCount = 5;

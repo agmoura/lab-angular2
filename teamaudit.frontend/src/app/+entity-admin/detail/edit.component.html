@@ -4,19 +4,19 @@
             <h3 class="card-title">
                 <i class="zmdi zmdi-edit"></i>{{resourceId ? "Atualizar" : "Incluir"}} {{resource | translate}}
             </h3>
+            <ng-container *ngFor="let action of actions">
+                <button md-menu-item (click)="action.execute()" [disabled]="!action.isEnabled()">
+                    {{action.label | translate}}
+                </button>
+            </ng-container>
         </div>
 
         <div class="card-block">
-            <form [formGroup]="mainForm" class="form-horizontal">
+            <form [formGroup]="mainForm">
                 <input type="hidden" formControlName="id">
 
-                <!--<select>
-                    <option></option>
-                    <option></option>
-                </select>-->
-
                 <ng-container *ngFor="let field of formViewSchema.fields">
-                    <ng-container [dynamicField]="field" [group]="mainForm" [formSchema]="formViewSchema"></ng-container>
+                    <ng-container [dynamicField]="field" [group]="mainForm"></ng-container>
                 </ng-container>
 
                 <div class="form-group">

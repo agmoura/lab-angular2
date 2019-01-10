@@ -4,15 +4,12 @@ import {FieldComponent} from "../model/field";
 @Component({
     selector: 'boolean-input',
     template: `
-        <div class="form-group" [formGroup]="group" [hidden]="schema.hidden">
-            <label for="boolean-input-000" class="col-md-2 control-label">{{schema.label | translate}}</label>
-            <div class="col-md-10">
-                <input type="checkbox" class="form-control" id="boolean-input-000" [formControlName]="schema.source" [placeholder]="schema.label | translate">
-            </div>
-        </div>
+        <wrapper-input [formGroup]="group" [schema]="schema">
+            <input type="checkbox" class="form-control" [id]="schema.index" [formControlName]="schema.source" [placeholder]="schema.label | translate">
+        </wrapper-input>
     `,
 })
-export class BooleanInputComponent extends FieldComponent {
+export class BooleanInputComponent extends FieldComponent<boolean> {
     constructor() {
         super();
     }

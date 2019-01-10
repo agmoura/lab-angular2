@@ -27,8 +27,7 @@ export class ObjetivoListComponent implements OnInit {
             data => {
                 this.objetivos = data.list;
                 this.page = new Page(data.page);
-            },
-            error => this.errors = error
+            }
         );
     }
 

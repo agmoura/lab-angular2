@@ -4,16 +4,12 @@ import {FieldComponent} from "../model/field";
 @Component({
     selector: 'text-input',
     template: `
-        <div class="form-group" [formGroup]="group" [hidden]="schema.hidden">
-            <label for="text-input-000" class="col-md-2 control-label">{{schema.label | translate}}</label>
-            <div class="col-md-10">
-                <input type="text" class="form-control" id="text-input-000" [formControlName]="schema.source" [placeholder]="schema.label | translate" [required]="schema.required" >
-            </div>
-        </div>
-        <!--<p class="text-danger" *ngIf="firstName.errors?.required">You must include a first name.</p>-->
+        <wrapper-input [formGroup]="group" [schema]="schema">
+            <input type="text" class="form-control" [id]="schema.index" [formControlName]="schema.source" [placeholder]="schema.label | translate" [required]="schema.required" >
+        </wrapper-input>
     `,
 })
-export class TextInputComponent extends FieldComponent {
+export class TextInputComponent extends FieldComponent<string> {
     constructor() {
         super();
     }

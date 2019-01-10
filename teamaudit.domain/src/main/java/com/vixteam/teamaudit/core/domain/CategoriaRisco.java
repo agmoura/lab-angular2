@@ -4,6 +4,7 @@ package com.vixteam.teamaudit.core.domain;
 import com.vixteam.teamaudit.core.domain.baseentity.BaseEntity;
 import com.vixteam.teamaudit.core.domain.enums.SimNaoEnum;
 import com.vixteam.teamaudit.core.domain.enums.SimNaoEnumConverter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,10 +14,10 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "CATRI")
-@AttributeOverride(name="id", column=@Column(name = "CD_CATRI", columnDefinition = "CHAR(32)"))
+@AttributeOverride(name = "id", column = @Column(name = "CD_CATRI", columnDefinition = "CHAR(32)"))
 public class CategoriaRisco extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CD_ESCPO", columnDefinition = "CHAR(32)")
     private Escopo escopo;
 
@@ -35,7 +36,7 @@ public class CategoriaRisco extends BaseEntity {
     @Column(name = "ID_CATRI_INTR_SIST", length = 1, nullable = false)
     private SimNaoEnum indicadorInternoSistema = SimNaoEnum.Nao;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CD_CATRI_PAI")
     private CategoriaRisco categoriaRiscoPai;
 
@@ -45,7 +46,7 @@ public class CategoriaRisco extends BaseEntity {
     private String ordem = "";
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CD_CCRSC", nullable = false)
     private ClassificacaoRisco classificacaoRisco;
 

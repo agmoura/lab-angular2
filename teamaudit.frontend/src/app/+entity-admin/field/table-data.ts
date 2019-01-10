@@ -27,7 +27,7 @@ import {FieldComponent} from "../model/field";
 export class TableDataComponent {
     @Input() data: Array<any>;
     @Output() onEdit = new EventEmitter<any>();
-    @ContentChildren(FieldComponent) fields: QueryList<FieldComponent>;
+    @ContentChildren(FieldComponent) fields: QueryList<FieldComponent<any>>;
 
     constructor() {
     }
@@ -41,14 +41,14 @@ export class TableDataComponent {
     selector: '[table-field]'
 })
 export class TableFieldDirective implements OnInit {
-    @Input('table-field') field: FieldComponent;
+    @Input('table-field') field: FieldComponent<any>;
     @Input() record: Array<any>;
 
     constructor(private container: ViewContainerRef, private resolver: ComponentFactoryResolver) {
     }
 
     ngOnInit() {
-        let factory = this.resolver.resolveComponentFactory(<Type<FieldComponent>> this.field.constructor);
+        let factory = this.resolver.resolveComponentFactory(<Type<FieldComponent<any>>> this.field.constructor);
         let component = this.container.createComponent(factory);
         component.instance.source = this.field.source;
         component.instance.record = this.record;

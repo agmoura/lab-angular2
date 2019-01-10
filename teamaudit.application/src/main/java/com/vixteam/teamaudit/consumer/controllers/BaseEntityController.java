@@ -1,3 +1,4 @@
+/*
 package com.vixteam.teamaudit.consumer.controllers;
 
 import java.io.IOException;
@@ -121,3 +122,4 @@ public class BaseEntityController {
         facade.execute(new DeleteEntity<>(getEntityClass(commandPath), id));
     }
 }
+*/

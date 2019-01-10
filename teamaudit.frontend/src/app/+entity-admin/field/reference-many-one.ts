@@ -2,7 +2,7 @@ import {Component, OnInit, Input, ContentChildren, QueryList} from '@angular/cor
 import {DataService} from "../../shared/services/data.service";
 import {ResourceQuery} from "../../shared/model/query";
 import {SelectInputComponent} from "../input/select-input";
-import {NotificationService} from "../shared/notification.service";
+import {NotificationService} from "../../shared/services/notification.service";
 
 @Component({
     selector: 'reference-many-one',
@@ -28,8 +28,7 @@ export class ReferenceManyToOneComponent implements OnInit {
             .subscribe(
                 data => {
                     this.fields.forEach(field => field.items = data.list);
-                },
-                error => NotificationService.showError('Ocorreu um erro: ' + JSON.stringify(error.json().errors))
+                }
             );
     }
 }

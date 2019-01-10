@@ -4,7 +4,7 @@ import {DataService} from "../../shared/services/data.service";
 import {Page} from "../../shared/model/paged-list";
 import {ResourceQuery} from "../../shared/model/query";
 import {TableDataComponent} from "./table-data";
-import {NotificationService} from "../shared/notification.service";
+import {NotificationService} from "../../shared/services/notification.service";
 
 @Component({
     selector: 'list-view',
@@ -56,7 +56,7 @@ export class ListViewComponent implements OnInit, OnDestroy, AfterContentInit {
                     this.children.forEach(child => child.data = data.list);
                     this.resourceQuery.pageItem(this.page = new Page(data.page));
                 },
-                error => NotificationService.showError('Ocorreu um erro: ' + JSON.stringify(error.json().errors))
+                error => NotificationService.error('Ocorreu um erro: ' + JSON.stringify(error.json().errors))
             );
     }
 
