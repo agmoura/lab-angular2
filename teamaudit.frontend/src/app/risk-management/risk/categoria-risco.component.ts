@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {CategoriaRisco} from '../../shared/model/models';
-import {Page} from '../../shared/model/paged-list';
-import {TreeItem} from '../../shared/model/tree-list';
+import {Page} from '../../shared/model';
+import {TreeItem} from './tree-list';
 import {CategoriaRiscoService} from './categoria-risco.service';
 
 @Component({

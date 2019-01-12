@@ -1,5 +1,5 @@
 import {Route} from "@angular/router";
-import {FieldType, ListComponent, EditComponent, ResourceSchema} from '../../+entity-admin';
+import {FieldType, ListComponent, EditComponent, ResourceSchema} from '../../shared/entity-admin';
 
 export const escopoRoutes: Route[] = [
     {path: 'escopos', component: ListComponent, data: {schema: getEscopoResource}},

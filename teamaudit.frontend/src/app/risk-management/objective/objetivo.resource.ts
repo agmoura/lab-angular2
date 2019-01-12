@@ -3,7 +3,7 @@ import {Injectable} from "@angular/core";
 import {FormGroup, Validators} from '@angular/forms';
 import {Observable, EMPTY} from "rxjs";
 
-import {BaseAction, RouteAction, FieldType, ListComponent, EditComponent, ResourceSchema, ReferenceDataSource} from '../../+entity-admin';
+import {BaseAction, RouteAction, FieldType, ListComponent, EditComponent, ResourceSchema, ReferenceDataSource} from '../../shared/entity-admin';
 import {EntityBase} from "../../shared/model/models";
 import {DataService} from "../../shared/services/data.service";
 import {NotificationService} from '../../shared/services/notification.service';
@@ -85,3 +85,5 @@ export const objetivoResource = new ResourceSchema('objetivos', {
         ]
     }
 });
+
+export const objetivoProviders = [DuplicateObjetiveAction];

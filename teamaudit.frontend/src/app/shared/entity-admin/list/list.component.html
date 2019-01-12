@@ -1,0 +1,22 @@
+<div class="col-md-12">
+    <div class="card mt-4">
+        <div class="card-header">
+            <i class="zmdi zmdi-filter-list"></i>Manter {{resource.toUpperCase() | translate}}
+        </div>
+
+        <div class="card-body">
+            <!--<datagrid
+                [resource]="resource"
+                [listViewSchema]="listViewSchema"
+                (onCreate)="onCreate()"
+                (onEdit)="onEdit($event)">
+            </datagrid>-->
+            <dxdatagrid
+                [resource]="resource"
+                [listViewSchema]="listViewSchema"
+                (onCreate)="onCreate()"
+                (onEdit)="onEdit($event)">
+            </dxdatagrid>
+        </div>
+    </div>
+</div>

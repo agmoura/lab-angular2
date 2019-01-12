@@ -3,9 +3,8 @@ import {Route} from '@angular/router';
 import {FormGroup, Validators} from '@angular/forms';
 import {EMPTY, Observable} from 'rxjs';
 
-import {FieldType, ReferenceType, ListComponent, EditComponent, ResourceSchema, ReferenceDataSource, BaseAction} from '../../+entity-admin';
+import {IFormField, FieldType, ReferenceType, ListComponent, EditComponent, ResourceSchema, ReferenceDataSource, BaseAction} from '../../shared/entity-admin';
 import {objetivoResource} from './objetivo.resource';
-import {IFormField} from '../../+entity-admin/model/schema';
 import {EntityBase} from '../../shared/model/models';
 
 // HACK: Passar função 'getCategoriaObjetivoResource', ao invés de 'categoriaObjetivoResource', no campo 'data' para permitir verificação estática do modo AOT
@@ -14,8 +13,6 @@ export const categoriaObjetivoRoutes: Route[] = [
     {path: 'categoriaObjetivos/edit', component: EditComponent, resolve: {schema: getCategoriaObjetivoResource}},
     {path: 'categoriaObjetivos/edit/:id', component: EditComponent, resolve: {schema: getCategoriaObjetivoResource}}
 ];
-
-export const categoriaObjetivoProvider = {provide: getCategoriaObjetivoResource, useValue: getCategoriaObjetivoResource};
 
 export function getCategoriaObjetivoResource() {
     return categoriaObjetivoResource;
@@ -44,7 +41,7 @@ export class ChangeScopeAction extends BaseAction<EntityBase> {
     }
 }
 
-export const categoriaObjetivoResource = new ResourceSchema ('categoriaObjetivos', {
+export const categoriaObjetivoResource = new ResourceSchema('categoriaObjetivos', {
     listView: {
         fields: [
             {source: 'escopo.descricao'},
@@ -169,3 +166,8 @@ export const categoriaObjetivoResource = new ResourceSchema ('categoriaObjetivos
         ]
     }
 });
+
+export const categoriaObjetivoProviders = [
+    {provide: getCategoriaObjetivoResource, useValue: getCategoriaObjetivoResource},
+    ChangeScopeAction
+];

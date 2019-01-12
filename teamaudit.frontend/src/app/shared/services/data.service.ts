@@ -5,7 +5,7 @@ import {PagedList, Page} from "../model/paged-list";
 import {EntityBase} from "../model/models";
 import {ResourceQuery} from "../model/query";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class DataService {
 
     //baseUrl: string = 'http://localhost:8080/teamaudit/api/';
@@ -23,11 +23,8 @@ export class DataService {
         let url: string = this.baseUrl + path + '?';
 
         if (page) url += 'page.number=' + page.number + '&page.size=' + page.size;
-
         if (sorts) sorts.forEach(sort => url += '&sorts=' + sort);
-
         if (predicates) predicates.forEach(predicate => url += '&predicates=' + predicate);
-
         if (projections) projections.forEach(projection => url += '&projections=' + projection);
 
         return this.http.get<PagedList>(url);

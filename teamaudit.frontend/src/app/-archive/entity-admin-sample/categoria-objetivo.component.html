@@ -1,0 +1,47 @@
+<list-view>
+    <table-data>
+        <text-field label="ID" source="id" ></text-field>
+        <text-field label="Nome" source="nome" ></text-field>
+        <text-field label="Descrição" source="descricao" ></text-field>
+        <boolean-field label="Interno" source="indicadorInternoSistema" ></boolean-field>
+        <text-field label="Escopo" source="escopo.descricao" ></text-field>
+        <!--<edit-button></edit-button>-->
+    </table-data>
+</list-view>
+
+<edit-view>
+    <simple-form>
+        <text-input label="Nome" [(ngModel)]="record.nome"></text-input>
+        <text-input label="Descrição" [(ngModel)]="record.descricao"></text-input>
+        <boolean-input label="Interno" [(ngModel)]="record.indicadorInternoSistema"></boolean-input>
+        <reference-many-one resource="escopos">
+            <select-input label="Escopo" sourceValue="id" sourceText="nome" [ngModel]="record.escopo?.id" (ngModelChange)="record.escopo.id=$event"></select-input>
+        </reference-many-one>
+
+        <reference-one-many resource="objetivos" target="categoriaObjetivo.id" [targetId]="record.id">
+            <table-data>
+                <text-field source="nome" label="Nome"></text-field>
+                <text-field source="descricao" label="Descrição"></text-field>
+            </table-data>
+        </reference-one-many>
+    </simple-form>
+
+    <!--<tab-group>
+        <tab-item>
+            <reference-many reference="objetivo" target="categoriaObjetivo.id">
+                <table-data>
+                    <text-field source="nome" label="Nome"></text-field>
+                    <text-field source="descricao" label="Descrição"></text-field>
+                </table-data>
+            </reference-many>
+        </tab-item>
+        <tab-item>
+            <reference-many reference="entidade" target="categoriasObjetivos">
+                <table-data>
+                    <text-field source="nome" label="Nome"></text-field>
+                    <text-field source="descricao" label="Descrição"></text-field>
+                </table-data>
+            </reference-many>
+        </tab-item>
+    </tab-group>-->
+</edit-view>

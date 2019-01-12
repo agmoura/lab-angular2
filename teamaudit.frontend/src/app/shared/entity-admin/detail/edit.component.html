@@ -1,0 +1,60 @@
+<div class="col-md-12" *ngIf="!childEdit">
+    <div class="card mt-4">
+        <div class="card-header">
+            <i class="zmdi zmdi-edit"></i>{{resourceId ? "Atualizar" : "Incluir"}} {{resource | translate}}
+            <ng-container *ngFor="let action of actions">
+                <button (click)="action.execute()" [disabled]="!action.isEnabled()">
+                    {{action.label | translate}}
+                </button>
+            </ng-container>
+        </div>
+
+        <div class="card-body">
+            <form [formGroup]="mainForm">
+                <input type="hidden" formControlName="id">
+
+                <ng-container *ngFor="let field of formViewSchema.fields">
+                    <ng-container [dynamicField]="field" [group]="mainForm"></ng-container>
+                </ng-container>
+
+                <div class="form-group">
+                    <div class="col-md-10 offset-md-2">
+                        <ng-content></ng-content>
+                        <button class="btn btn-primary mr-2" (click)="save(mainForm.value)" [disabled]="mainForm.invalid">SAVE</button>
+                        <button class="btn btn-light mr-2" (click)="goBack()">BACK</button>
+                        <button class="btn btn-light" (click)="delete()">DELETE</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div *ngIf="resourceId && formViewSchema.references">
+        <div class="card mt-4" *ngFor="let reference of formViewSchema.references" >
+            <div class="card-header">
+                <i class="zmdi zmdi-edit"></i>{{reference.resource.toUpperCase() | translate}}
+            </div>
+            <div class="card-body">
+                <reference-many [referenceSchema]="reference" [resource]="resource" [targetId]="resourceId" (onEdit)="childEdit = $event"></reference-many>
+            </div>
+        </div>
+    </div>
+
+    <!--TODO: Remover Informações de Depuração-->
+    <strong>form.value:</strong> {{mainForm.value | json}}
+</div>
+
+<edit *ngIf="childEdit"
+      [resource]="childEdit.referenceSchema.resource"
+      [resourceId]="childEdit.resourceId"
+      [target]="childEdit.referenceSchema.target"
+      [targetId]="resourceId"
+      [formViewSchema]="childEdit.referenceSchema.formView">
+    <button (click)="childEdit = null">VOLTAR2</button>
+</edit>
+
+
+
+
+
+

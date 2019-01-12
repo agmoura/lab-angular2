@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule}   from '@angular/common';
-import {EntityAdminModule} from "../+entity-admin/entity-admin.module";
+import {EntityAdminModule} from "../shared/entity-admin/entity-admin.module";
 import {RiskManagementRoutingModule} from "./risk-management-routing.module";
 import {RiskModule} from './risk/risk.module';
 
