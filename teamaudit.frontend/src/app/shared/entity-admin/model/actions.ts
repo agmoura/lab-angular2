@@ -1,4 +1,4 @@
-import {Injectable, Injector, ReflectiveInjector, Type} from '@angular/core';
+import {Injectable, Injector, Type} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormGroup} from '@angular/forms';
 import {Observable, EMPTY} from 'rxjs';
@@ -17,16 +17,10 @@ export interface IAction<T> {
 @Injectable()
 export class ActionService<T> {
 
-    constructor(private injector: Injector) {
-
-    }
+    constructor(private injector: Injector) { }
 
     public getActions(actionSchemas: IAction<T>[], context: Data): BaseAction<T>[] {
-
         if (!actionSchemas) return [];
-
-        // const injector = Injector.create({providers: [], parent: this.injector});
-        // const injector = ReflectiveInjector.fromResolvedProviders([], this.injector);
 
         return actionSchemas.map(schema => {
             let action: BaseAction<T> = this.injector.get(schema.action); // Prototype Scope
@@ -41,7 +35,6 @@ export class ActionService<T> {
 
 export abstract class BaseAction<T> {
     public label: string;
-
     public icon: string;
 
     public isEnabled(): boolean {

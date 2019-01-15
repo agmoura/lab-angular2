@@ -4,10 +4,14 @@ import {CommonModule}   from '@angular/common';
 import {HttpClientModule} from "@angular/common/http";
 import {TranslateModule} from "@ngx-translate/core";
 import {DxDataGridModule} from 'devextreme-angular/ui/data-grid';
+import {DxDrawerModule} from 'devextreme-angular/ui/drawer';
+import {DxPopupModule} from 'devextreme-angular/ui/popup';
+import {DxScrollViewModule} from 'devextreme-angular/ui/scroll-view';
 
 import {entityAdminRouting} from "./entity-admin.routes";
 import {ListComponent} from "./list/list.component";
 import {EditComponent} from "./detail/edit.component";
+import {DynamicFormComponent} from './detail/dynamic-form.component';
 import {WrapperInputComponent} from "./input/wrapper-input";
 import {TextInputComponent} from "./input/text-input";
 import {SelectInputComponent} from "./input/select-input";
@@ -37,7 +41,10 @@ const components = [
         HttpClientModule,
         TranslateModule,
         entityAdminRouting,
-        DxDataGridModule
+        DxDataGridModule,
+        DxDrawerModule,
+        DxPopupModule,
+        DxScrollViewModule
     ],
     declarations: [
         ListComponent,
@@ -45,6 +52,7 @@ const components = [
         // DatagridComponent,
         DxDatagridComponent,
         ReferenceManyComponent,
+        DynamicFormComponent,
         DynamicFieldDirective,
         WrapperInputComponent,
         ...components,

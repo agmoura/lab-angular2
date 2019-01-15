@@ -1,32 +1,32 @@
 import {Component, Input, SimpleChanges, OnChanges, EventEmitter, Output} from '@angular/core';
-import {ReferenceSchema, ReferenceType} from "../model/schema";
-import {DataService} from "../../services/data.service";
-import {DxDatagridComponent} from "../list/dxdatagrid.component";
-import {NotificationService} from "../../services/notification.service";
+import {ReferenceSchema, ReferenceType} from '../model/schema';
+import {DataService} from '../../services/data.service';
+import {DxDatagridComponent} from '../list/dxdatagrid.component';
+import {NotificationService} from '../../services/notification.service';
 
 @Component({
     selector: 'reference-many',
     template: `
-    <ng-container *ngIf="referenceSchema.type === ReferenceType.ManyToMany">
-        <dxdatagrid #datagrid
-                  [resource]="referenceSchema.resource" 
-                  [listViewSchema]="referenceSchema.listView"
-                  [filter]="filter"
-                  (onCreate)="edit()"
-                  (onEdit)="edit($event)"
-                  (onLink)="selectedKeys = $event;">
-        </dxdatagrid>
-    </ng-container>
-    
-    <ng-container *ngIf="referenceSchema.type === ReferenceType.OneToMany">
-        <dxdatagrid [resource]="referenceSchema.resource" 
-                  [listViewSchema]="referenceSchema.listView"
-                  [filter]="filter"
-                  (onCreate)="edit()"
-                  (onEdit)="edit($event)">
-        </dxdatagrid>
-    </ng-container>
-   `
+        <ng-container *ngIf="referenceSchema.type === ReferenceType.ManyToMany">
+            <dxdatagrid #datagrid
+                        [resource]="referenceSchema.resource"
+                        [listViewSchema]="referenceSchema.listView"
+                        [filter]="filter"
+                        (onCreate)="edit()"
+                        (onEdit)="edit($event)"
+                        (onLink)="selectedKeys = $event;">
+            </dxdatagrid>
+        </ng-container>
+
+        <ng-container *ngIf="referenceSchema.type === ReferenceType.OneToMany">
+            <dxdatagrid [resource]="referenceSchema.resource"
+                        [listViewSchema]="referenceSchema.listView"
+                        [filter]="filter"
+                        (onCreate)="edit()"
+                        (onEdit)="edit($event)">
+            </dxdatagrid>
+        </ng-container>
+    `
 })
 export class ReferenceManyComponent implements OnChanges {
     @Input() referenceSchema: ReferenceSchema;

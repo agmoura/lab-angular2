@@ -1,57 +1,86 @@
-<div class="col-md-12" *ngIf="!childEdit">
+<div class="col-md-12">
     <div class="card mt-4">
         <div class="card-header">
-            <i class="zmdi zmdi-edit"></i>{{resourceId ? "Atualizar" : "Incluir"}} {{resource | translate}}
-            <ng-container *ngFor="let action of actions">
-                <button (click)="action.execute()" [disabled]="!action.isEnabled()">
+            <h4 class="card-title">{{resourceId ? "Atualizar" : "Incluir"}} {{resource | translate}}</h4>
+        </div>
+        <div class="card-body">
+            <dynamicForm
+                #main
+                [schema]="schema"
+                [resourceId]="resourceId"
+                (close)="goBack()">
+            </dynamicForm>
+            <!--<form [formGroup]="mainForm">
+                <input type="hidden" formControlName="id">
+                <ng-container *ngFor="let field of formViewSchema.fields">
+                    <ng-container [dynamicField]="field" [group]="mainForm"></ng-container>
+                </ng-container>
+            </form>-->
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-outline-primary mr-2" (click)="main.save()"> Salvar</button>
+            <button class="btn btn-outline-secondary mr-2" (click)="goBack()"> Voltar</button>
+            <button class="btn btn-outline-danger mr-2" (click)="main.delete()"> Excluir</button>
+            <ng-container *ngFor="let action of main.actions">
+                <button class="btn btn-outline-secondary mr-2" (click)="action.execute()" [disabled]="!action.isEnabled()">
                     {{action.label | translate}}
                 </button>
             </ng-container>
         </div>
-
-        <div class="card-body">
-            <form [formGroup]="mainForm">
-                <input type="hidden" formControlName="id">
-
-                <ng-container *ngFor="let field of formViewSchema.fields">
-                    <ng-container [dynamicField]="field" [group]="mainForm"></ng-container>
-                </ng-container>
-
-                <div class="form-group">
-                    <div class="col-md-10 offset-md-2">
-                        <ng-content></ng-content>
-                        <button class="btn btn-primary mr-2" (click)="save(mainForm.value)" [disabled]="mainForm.invalid">SAVE</button>
-                        <button class="btn btn-light mr-2" (click)="goBack()">BACK</button>
-                        <button class="btn btn-light" (click)="delete()">DELETE</button>
-                    </div>
-                </div>
-            </form>
-        </div>
     </div>
 
     <div *ngIf="resourceId && formViewSchema.references">
-        <div class="card mt-4" *ngFor="let reference of formViewSchema.references" >
+        <div *ngFor="let reference of formViewSchema.references" class="card mt-4">
             <div class="card-header">
-                <i class="zmdi zmdi-edit"></i>{{reference.resource.toUpperCase() | translate}}
+                {{reference.resource.toUpperCase() | translate}}
             </div>
             <div class="card-body">
-                <reference-many [referenceSchema]="reference" [resource]="resource" [targetId]="resourceId" (onEdit)="childEdit = $event"></reference-many>
+                <reference-many
+                    [referenceSchema]="reference"
+                    [resource]="resource"
+                    [targetId]="resourceId"
+                    (onEdit)="childEdit = $event">
+                </reference-many>
             </div>
         </div>
     </div>
-
-    <!--TODO: Remover Informações de Depuração-->
-    <strong>form.value:</strong> {{mainForm.value | json}}
 </div>
 
-<edit *ngIf="childEdit"
+<dx-popup
+    [title]="(childEdit?.resourceId ? 'Atualizar ' : 'Incluir ') + (childEdit?.referenceSchema.resource | translate)"
+    position="right top"
+    height="100%"
+    [dragEnabled]="false"
+    [closeOnOutsideClick]="true"
+    [visible]="childEdit">
+
+    <dxi-toolbar-item
+        widget="dxButton"
+        location="after"
+        [options]="{text: 'Salvar', onClick: refresh}">
+    </dxi-toolbar-item>
+
+    <div *dxTemplate="let data of 'content'">
+        <dx-scroll-view>
+            <dynamicForm
+                #reference
+                [schema]="childEdit.referenceSchema"
+                [resourceId]="childEdit.resourceId"
+                [targetId]="resourceId"
+                (close)="childEdit = null">
+            </dynamicForm>
+        </dx-scroll-view>
+    </div>
+</dx-popup>
+
+<!--<edit *ngIf="childEdit"
       [resource]="childEdit.referenceSchema.resource"
       [resourceId]="childEdit.resourceId"
       [target]="childEdit.referenceSchema.target"
       [targetId]="resourceId"
       [formViewSchema]="childEdit.referenceSchema.formView">
-    <button (click)="childEdit = null">VOLTAR2</button>
-</edit>
+    <button class="btn btn-outline-secondary mr-2" (click)="childEdit = null"> Voltar2 </button>
+</edit>-->
 
 
 

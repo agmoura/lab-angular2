@@ -10,8 +10,8 @@ import {EntityBase} from '../../shared/model/models';
 // HACK: Passar função 'getCategoriaObjetivoResource', ao invés de 'categoriaObjetivoResource', no campo 'data' para permitir verificação estática do modo AOT
 export const categoriaObjetivoRoutes: Route[] = [
     {path: 'categoriaObjetivos', component: ListComponent, data: {schema: getCategoriaObjetivoResource}},
-    {path: 'categoriaObjetivos/edit', component: EditComponent, resolve: {schema: getCategoriaObjetivoResource}},
-    {path: 'categoriaObjetivos/edit/:id', component: EditComponent, resolve: {schema: getCategoriaObjetivoResource}}
+    {path: 'categoriaObjetivos/edit', component: EditComponent, data: {schema: getCategoriaObjetivoResource}},
+    {path: 'categoriaObjetivos/edit/:id', component: EditComponent, data: {schema: getCategoriaObjetivoResource}}
 ];
 
 export function getCategoriaObjetivoResource() {
