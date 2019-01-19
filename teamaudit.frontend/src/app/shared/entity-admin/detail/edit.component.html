@@ -1,89 +1,70 @@
-<div class="col-md-12">
-    <div class="card mt-4">
-        <div class="card-header">
-            <h4 class="card-title">{{resourceId ? "Atualizar" : "Incluir"}} {{resource | translate}}</h4>
-        </div>
-        <div class="card-body">
-            <dynamicForm
-                #main
-                [schema]="schema"
-                [resourceId]="resourceId"
-                (close)="goBack()">
-            </dynamicForm>
-            <!--<form [formGroup]="mainForm">
-                <input type="hidden" formControlName="id">
-                <ng-container *ngFor="let field of formViewSchema.fields">
-                    <ng-container [dynamicField]="field" [group]="mainForm"></ng-container>
-                </ng-container>
-            </form>-->
-        </div>
-        <div class="card-footer">
-            <button class="btn btn-outline-primary mr-2" (click)="main.save()"> Salvar</button>
-            <button class="btn btn-outline-secondary mr-2" (click)="goBack()"> Voltar</button>
-            <button class="btn btn-outline-danger mr-2" (click)="main.delete()"> Excluir</button>
-            <ng-container *ngFor="let action of main.actions">
-                <button class="btn btn-outline-secondary mr-2" (click)="action.execute()" [disabled]="!action.isEnabled()">
+<nz-card
+    [nzTitle]="(resourceId ? 'Atualizar ' : 'Incluir ') + (resource.toUpperCase() | translate)"
+    [nzBordered]="false"
+    [nzExtra]="mainActions">
+
+    <dynamicForm
+        #main
+        [schema]="schema"
+        [(resourceId)]="resourceId"
+        (close)="goBack()">
+    </dynamicForm>
+</nz-card>
+
+<ng-template #mainActions>
+    <nz-button-group>
+        <button nz-button nzType="primary" (click)="main.save().subscribe()"><i nz-icon type="save"></i> Save</button>
+        <button nz-button nzType="default" (click)="goBack()"><i nz-icon type="close"></i> Cancel</button>
+        <button nz-button nzType="danger" (click)="main.delete()" [disabled]="!resourceId"><i nz-icon type="delete"></i> Delete</button>
+
+        <nz-dropdown *ngIf="main.actions.length">
+            <button nz-button nz-dropdown><span> Actions </span> <i nz-icon type="down"></i></button>
+            <ul nz-menu>
+                <li nz-menu-item *ngFor="let action of main.actions" (click)="action.execute()" [nzDisabled]="!action.isEnabled()">
                     {{action.label | translate}}
-                </button>
-            </ng-container>
+                </li>
+            </ul>
+        </nz-dropdown>
+    </nz-button-group>
+    <!--<ng-container *ngFor="let action of main.actions">
+        <button nz-button nzType="default" (click)="action.execute()" [disabled]="!action.isEnabled()">
+            {{action.label | translate}}
+        </button>
+    </ng-container>-->
+</ng-template>
+
+<ng-container *ngIf="resourceId && formViewSchema.references">
+    <ng-container *ngFor="let reference of formViewSchema.references">
+        <reference-many
+            [schema]="reference"
+            [resource]="resource"
+            [targetId]="resourceId"
+            style="display: block; margin-top: 25px">
+        </reference-many>
+    </ng-container>
+</ng-container>
+
+<!--<nz-drawer
+    [nzTitle]="(childEdit?.resourceId ? 'Atualizar ' : 'Incluir ') + (childEdit?.schema.resource | translate)"
+    [nzWidth]="750"
+    [nzVisible]="childEdit"
+    (nzOnClose)="childEdit = null">
+
+    <ng-container *ngIf="childEdit">
+        <dynamicForm
+            #child
+            [schema]="childEdit.schema"
+            [resourceId]="childEdit.resourceId"
+            [targetId]="resourceId"
+            (close)="childEdit = null">
+        </dynamicForm>
+
+        <div class="footer">
+            <button nz-button nzType="default" (click)="childEdit = null"><i nz-icon type="close"></i> Cancel</button>
+            <button nz-button nzType="primary" (click)="child.save()"><i nz-icon type="save"></i> Save</button>
         </div>
-    </div>
-
-    <div *ngIf="resourceId && formViewSchema.references">
-        <div *ngFor="let reference of formViewSchema.references" class="card mt-4">
-            <div class="card-header">
-                {{reference.resource.toUpperCase() | translate}}
-            </div>
-            <div class="card-body">
-                <reference-many
-                    [referenceSchema]="reference"
-                    [resource]="resource"
-                    [targetId]="resourceId"
-                    (onEdit)="childEdit = $event">
-                </reference-many>
-            </div>
-        </div>
-    </div>
-</div>
-
-<dx-popup
-    [title]="(childEdit?.resourceId ? 'Atualizar ' : 'Incluir ') + (childEdit?.referenceSchema.resource | translate)"
-    position="right top"
-    height="100%"
-    [dragEnabled]="false"
-    [closeOnOutsideClick]="true"
-    [visible]="childEdit">
-
-    <dxi-toolbar-item
-        widget="dxButton"
-        location="after"
-        [options]="{text: 'Salvar', onClick: refresh}">
-    </dxi-toolbar-item>
-
-    <div *dxTemplate="let data of 'content'">
-        <dx-scroll-view>
-            <dynamicForm
-                #reference
-                [schema]="childEdit.referenceSchema"
-                [resourceId]="childEdit.resourceId"
-                [targetId]="resourceId"
-                (close)="childEdit = null">
-            </dynamicForm>
-        </dx-scroll-view>
-    </div>
-</dx-popup>
-
-<!--<edit *ngIf="childEdit"
-      [resource]="childEdit.referenceSchema.resource"
-      [resourceId]="childEdit.resourceId"
-      [target]="childEdit.referenceSchema.target"
-      [targetId]="resourceId"
-      [formViewSchema]="childEdit.referenceSchema.formView">
-    <button class="btn btn-outline-secondary mr-2" (click)="childEdit = null"> Voltar2 </button>
-</edit>-->
-
-
-
+    </ng-container>
+</nz-drawer>-->
 
 
 

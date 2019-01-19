@@ -5,19 +5,21 @@ import {FormFieldSchema} from "../model/schema";
 @Component({
     selector: 'wrapper-input',
     template: `
-        <div class="form-group row" [hidden]="schema.hidden">
-            <label [for]="schema.index" class="col-md-2 col-form-label">{{schema.label | translate}}</label>
-            <div class="col-md-10">
+        <nz-form-item [hidden]="schema.hidden">
+            <nz-form-label [nzSm]="6" [nzXs]="24" [nzFor]="schema.index" [nzRequired]="schema.required">
+                {{schema.label | translate}}
+            </nz-form-label>
+            <nz-form-control [nzSm]="18" [nzXs]="24">
+                <!--<input nz-input type="text" [id]="schema.index" [formControlName]="schema.source" [placeholder]="schema.label | translate" [required]="schema.required" >-->
                 <ng-content></ng-content>
                 <ng-container *ngIf="control.errors && (control.dirty || control.touched)">
-                    <small *ngFor="let error of control.errors | keyvalue" class="text-danger">
+                    <nz-form-explain *ngFor="let error of control.errors | keyvalue">
                         {{ ('VALIDATORS.' + error.key).toUpperCase() | translate: getParameters(schema.label | translate, error.value) }}
-                    </small>
+                    </nz-form-explain>
                 </ng-container>
-            </div>
-        </div>
-    `,
-    styles: [".text-danger {display: block}"]
+            </nz-form-control>
+        </nz-form-item>
+    `
 })
 export class WrapperInputComponent implements OnInit {
     @Input() schema: FormFieldSchema<any>;

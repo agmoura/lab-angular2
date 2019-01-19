@@ -1,5 +1,7 @@
 import {FormGroup} from '@angular/forms';
 import {Component, OnChanges, Input, SimpleChanges, Output, EventEmitter} from '@angular/core';
+import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 import {EntityBase} from '../../model/models';
 import {DataService} from '../../services/data.service';
@@ -11,7 +13,7 @@ import {BaseAction} from '../index';
 @Component({
     selector: 'dynamicForm',
     template: `
-        <form [formGroup]="mainForm">
+        <form nz-form [formGroup]="mainForm">
             <input type="hidden" formControlName="id">
             <ng-container *ngFor="let field of formViewSchema.fields">
                 <ng-container [dynamicField]="field" [group]="mainForm"></ng-container>
@@ -25,6 +27,7 @@ export class DynamicFormComponent implements OnChanges {
     @Input() schema: ResourceSchema & ReferenceSchema;
     @Input() resourceId: string;
     @Input() targetId: string;
+    @Output() resourceIdChange = new EventEmitter<string>();
     @Output() close = new EventEmitter<void>();
 
     public resource: string;
@@ -32,7 +35,10 @@ export class DynamicFormComponent implements OnChanges {
     public mainForm: FormGroup;
     public actions: BaseAction<EntityBase>[];
 
-    constructor(private actionService: ActionService<EntityBase>, private dataService: DataService) { }
+    constructor(private notification: NotificationService,
+                private actionService: ActionService<EntityBase>,
+                private dataService: DataService) {
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
         this.resource = this.schema.resource;
@@ -71,9 +77,8 @@ export class DynamicFormComponent implements OnChanges {
         }
     }
 
-    public save() {
+    public save(): Observable<any> {
         const entity = this.mainForm.value;
-
         // this.actions.execute(new saveEntity(this.resource, entity));
         // this.cleanEntity(entity);
 
@@ -81,20 +86,18 @@ export class DynamicFormComponent implements OnChanges {
         if (this.schema.target) {
             let targetPath: string[] = this.schema.target.split('.');
 
-            if (targetPath.length > 1) {
-                if (!entity[targetPath[0]]) entity[targetPath[0]] = {[targetPath[1]]: this.targetId};
-            } else
+            if (targetPath.length > 1)
+                entity[targetPath[0]] = {[targetPath[1]]: this.targetId};
+            else
                 entity[targetPath[0]] = [{id: this.targetId}];
         }
 
-        this.dataService.save<any>(this.resource, entity).subscribe(
-            data => this.mainForm.patchValue(data),
-            undefined,
-            () => {
-                this.resourceId = this.mainForm.get('id').value;
-                NotificationService.success('Operação realizada com sucesso');
-            }
-        );
+        return this.dataService.save<any>(this.resource, entity).pipe(tap(data => {
+            this.mainForm.patchValue(data);
+            this.resourceId = this.mainForm.get('id').value;
+            this.resourceIdChange.emit(this.resourceId);
+            this.notification.success('Operação realizada com sucesso');
+        }));
     }
 
     public delete() {
@@ -102,7 +105,7 @@ export class DynamicFormComponent implements OnChanges {
             data => data,
             undefined,
             () => {
-                NotificationService.success('Exclusão realizada com sucesso');
+                this.notification.success('Exclusão realizada com sucesso');
                 this.close.emit();
             }
         );

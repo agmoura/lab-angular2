@@ -5,7 +5,7 @@ import {FieldComponent} from "../model/field";
     selector: 'text-input',
     template: `
         <wrapper-input [formGroup]="group" [schema]="schema">
-            <input type="text" class="form-control" [id]="schema.index" [formControlName]="schema.source" [placeholder]="schema.label | translate" [required]="schema.required" >
+            <input nz-input type="text" [id]="schema.index" [formControlName]="schema.source" [placeholder]="schema.label | translate" [required]="schema.required" >
         </wrapper-input>
     `,
 })

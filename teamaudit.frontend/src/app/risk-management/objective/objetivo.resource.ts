@@ -22,7 +22,7 @@ export function getObjetivoResource() {
 export class DuplicateObjetiveAction extends BaseAction<EntityBase> {
     public form: FormGroup;
 
-    constructor(private dataService: DataService) {
+    constructor(private dataService: DataService, private notification: NotificationService) {
         super();
     }
 
@@ -37,7 +37,7 @@ export class DuplicateObjetiveAction extends BaseAction<EntityBase> {
         this.dataService.save('objetivos', entity).subscribe(
             data => {},
             undefined,
-            () => NotificationService.success('Cópia realizada com sucesso')
+            () => this.notification.success('Cópia realizada com sucesso')
         );
 
         return EMPTY;

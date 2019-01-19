@@ -1,11 +1,10 @@
-import {Component, ViewEncapsulation, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'ta-root',
-    encapsulation: ViewEncapsulation.None,
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit {
 

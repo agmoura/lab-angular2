@@ -1,17 +1,24 @@
-import {HttpClient} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {FieldComponent} from "../model/field";
+import {FieldComponent} from '../model/field';
 
 @Component({
     selector: 'select-input',
     template: `
         <wrapper-input [formGroup]="group" [schema]="schema">
-            <select class="form-control" [id]="schema.index" [formControlName]="'id'" [required]="schema.required">
-                <option value="">--- SELECT ---</option>
-                <option *ngFor="let item of items" [ngValue]="item[schema.dataSource.valueField]">
-                    {{item[schema.dataSource.textField]}}
-                </option>
-            </select>
+            <nz-select
+                [id]="schema.index"
+                [formControlName]="'id'"
+                [required]="schema.required"
+                [nzShowSearch]="true"
+                [nzAllowClear]="true"
+                nzPlaceHolder="Choose">
+                <nz-option
+                    *ngFor="let item of items"
+                    [nzValue]="item[schema.dataSource.valueField]"
+                    [nzLabel]="item[schema.dataSource.textField]">
+                </nz-option>
+            </nz-select>
         </wrapper-input>
     `,
 })

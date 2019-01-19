@@ -1,28 +1,26 @@
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule}   from '@angular/common';
-import {HttpClientModule} from "@angular/common/http";
-import {TranslateModule} from "@ngx-translate/core";
-import {DxDataGridModule} from 'devextreme-angular/ui/data-grid';
-import {DxDrawerModule} from 'devextreme-angular/ui/drawer';
-import {DxPopupModule} from 'devextreme-angular/ui/popup';
-import {DxScrollViewModule} from 'devextreme-angular/ui/scroll-view';
+import {HttpClientModule} from '@angular/common/http';
+import {TranslateModule} from '@ngx-translate/core';
+import {NgZorroAntdModule} from 'ng-zorro-antd';
 
-import {entityAdminRouting} from "./entity-admin.routes";
-import {ListComponent} from "./list/list.component";
-import {EditComponent} from "./detail/edit.component";
+import {entityAdminRouting} from './entity-admin.routes';
+import {ListComponent} from './list/list.component';
+import {EditComponent} from './detail/edit.component';
 import {DynamicFormComponent} from './detail/dynamic-form.component';
-import {WrapperInputComponent} from "./input/wrapper-input";
-import {TextInputComponent} from "./input/text-input";
-import {SelectInputComponent} from "./input/select-input";
-import {NumberInputComponent} from "./input/number-input";
-import {DateInputComponent} from "./input/date-input";
-import {GroupInputComponent} from "./input/group-input";
-import {ReferenceManyComponent} from "./detail/reference-many.component";
-import {BooleanInputComponent} from "./input/boolean-input";
-import {DynamicFieldDirective} from "./input/dynamic-field.directive";
-import {DxDatagridComponent} from "./list/dxdatagrid.component";
+import {WrapperInputComponent} from './input/wrapper-input';
+import {TextInputComponent} from './input/text-input';
+import {SelectInputComponent} from './input/select-input';
+import {NumberInputComponent} from './input/number-input';
+import {DateInputComponent} from './input/date-input';
+import {GroupInputComponent} from './input/group-input';
+import {ReferenceManyComponent} from './detail/reference-many.component';
+import {BooleanInputComponent} from './input/boolean-input';
+import {DynamicFieldDirective} from './input/dynamic-field.directive';
+import {DynamicTableComponent} from './list/dynamic-table.component';
 import {ActionService} from './model/actions';
+
 
 const components = [
     SelectInputComponent,
@@ -41,16 +39,13 @@ const components = [
         HttpClientModule,
         TranslateModule,
         entityAdminRouting,
-        DxDataGridModule,
-        DxDrawerModule,
-        DxPopupModule,
-        DxScrollViewModule
+        NgZorroAntdModule
     ],
     declarations: [
         ListComponent,
         EditComponent,
         // DatagridComponent,
-        DxDatagridComponent,
+        DynamicTableComponent,
         ReferenceManyComponent,
         DynamicFormComponent,
         DynamicFieldDirective,
@@ -64,7 +59,7 @@ const components = [
         ListComponent,
         EditComponent,
         // DatagridComponent,
-        DxDatagridComponent,
+        DynamicTableComponent,
         ReferenceManyComponent,
         DynamicFieldDirective,
         ...components,

@@ -1,11 +1,15 @@
 import {Component} from '@angular/core';
-import {FieldComponent} from "../model/field";
+import {FieldComponent} from '../model/field';
 
 @Component({
     selector: 'boolean-input',
     template: `
         <wrapper-input [formGroup]="group" [schema]="schema">
-            <input type="checkbox" class="form-control" [id]="schema.index" [formControlName]="schema.source" [placeholder]="schema.label | translate">
+            <nz-switch
+                [id]="schema.index"
+                [formControlName]="schema.source"
+                [required]="schema.required">
+            </nz-switch>
         </wrapper-input>
     `,
 })

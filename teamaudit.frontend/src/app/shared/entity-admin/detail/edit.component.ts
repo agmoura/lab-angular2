@@ -14,7 +14,6 @@ export class EditComponent implements OnInit, OnDestroy {
     public resource: string;
     public resourceId: string;
     public formViewSchema: FormViewSchema;
-    public childEdit: any;
     private routeSubscription: any;
 
     constructor(private builder: FormBuilder,
@@ -36,7 +35,6 @@ export class EditComponent implements OnInit, OnDestroy {
     }
 
     public goBack() {
-        //this.router.navigate(['entity', this.resource]);
         this.location.back();
     }
 }

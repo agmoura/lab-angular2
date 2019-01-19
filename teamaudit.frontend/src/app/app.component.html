@@ -1,3 +1,43 @@
+<nz-layout class="layout">
+    <nz-header>
+        <a href="#" style="float: left; color: white"><strong>TEAM</strong>AUDIT</a>
+        <ul nz-menu nzTheme="dark" [nzMode]="'horizontal'" style="line-height: 64px;">
+            <li nz-submenu>
+                <span title><i nz-icon type="appstore"></i> Master Data </span>
+                <ul>
+                    <li nz-menu-item routerLink="/masterdata/entidades"> Entities </li>
+                </ul>
+            </li>
+            <li nz-submenu>
+                <span title><i nz-icon type="setting"></i> Risk Management </span>
+                <ul>
+                    <li nz-menu-item routerLink="/riskmanagement/categoriaRiscos"> Risk Categories </li>
+                    <li nz-menu-item routerLink="/riskmanagement/escopos"> Scopes </li>
+                    <li nz-menu-item routerLink="/riskmanagement/categoriaObjetivos"> Objective Categories </li>
+                    <li nz-menu-item routerLink="/riskmanagement/objetivos"> Objective </li>
+                </ul>
+            </li>
+            <li nz-submenu>
+                <span title><i nz-icon type="stop"></i> Old </span>
+                <ul>
+                    <li nz-menu-item routerLink="/archive/categoriaObjetivo"> Objective Categories </li>
+                    <li nz-menu-item routerLink="/archive/objetivo"> Objective </li>
+                </ul>
+            </li>
+        </ul>
+    </nz-header>
+    <nz-content style="padding:25px 25px;">
+        <!--<nz-breadcrumb style="margin:16px 0;">
+            <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+            <nz-breadcrumb-item>List</nz-breadcrumb-item>
+            <nz-breadcrumb-item>App</nz-breadcrumb-item>
+        </nz-breadcrumb>-->
+        <router-outlet></router-outlet>
+    </nz-content>
+    <nz-footer style="text-align: center;">TeamAudit ©2019 Implement By Vixteam</nz-footer>
+</nz-layout>
+
+<!--
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#"><strong>TEAM</strong>AUDIT</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,4 +62,4 @@
     <main>
         <router-outlet></router-outlet>
     </main>
-</div>
+</div>-->

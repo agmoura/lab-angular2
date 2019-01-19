@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs-compat/add/operator/map';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {Page, PagedList} from '../../shared/model/paged-list';
 import {EntityBase} from '../../shared/model/models';
 
@@ -25,9 +25,9 @@ export class CategoriaRiscoService {
         if (predicates) predicates.forEach(predicate => url += '&predicates=' + predicate);
         if (projections) projections.forEach(projection => url += '&projections=' + projection);
 
-        return this.http.get<PagedList>(url).map((result: any) =>
+        return this.http.get<any>(url).pipe(map(result =>
             new PagedList({page: result.page, list: result._embedded[path]})
-        );
+        ));
     }
 
     public getByUri<T extends EntityBase>(uri: string): Observable<T> {

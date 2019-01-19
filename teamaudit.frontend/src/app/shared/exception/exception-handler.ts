@@ -22,6 +22,7 @@ export class ExceptionHandler implements ErrorHandler {
         const zone = this.injector.get(NgZone);
         const exceptionService = this.injector.get(ExceptionService);
         const router = this.injector.get(Router);
+        const notification = this.injector.get(NotificationService);
 
         zone.run(() => {
             // Server Error
@@ -29,7 +30,7 @@ export class ExceptionHandler implements ErrorHandler {
 
                 // No Internet connection
                 if (!navigator.onLine)
-                    return NotificationService.error('No Internet Connection');
+                    return notification.error('No Internet Connection');
 
                 if (error.status === 401)
                     return router.navigate(['/login']);
@@ -38,7 +39,7 @@ export class ExceptionHandler implements ErrorHandler {
                     return router.navigate(['/forbiden']);
 
                 // Show notification to the user
-                return NotificationService.error(this.getMessage(error));
+                return notification.error(this.getMessage(error));
             }
 
             // Client Error

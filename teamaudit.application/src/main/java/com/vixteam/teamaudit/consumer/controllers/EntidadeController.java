@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/entidades")
 public class EntidadeController extends BaseController<Entidade> {
-
     public EntidadeController() {
         super(Entidade.class);
     }

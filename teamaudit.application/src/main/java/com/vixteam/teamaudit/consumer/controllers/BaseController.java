@@ -1,5 +1,7 @@
 package com.vixteam.teamaudit.consumer.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vixteam.teamaudit.consumer.commons.ApplicationException;
 import com.vixteam.teamaudit.core.domain.commons.IEntity;
 import com.vixteam.teamaudit.core.usecase.baseentity.*;
 import com.vixteam.teamaudit.core.usecase.commons.EntityQuery;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.io.Serializable;
 
 public abstract class BaseController<TEntity extends IEntity> {
@@ -56,21 +59,13 @@ public abstract class BaseController<TEntity extends IEntity> {
         return facade.execute(mountUpdateCommand(entity));
     }
 
-    /*@Transactional
+    @Transactional
     @PatchMapping("{id}")
-    public Object patch(@PathVariable String id, @RequestBody TEntity entity)  {
-
+    public Object patch(@PathVariable String id, @RequestBody String entityData) throws IOException {
         TEntity currentEntity = this.get(id);
-
-        try {
-            entity = new ObjectMapper().readerForUpdating(currentEntity).readValue(entityData);
-        } catch (IOException ex) {
-            throw new ApplicationException("Erro ao deserializar '" + entityData + "' na entidade '" + commandPath + "'");
-        }
-
+        TEntity entity = new ObjectMapper().readerForUpdating(currentEntity).readValue(entityData);
         return this.facade.execute(new UpdateEntity(entity));
-    }*/
-
+    }
 
     @Transactional
     @DeleteMapping("{id}")

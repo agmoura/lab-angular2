@@ -31,7 +31,7 @@ export class ChangeScopeAction extends BaseAction<EntityBase> {
     }
 
     public isEnabled(): boolean {
-        return true;
+        return !!this.form.value.id;
     }
 
     public execute(): Observable<EntityBase> {
@@ -46,7 +46,7 @@ export const categoriaObjetivoResource = new ResourceSchema('categoriaObjetivos'
         fields: [
             {source: 'escopo.descricao'},
             {source: 'nome'},
-            {source: 'descricao', hidden: true},
+            {source: 'descricao', hidden: false},
             {source: 'indicadorInternoSistema', type: FieldType.Boolean},
         ],
         orders: ['nome desc']

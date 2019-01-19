@@ -1,17 +1,16 @@
 import {Injectable} from '@angular/core';
-import notify from 'devextreme/ui/notify';
+import {NzMessageService} from 'ng-zorro-antd';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class NotificationService {
 
-    constructor() {
+    constructor(private service: NzMessageService) { }
+
+    public success(message: string) {
+        this.service.success(message);
     }
 
-    static success(message: string) {
-        notify(message, 'success');
-    }
-
-    static error(message: string) {
-        notify(message, 'error');
+    public error(message: string) {
+        this.service.error(message);
     }
 }

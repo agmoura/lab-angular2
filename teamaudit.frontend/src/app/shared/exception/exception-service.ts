@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
-import 'rxjs-compat/add/observable/of';
+import {Observable, of} from 'rxjs';
 
 @Injectable()
 export class ExceptionService {
@@ -17,7 +16,7 @@ export class ExceptionService {
             url: this.router.url
         };
 
-        return Observable.of(exception);
+        return of(exception);
     }
 }
 

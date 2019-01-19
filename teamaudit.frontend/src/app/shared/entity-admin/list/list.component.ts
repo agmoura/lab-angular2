@@ -30,12 +30,12 @@ export class ListComponent implements OnInit, OnDestroy {
         this.routeSubscription.unsubscribe();
     }
 
-    onCreate() {
+    create() {
         // this.router.navigate(['entity', this.resource, 'edit']);
         this.router.navigate(['edit'], {relativeTo: this.route});
     }
 
-    onEdit(id: string) {
+    edit(id: string) {
         // this.router.navigate(['entity', this.resource, 'edit', id]);
         this.router.navigate(['edit', id], {relativeTo: this.route});
     }

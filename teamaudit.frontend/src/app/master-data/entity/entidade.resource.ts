@@ -25,7 +25,7 @@ export const entidadeResource = new ResourceSchema ('entidades', {
     },
     formView: {
         fields: [
-            {source: 'nome', type: FieldType.Text},
+            {source: 'nome', type: FieldType.Text, required: true},
             {source: 'descricao', type: FieldType.Text},
             {source: 'codigoCarteiraAtiva', type: FieldType.Text},
             /*{
@@ -39,8 +39,8 @@ export const entidadeResource = new ResourceSchema ('entidades', {
                 type: FieldType.Reference,
                 dataSource: new ReferenceDataSource('planoAnual', 'id', 'numero'),
             },
-            {source: 'dataInicio', type: FieldType.Date},
-            {source: 'dataFim', type: FieldType.Date},
+            {source: 'dataInicio', type: FieldType.Date, required: true},
+            {source: 'dataFim', type: FieldType.Date, required: true},
             {source: 'codigoImportacao', type: FieldType.Text, readOnly: true}
         ],
         references: [

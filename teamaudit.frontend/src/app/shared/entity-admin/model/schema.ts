@@ -42,6 +42,7 @@ export interface IField {
     label?: string;         // Field Label Key - Default: UpperCase(Resource + '.' + Source)
     required?: boolean;
     hidden?: boolean;
+    format?: string;
 }
 
 export interface IListField<T> extends IField {
@@ -177,6 +178,7 @@ export abstract class FieldSchema implements IField {
     readonly label: string;         // Field Label Key - Default: UpperCase(Resource + '.' + Source)
     readonly required: boolean;
     readonly hidden: boolean;
+    readonly format: string;
     readonly index: number;
 
     constructor(resource: string, index: number, data: IField) {
@@ -185,6 +187,7 @@ export abstract class FieldSchema implements IField {
         this.label = data.label || (resource + '.' + data.source).toUpperCase();
         this.required = data.required;
         this.hidden = data.hidden;
+        this.format = data.format;
         this.index = index;
     }
 }

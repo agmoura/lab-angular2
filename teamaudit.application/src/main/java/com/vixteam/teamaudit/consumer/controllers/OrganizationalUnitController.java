@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController()
 @RequestMapping("api/organizationalUnits")
 public class OrganizationalUnitController extends BaseController<UnidadeOrganizacional> {
-
     public OrganizationalUnitController() {
         super(UnidadeOrganizacional.class);
     }

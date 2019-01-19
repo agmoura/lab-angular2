@@ -1,6 +1,6 @@
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import 'rxjs-compat/add/operator/map';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {IDataSource} from '../model/schema';
 import {EntityBase, PagedList, ResourceQuery} from '../../model';
 
@@ -31,7 +31,7 @@ export class ReferenceDataSource implements IDataSource<EntityBase> {
 
     execute(http: HttpClient): Observable<EntityBase[]> {
         return http.post<PagedList>(`api/${this.query.entityPath}/query`, this.query)
-            .map(data => data.list);
+            .pipe( map(data => data.list));
     }
 
     /*execute(): Observable<EntityBase> {

@@ -1,22 +1,15 @@
-<div class="col-md-12">
-    <div class="card mt-4">
-        <div class="card-header">
-            <i class="zmdi zmdi-filter-list"></i>Manter {{resource.toUpperCase() | translate}}
-        </div>
+<nz-card
+    [nzTitle]="'Manter ' + (resource.toUpperCase() | translate)"
+    [nzBordered]="false"
+    [nzExtra]="extraTemplate">
 
-        <div class="card-body">
-            <!--<datagrid
-                [resource]="resource"
-                [listViewSchema]="listViewSchema"
-                (onCreate)="onCreate()"
-                (onEdit)="onEdit($event)">
-            </datagrid>-->
-            <dxdatagrid
-                [resource]="resource"
-                [listViewSchema]="listViewSchema"
-                (onCreate)="onCreate()"
-                (onEdit)="onEdit($event)">
-            </dxdatagrid>
-        </div>
-    </div>
-</div>
+    <dynamicTable
+        [resource]="resource"
+        [listViewSchema]="listViewSchema"
+        (onEdit)="edit($event)">
+    </dynamicTable>
+</nz-card>
+
+<ng-template #extraTemplate>
+    <button nz-button nzType="default" (click)="create()"><i nz-icon type="plus"></i> Add New </button>
+</ng-template>
