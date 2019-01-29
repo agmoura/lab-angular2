@@ -1,7 +1,6 @@
 package com.vixteam.teamaudit.consumer.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vixteam.teamaudit.consumer.commons.ApplicationException;
 import com.vixteam.teamaudit.core.domain.commons.IEntity;
 import com.vixteam.teamaudit.core.usecase.baseentity.*;
 import com.vixteam.teamaudit.core.usecase.commons.EntityQuery;

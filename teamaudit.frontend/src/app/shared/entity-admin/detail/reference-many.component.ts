@@ -8,6 +8,7 @@ import {DynamicFormComponent} from './dynamic-form.component';
 @Component({
     selector: 'reference-many',
     template: `
+        <!-- MAIN TABLE -->
         <nz-card
             [nzTitle]="schema.resource.toUpperCase() | translate"
             [nzBordered]="false"
@@ -35,6 +36,7 @@ import {DynamicFormComponent} from './dynamic-form.component';
             (nzOnClose)="editVisible = false">
 
             <dynamicForm
+                *ngIf="editEnable"
                 #form
                 [schema]="schema"
                 [resourceId]="resourceId"
@@ -59,6 +61,7 @@ import {DynamicFormComponent} from './dynamic-form.component';
             nzWidth="75%">
 
             <dynamicTable
+                *ngIf="linkEnable"
                 #selection
                 [resource]="schema.resource"
                 [listViewSchema]="schema.listView"
@@ -91,9 +94,11 @@ export class ReferenceManyComponent implements OnChanges {
     public filter: any;
 
     public resourceId: string;
+    public editEnable = false;
     public editVisible = false;
     public saveLoading = false;
 
+    public linkEnable = false;
     public linkVisible = false;
     public linkLoading = false;
     public selectedKeys = [];
@@ -112,6 +117,7 @@ export class ReferenceManyComponent implements OnChanges {
     }
 
     public openEdit(key: string = null) {
+        this.editEnable = true;
         this.resourceId = key;
         this.editVisible = true;
     }
@@ -131,6 +137,7 @@ export class ReferenceManyComponent implements OnChanges {
     }
 
     public openLink() {
+        this.linkEnable = true;
         this.selectedKeys = this.table.getKeys();
         this.linkVisible = true;
     }

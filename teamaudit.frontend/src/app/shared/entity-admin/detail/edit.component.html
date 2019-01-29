@@ -44,27 +44,5 @@
     </ng-container>
 </ng-container>
 
-<!--<nz-drawer
-    [nzTitle]="(childEdit?.resourceId ? 'Atualizar ' : 'Incluir ') + (childEdit?.schema.resource | translate)"
-    [nzWidth]="750"
-    [nzVisible]="childEdit"
-    (nzOnClose)="childEdit = null">
-
-    <ng-container *ngIf="childEdit">
-        <dynamicForm
-            #child
-            [schema]="childEdit.schema"
-            [resourceId]="childEdit.resourceId"
-            [targetId]="resourceId"
-            (close)="childEdit = null">
-        </dynamicForm>
-
-        <div class="footer">
-            <button nz-button nzType="default" (click)="childEdit = null"><i nz-icon type="close"></i> Cancel</button>
-            <button nz-button nzType="primary" (click)="child.save()"><i nz-icon type="save"></i> Save</button>
-        </div>
-    </ng-container>
-</nz-drawer>-->
-
 
 
